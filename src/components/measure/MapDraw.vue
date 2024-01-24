@@ -31,8 +31,8 @@ export default {
         // 
     },
     props: {
-        lat: decimal,
-        lon: decimal
+        lat: Number,
+        lon: Number
     },
     data() {
         return {
