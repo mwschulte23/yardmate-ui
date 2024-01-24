@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import MapDraw from "./MapDraw.Vue"
+import MapDraw from "./MapDraw.vue"
 import MeasureForm from "./MeasureForm.vue"
 
 import { addressAutoComplete, submitImage, dataURLtoBlob } from '../../services/apiService'
