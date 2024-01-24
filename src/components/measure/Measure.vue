@@ -2,9 +2,12 @@
     <v-container class="h-screen my-12">
         <v-row class="h-auto">
             <v-col>
-                <h1 class="text-h5 font-weight-bold text-dark">
+                <v-sheet class="bg-transparent mb-4">
+                    <h1 class="text-black font-weight-bold">Yard <span class="px-2 bg-brand text-light">Mate</span> </h1>
+                </v-sheet>
+                <h2 class="text-h5 font-weight-bold text-dark">
                     Measure
-                </h1>
+                </h2>
             </v-col>
         </v-row>
         <v-row class="h-auto">

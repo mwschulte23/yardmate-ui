@@ -22,7 +22,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 // import * as turf from '@turf/turf';
 import { area } from '@turf/turf'
-import { decimal } from '@vuelidate/validators';
+// import { decimal } from '@vuelidate/validators';
 
 
 export default {

@@ -76,7 +76,7 @@
 </template>
   
 <script>
-import { addressAutoComplete, submitImage, dataURLtoBlob } from '../../services/apiService'
+import { addressAutoComplete } from '../../services/apiService'
 
 export default {
     name: "MeasureForm",
