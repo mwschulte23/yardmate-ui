@@ -9,8 +9,8 @@
         <v-btn @click="resetMap" class="pa-2 mb-2" color="accent" variant="outlined">
             Reset
         </v-btn>
-        <p v-if="area > 0" class="text-subtitle-2">
-            Sq Meters: <span class="text-darkbrand text-subtitle-1">{{ roundArea(area) }}</span>
+        <p v-if="measuredArea > 0" class="text-subtitle-2">
+            Sq Meters: <span class="text-darkbrand text-subtitle-1">{{ roundArea(measuredArea) }}</span>
         </p>
     </v-col>
 </template>
@@ -20,7 +20,8 @@
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import * as turf from '@turf/turf';
+// import * as turf from '@turf/turf';
+import { area } from '@turf/turf'
 import { decimal } from '@vuelidate/validators';
 
 
@@ -40,7 +41,7 @@ export default {
             address: '',
             map: null,
             draw: null,
-            area: null,
+            measuredArea: null,
         }
     },
     mounted() {
@@ -73,8 +74,8 @@ export default {
             const data = this.draw.getAll()
 
             if (data.features.length > 0) {
-                this.area = turf.area(data)
-                console.log(this.area)
+                this.measuredArea = area(data)
+                console.log(this.measuredArea)
                 // const rounded_area = Math.round(area * 100) / 100;
             } else {
                 if (e.type !== 'draw.delete') {
@@ -82,15 +83,15 @@ export default {
                 }
             }
         },
-        roundArea(area) {
+        roundArea(measuredArea) {
             if (area) {
-                return Math.round(area * 100) / 100
+                return Math.round(measuredArea * 100) / 100
             }
         },
         resetMap() {
             this.map = null
             this.draw = null
-            this.area = null
+            this.measuredArea = null
         }
     }
 }
