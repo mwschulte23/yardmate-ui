@@ -6,7 +6,7 @@
 import { supabase } from '../../supabase'
 
 export default {
-    name: 'LogIn',
+    name: 'SignOut',
     data() {
         return {
             loading: false
