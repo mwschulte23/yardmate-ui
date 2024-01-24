@@ -27,17 +27,28 @@ const router = createRouter({
   routes
 })
 
+async function getAuthStatus() {
+    const isAuth = Auth.checkAuth().then()
+    return isAuth
+}
+
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const isAuth = Auth.checkAuth()
 
-  if (requiresAuth && isAuth === false) {
-    next({ name: 'login'})
-  } else if (to.path === '/login' && isAuth === true) {
-    next({ name: from.path})
-  } else {
-    next()
-  }
+  Auth.checkAuth().then(isAuth => {
+    if (requiresAuth && !isAuth) {
+      console.log('not auth')
+      next('/login')
+    } else if (to.path === '/login' && isAuth) {
+      console.log('no auth needed')
+      next({ name: from.path })
+    } else {
+      next()
+    }
+  }).catch(error => {
+    console.log(error)
+    next('/login')
+  })
 })
 
 export default router
