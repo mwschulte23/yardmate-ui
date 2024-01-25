@@ -35,6 +35,7 @@ export default {
                     data: {
                         full_name: this.name,
                         company: this.company,
+                        email: this.email
                     }
                 }
             })

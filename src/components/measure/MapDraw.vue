@@ -26,7 +26,7 @@ import { area } from '@turf/turf'
 
 
 export default {
-    name: "MeasureForm",
+    name: "MapDraw",
     components: {
         // 
     },

@@ -19,6 +19,12 @@ const routes = [
     name: 'measure',
     component: () => import(/* webpackChunkName: "login" */ '../views/MeasureView.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/acquire',
+    name: 'acquire',
+    component: () => import(/* webpackChunkName: "login" */ '../views/AcquireView.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
@@ -26,11 +32,6 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
-
-async function getAuthStatus() {
-    const isAuth = Auth.checkAuth().then()
-    return isAuth
-}
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)

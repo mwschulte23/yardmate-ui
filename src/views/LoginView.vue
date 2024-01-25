@@ -7,7 +7,7 @@
 import Auth from '../components/auth/Auth.vue'
 
 export default {
-  name: 'App',
+  name: 'LoginView',
 
   components: {
     Auth,

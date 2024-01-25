@@ -6,7 +6,7 @@
 import Measure from '../components/measure/Measure.vue';
 
 export default {
-    name: 'App',
+    name: 'MeasureView',
 
     components: {
         Measure

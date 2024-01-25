@@ -1,5 +1,5 @@
 <template>
-    <v-form class="elevation-2" @submit.prevent="sendUpCoordinates">
+    <v-form class="elevation-2" @submit.prevent="submitMeasureForm">
         <v-container>
             <v-row class="my-4">
                 <v-col>
@@ -51,6 +51,7 @@
 
                     <v-list v-if="suggestions.length > 0" class="elevation-4">
                         <v-list-item
+                            class="d-flex justify-start"
                             v-for="(suggestion, index) in suggestions"
                             :key="index"
                         >
@@ -76,6 +77,7 @@
 </template>
   
 <script>
+import { supabase } from '../../supabase'
 import { addressAutoComplete } from '../../services/apiService'
 
 export default {
@@ -95,15 +97,39 @@ export default {
 
         }
     },
+    mounted() {
+    },
     methods: {
-        submitMeasureForm() {
-            console.log('form submitted...eventually')
+        async submitMeasureForm() {
+            // emit lat, lon
+            this.sendUpCoordinates()
+            // write to db
+            console.log(this.$store.state.userId)
+            const { error } = await supabase
+                .from('locations')
+                .insert([
+                    {
+                        user_id: this.$store.state.userId,
+                        customer_name: this.customerName,
+                        status: this.customerStatus,
+                        address: this.address,
+                        lat: this.coordinates.lat,
+                        lon: this.coordinates.lon,
+                    }
+                ]);
+            if (error) {
+                console.error('Error inserting data:', error);
+                return null;
+            }
+
+            return 'Data inserted successfully';
         },
         sendUpCoordinates() {
             if (this.coordinates) {
                 this.$emit('coordinates', this.coordinates)
             } else {
-                console.log("bad")
+                alert('Error, Error')
+                // console.log("bad")
             }
         },
         async fetchAutocompleteSuggestions() {

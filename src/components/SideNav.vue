@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer 
         app 
-        class="bg-light px-2 pt-16 pb-12"
+        class="bg-white pt-16 pb-12"
         location="left"
         permanent
         v-model="drawer"
@@ -12,16 +12,16 @@
             </v-sheet>
             <v-list nav color="accent" class="text-center text-subtitle-2">
                 <RouterLink class="text-decoration-none text-black" to="/">
-                    <v-list-item class="pr-8 my-2" prepend-icon="mdi-home" title="Dashboard" value="dashboard"></v-list-item>
+                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-home" title="Dashboard" value="dashboard"></v-list-item>
                 </RouterLink>
                 <RouterLink class="text-decoration-none text-black" to="/measure">
-                    <v-list-item class="pr-8 my-2" prepend-icon="mdi-ruler" title="Measure" value="measure"></v-list-item>
+                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-ruler" title="Measure" value="measure"></v-list-item>
+                </RouterLink>
+                <RouterLink class="text-decoration-none text-black" to="/acquire">
+                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-account" title="Acquire" value="acquire"></v-list-item>
                 </RouterLink>
                 <RouterLink class="text-decoration-none text-black" to="/">
-                    <v-list-item class="pr-8 my-2" prepend-icon="mdi-account" title="Acquire" value="acquire"></v-list-item>
-                </RouterLink>
-                <RouterLink class="text-decoration-none text-black" to="/">
-                    <v-list-item class="pr-8 my-2" prepend-icon="mdi-clipboard" title="Order" value="order"></v-list-item>
+                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-clipboard" title="Order" value="order"></v-list-item>
                 </RouterLink>
             </v-list>
         </div>
@@ -46,38 +46,38 @@
         </template>
     </v-navigation-drawer>
     
-    </template>
+</template>
     
-    <script>
-    import { RouterLink } from 'vue-router'
-    import { supabase } from '../supabase'
-    import SignOut from './auth/SignOut.vue'
+<script>
+import { RouterLink } from 'vue-router'
+import { supabase } from '../supabase'
+import SignOut from './auth/SignOut.vue'
 
-    export default {
-        components: {
-            RouterLink,
-            SignOut
-        },
-        props: {
-            session: Object
-        },
-        data: () => ({
-            drawer: true,
-            userName: 'Unknown',
-            company: 'Unknown'
-        }),
-        async mounted() {
-            if (this.session) {
-                const { data, error, status } = await supabase
-                    .from('profiles')
-                    .select('full_name, company')
-                    .eq('id', this.session.user.id)
-                    .single()
-                
-                this.userName = data.full_name
-                this.company = data.company
-            }
+export default {
+    components: {
+        RouterLink,
+        SignOut
+    },
+    props: {
+        session: Object
+    },
+    data: () => ({
+        drawer: true,
+        userName: 'Unknown',
+        company: 'Unknown'
+    }),
+    async mounted() {
+        if (this.session) {
+            const { data, error, status } = await supabase
+                .from('profiles')
+                .select('full_name, company')
+                .eq('id', this.session.user.id)
+                .single()
+            
+            this.userName = data.full_name
+            this.company = data.company
         }
     }
-    
-    </script>
+}
+
+</script>
