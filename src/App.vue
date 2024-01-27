@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <SideNav v-if="session" :session="session" />
-    <v-main class="bg-grey-lighten-5">
+    <v-main class="bg-grey-lighten-4">
       <router-view />
     </v-main>
   </v-app>
@@ -15,7 +15,7 @@ export default {
   name: 'App',
 
   components: {
-    SideNav,
+    SideNav
   },
 
   data() {

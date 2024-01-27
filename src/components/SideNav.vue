@@ -1,28 +1,34 @@
 <template>
     <v-navigation-drawer 
         app 
-        class="bg-white pt-16 pb-12"
+        class="bg-transparent border-0 pt-16 pb-12"
         location="left"
         permanent
         v-model="drawer"
     >
         <div class="d-flex flex-column justify-end align-center">
-            <v-sheet class="bg-transparent mb-4">
+            <v-sheet class="bg-transparent mb-12">
                 <h1 class="text-black font-weight-bold">Yard <span class="px-2 bg-brand text-light">Mate</span> </h1>
             </v-sheet>
-            <v-list nav color="accent" class="text-center text-subtitle-2">
-                <RouterLink class="text-decoration-none text-black" to="/">
-                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-home" title="Dashboard" value="dashboard"></v-list-item>
-                </RouterLink>
-                <RouterLink class="text-decoration-none text-black" to="/measure">
-                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-ruler" title="Measure" value="measure"></v-list-item>
-                </RouterLink>
-                <RouterLink class="text-decoration-none text-black" to="/acquire">
-                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-account" title="Acquire" value="acquire"></v-list-item>
-                </RouterLink>
-                <RouterLink class="text-decoration-none text-black" to="/">
-                    <v-list-item class="pr-4 my-2" prepend-icon="mdi-clipboard" title="Order" value="order"></v-list-item>
-                </RouterLink>
+
+            <v-list
+                nav 
+                class="text-center text-subtitle-2"
+                
+            >
+                <v-list-item
+                    class="pr-4 my-2 text-start"
+                    v-for="(item, i) in items"
+                    :key="i"
+                    :to="item.to"
+                    :value="item.to"
+                    :class="$route.path == item.to ? 'bg-lightbrand rounded-lg' : '' "
+                    :prepend-icon="item.icon"
+                >
+                    <RouterLink class="text-decoration-none text-black" :to="item.to">
+                        {{ item.title }}
+                    </RouterLink>
+                </v-list-item>
             </v-list>
         </div>
         
@@ -40,14 +46,17 @@
                     <p class="text-subtitle-2 font-weight-regular">{{ company }}</p>
                 </div>
             </div>
-            <div class="text-center pt-8">
+            <div class="d-flex justify-space-around text-center pt-8">
                 <SignOut />
+                <v-badge :content="10" color="lightbrand" class="mr-8">
+                    <v-icon color="grey-lighten-2">mdi-bell</v-icon>
+                </v-badge>
             </div>
         </template>
     </v-navigation-drawer>
     
 </template>
-    
+
 <script>
 import { RouterLink } from 'vue-router'
 import { supabase } from '../supabase'
@@ -64,8 +73,18 @@ export default {
     data: () => ({
         drawer: true,
         userName: 'Unknown',
-        company: 'Unknown'
+        company: 'Unknown',
+        items: [
+            {title: 'Dashboard', to: '/', icon: 'mdi-home'},
+            {title: 'Measure', to: '/measure', icon: 'mdi-ruler'},
+            {title: 'Order', to: '/order', icon: 'mdi-clipboard'},
+            {title: 'Acquire', to: '/acquire', icon: 'mdi-account'},
+        ]
     }),
+    created() {
+        this.setActiveLink()
+        console.log(this.activeLink)
+    },
     async mounted() {
         if (this.session) {
             const { data, error, status } = await supabase
@@ -76,6 +95,12 @@ export default {
             
             this.userName = data.full_name
             this.company = data.company
+        }
+    },
+    methods: {
+        setActiveLink() {
+            this.activeLink = this.$route.name
+            console.log(this.activeLink )
         }
     }
 }

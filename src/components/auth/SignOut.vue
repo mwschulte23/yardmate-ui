@@ -1,5 +1,5 @@
 <template>
-    <v-btn @click="signOut" variant="outlined" color="grey-darken-2" class="text-caption">Sign Out</v-btn>
+    <v-btn @click="signOut" variant="text" color="grey-darken-2" class="text-caption">Sign Out</v-btn>
 </template>
 
 <script>

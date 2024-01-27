@@ -1,16 +1,12 @@
 <template>
-    <v-container class="my-12">
+    <v-container class="my-16">
         <!-- HEADER -->
         <v-row>
             <v-col>
-                <div class="d-flex justify-space-between align-end">
-                    <h1 class="text-grey-darken-2 font-weight-regular pb-4">
-                        Dashboard
-                    </h1>
-                    
+                <div class="d-flex justify-end align-end">
                     <v-sheet class="text-right py-4 bg-transparent">
                         <v-btn 
-                            prepend-icon="mdi-plus" size="large" 
+                            prepend-icon="mdi-plus" size="large"  flat
                             class="rounded-lg bg-darkbrand text-subtitle-1 font-weight-bold" 
                             @click="goToMeasure"
                           >
@@ -22,32 +18,11 @@
         </v-row>
 
         <!-- METRICS -->
-        <v-row cols="12" class="my-2">
-            <v-col cols="4">
-                <v-sheet class="bg-transparent text-center">
-                    <p class="text-subtitle-1 font-weight-thin">Locations</p>
-                    <h5 class="text-subtitle-1 font-weight-regular">20</h5>
-                </v-sheet>
-            </v-col>
-            <v-divider vertical></v-divider>
-            <v-col cols="4">
-              <v-sheet class="bg-transparent text-center">
-                  <p class="text-subtitle-1 font-weight-thin">Total Sq Feet</p>
-                  <h5 class="text-subtitle-1 font-weight-regular">230k</h5>
-              </v-sheet>
-            </v-col>
-            <v-divider vertical></v-divider>
-            <v-col cols="4">
-              <v-sheet class="bg-transparent text-center">
-                  <p class="text-subtitle-1 font-weight-thin">Usage Percent</p>
-                  <h5 class="text-subtitle-1 font-weight-regular">20%</h5>
-              </v-sheet>
-            </v-col>
-        </v-row>
+        <DashboardMetrics />
         
         <!-- TABLE -->
-        <v-row class="mt-0">
-            <v-col>
+        <v-row cols="12" class="mt-0">
+            <v-col cols="12">
                 <v-card flat class="elevation-1">
                     <template v-slot:text>
                         <v-text-field
@@ -64,10 +39,9 @@
                         :headers="headers" 
                         :items="locations" 
                         :search="search" 
-                        height="400" 
+                        height="350" 
                         density="compact"
                         show-select
-                        v-model="selected"
                     ></v-data-table>
                 </v-card>
             </v-col>
@@ -75,17 +49,15 @@
       <!-- Orders Card -->
       <v-row>
         <v-col cols="12" md="6">
-          <v-card class="pa-2 text-darkbrand" height="500">
-            <v-card-title>Orders</v-card-title>
-            <v-card-text class="text-center text-grey-lighten-1 text-h2 mt-16">Coming Soon!</v-card-text>
-            <!-- Orders content here -->
-          </v-card>
+          <v-sheet class="pa-2 bg-white text-dark rounded-lg elevation-1 overflow-y-auto" height="250">
+            <p class="pa-2 text-black text-h5" style="position: sticky; top: 0">Orders</p>
+              <TempTimeline />
+          </v-sheet>
         </v-col>
         <v-col cols="12" md="6">
-          <v-card class="pa-2 text-darkbrand" height="500">
-            <v-card-title>Map</v-card-title>
-            <!-- <Map /> -->
-          </v-card>
+          <v-sheet class="pa-2 bg-white text-dark rounded-lg elevation-1 overflow-y-auto" height="250">
+            <p class="pa-2 text-black text-h5" style="position: sticky; top: 0">Map</p>
+          </v-sheet>
         </v-col>
       </v-row>
     </v-container>
@@ -93,16 +65,18 @@
   
 <script>
 import { supabase } from '../../supabase'
+import DashboardMetrics from './DashboardMetrics.vue'
+import TempTimeline from './TempTimeline.vue';
 
-  export default {
+export default {
     name: 'Dashboard',
     components: {
-      // Map
+        DashboardMetrics,
+        TempTimeline
     },
     data() {
       return {
         search: '',
-        selected: [],
         headers: [
           { title: 'Customer', key: 'customer_name' },
           { title: 'Address', key: 'address' },
