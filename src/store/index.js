@@ -5,24 +5,24 @@ import * as supaService from '../services/supaService'
 
 export default createStore({
   state: {
-    test: 'abc',
     locationAddress: '',
     imageUrl: null,
-    userId: null
+    userId: null,
+    coordinates: null,
   },
   getters: {
-    // temp
-    test2: function (state) {
-      return `${state.test.toUpperCase()}`
-    },
+    
   },
   mutations: {
     setUserId(state, userId) {
       state.userId = userId
     },
+    setCoordinates(state, coordinates) {
+      state.coordinates = coordinates
+    },
     SET_IMAGE_URL(state, url) {
       state.imageUrl = url;
-    }
+    },
   },
   actions: {
     async fetchLocationImage({ commit }, address ) {

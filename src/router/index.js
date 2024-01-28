@@ -25,6 +25,12 @@ const routes = [
     name: 'acquire',
     component: () => import(/* webpackChunkName: "login" */ '../views/AcquireView.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: () => import(/* webpackChunkName: "login" */ '../views/OrderView.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 

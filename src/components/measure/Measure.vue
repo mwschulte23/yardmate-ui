@@ -1,80 +1,89 @@
 <template>
-    <v-container class="h-screen my-12">
-        <v-row class="h-auto">
+    <v-container>
+        <v-row class="mt-8">
             <v-col>
-                <h1 class="text-grey-darken-2 font-weight-regular pb-4">
-                    Measure
-                </h1>
+                <LocationSearch /> <!-- @coordinates="handleCoordinates" />  -->
             </v-col>
         </v-row>
-        <v-row class="h-auto">
-            <v-col class="d-flex flex-column justify-center">
-                <MeasureForm @coordinates="handleCoordinates" />
-                <!-- <v-text-field
-                    v-model="search"
-                    prepend-inner-icon="mdi-magnify"
-                    density="compact"
-                    variant="outlined"
-                    label="Enter Address"
-                    class="bg-white"
-                    :color="isFocused ? 'darkbrand' : 'dark' "
-                    autofocus
-                    @focus="isFocused = true"
-                    @blur="isFocused = false"
-                    @keyup.enter="loadMap = true"
-                    @input="fetchAutocompleteSuggestions"
-                    single-line
-                    hide-details
-                ></v-text-field>
-                <v-btn
-                    color="darkbrand"
-                    size="regular"
-                    v-ripple
-                    flat
-                    class="text-white h-full px-2 py-2 mt-2 rounded-md"
-                    @click="loadMap = true"
-                >
-                    Start Measuring
-                </v-btn> -->
+        <v-row class="w-screen my-4" style="height: 600px">
+            <v-col v-if="coordinates" class="h-full w-full">
+                <MeasureMap :lat="coordinates.lat" :lon="coordinates.lon" />
             </v-col>
         </v-row>
-        <v-row cols="12" v-if="coordinates" class="justify-space-between h-50">
-            <MapDraw :lat="coordinates.lat" :lon="coordinates.lon" />
-        </v-row>
+        
+
+
         <v-row>
             <v-col>
-                
+                                
+                                <!-- <v-card 
+                                    v-if="coordinates"
+                                    class="my-card" 
+                                    @click="expanded = !expanded"
+                                    v-ripple="false"
+                                >
+                                    <v-sheet class="d-flex justify-space-between align-start">
+                                        <v-sheet class="">
+                                            <v-card-title class="text-left mb-0 pb-1">{{ addressOnly(0) }}</v-card-title>
+                                            <v-card-subtitle class="text-subtitle-1 font-weight-regular mt-0">{{ addressOnly(1) }}, {{ addressOnly(2) }}</v-card-subtitle>
+                                        </v-sheet>
+                                        <v-sheet>
+                                            
+                                        </v-sheet>
+                                    </v-sheet>
+                                
+                                
+                                <v-card-text>
+                                    Property detail...
+                                <v-expand-transition>
+                                <div v-if="expanded">
+                                    
+                                    Lot Size: <span class="text-accent">15,000 sq ft</span>
+                                </div>
+                                </v-expand-transition>
+                                </v-card-text>
+                                </v-card> -->
+                            
             </v-col>
         </v-row>
-        <!-- modal for submit form -->
+        <!-- <v-row>
+            <v-col>
+                <p v-if="coordinates">
+                    {{ coordinates.lat }} and {{  coordinates.lon }}
+                </p>
+            </v-col>
+        </v-row> -->
     </v-container>
 </template>
 
 <script>
-import MapDraw from "./MapDraw.vue"
-import MeasureForm from "./MeasureForm.vue"
-
-import { addressAutoComplete, submitImage, dataURLtoBlob } from '../../services/apiService'
+import LocationSearch from './LocationSearch.vue';
+import MeasureMap from './MeasureMap.vue'
 
 export default {
     name: 'Measure',
     components: {
-        MapDraw,
-        MeasureForm,
+        LocationSearch,
+        MeasureMap,
     },
     data() {
         return {
-            search: '',
-            suggestions: [],
-            address: '',
-            coordinates: null,
-            isFocused: false,
+            expanded: false,
         }
+    },
+    computed: {
+        coordinates() {
+            return this.$store.state.coordinates;
+        },
     },
     methods: {
         handleCoordinates(coordinates) {
             this.coordinates = coordinates
         },
+        addressOnly(split_part) {
+            const split_address = this.coordinates.address.toString().split(',');
+            return split_address[split_part]
+        }
     }
 }
 

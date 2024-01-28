@@ -22,10 +22,10 @@
                     :key="i"
                     :to="item.to"
                     :value="item.to"
-                    :class="$route.path == item.to ? 'bg-lightbrand rounded-lg' : '' "
+                    :class="$route.path == item.to ? 'bg-darkbrand rounded-lg' : '' "
                     :prepend-icon="item.icon"
                 >
-                    <RouterLink class="text-decoration-none text-black" :to="item.to">
+                    <RouterLink :class="$route.path == item.to ? 'text-decoration-none text-white' : 'text-decoration-none text-black' " :to="item.to">
                         {{ item.title }}
                     </RouterLink>
                 </v-list-item>
@@ -48,7 +48,7 @@
             </div>
             <div class="d-flex justify-space-around text-center pt-8">
                 <SignOut />
-                <v-badge :content="10" color="lightbrand" class="mr-8">
+                <v-badge :content="10" color="brand" class="mr-8">
                     <v-icon color="grey-lighten-2">mdi-bell</v-icon>
                 </v-badge>
             </div>
@@ -63,6 +63,7 @@ import { supabase } from '../supabase'
 import SignOut from './auth/SignOut.vue'
 
 export default {
+    name: 'SideNav',
     components: {
         RouterLink,
         SignOut
