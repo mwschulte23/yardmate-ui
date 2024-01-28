@@ -3,9 +3,9 @@
         <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">Save Measurement</v-btn>
         <v-dialog
             v-model="openForm"
-            width="auto"
+            width="w-screen"
         >
-            <SubmitLocation v-if="measuredArea > 0" :area="measuredArea" @openForm="closeLocationForm"/>
+            <SubmitLocation v-if="measuredArea > 0" :area="measuredArea" @openForm="closeLocationForm" class="mx-auto" style="width: 50%;"/>
             <v-card v-else>
                 <v-card-title>
                     <v-icon>mdi-info</v-icon> Please make measurements on map first!
@@ -32,7 +32,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import area from '@turf/area'
-import { formToJSON } from 'axios';
+// import { formToJSON } from 'axios';
 
 import SubmitLocation from './SubmitLocation.vue'
 

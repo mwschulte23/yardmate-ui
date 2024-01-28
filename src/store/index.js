@@ -5,10 +5,12 @@ import * as supaService from '../services/supaService'
 
 export default createStore({
   state: {
-    locationAddress: '',
+    address: '',
+    coordinates: null,
     imageUrl: null,
     userId: null,
-    coordinates: null,
+    userName: '',
+    userCompany: ''
   },
   getters: {
     
@@ -23,15 +25,17 @@ export default createStore({
     SET_IMAGE_URL(state, url) {
       state.imageUrl = url;
     },
+    SET_ADDRESS(state, newAddress) {
+      state.address = newAddress;
+    }
   },
   actions: {
     async fetchLocationImage({ commit }, address ) {
       const imageUrl = await apiService.getLocationImage(address);
       commit('SET_IMAGE_URL', imageUrl);
+    },
+    updateAddress({ commit }, address) {
+      commit('SET_ADDRESS', address)
     }
-
-    // Other actions
   },
-  
-  // modules: {}  // If you're using modules
 });
