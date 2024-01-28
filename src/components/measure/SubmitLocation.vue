@@ -1,33 +1,54 @@
 <template>
-    <v-card>
+    <v-card class="pt-8 px-12 mx-16 mb-0 h-full">
         <v-form>
-            <v-text-field
-                v-model="customerName"
-                label="Customer"
-                variant="outlined"
-                class="bg-white"
-                :color="isFocused == 'customer' ? 'darkbrand' : 'dark' "
-                @focus="isFocused = 'customer'"
-                @blur="isFocused != 'customer'"
-                autofocus
-                required
-                hide-details
-            />
-            <v-select 
-                v-model="customerStatus"
-                :items="statuses"    
-                label="Customer Status"     
-                variant="outlined"
-                class="bg-white"
-                :color="isFocused == 'status' ? 'darkbrand' : 'dark' "
-                @focus="isFocused = 'status'"
-                @blur="isFocused != 'status'"
-                required
-                hide-details
-            />
-            <v-card-actions>
-                <v-btn @click="closeForm">Close</v-btn>
-            </v-card-actions>
+            <v-row cols="12">
+                <v-col>
+                    <v-sheet class="d-flex justify-space-between mb-4 bg-transparent">
+                        <v-sheet>
+                            <h3 class="text-h6 font-weight-light">
+                                Location
+                            </h3>
+                            <p class="text-subtitle-1 pb-4 font-weight-light">{{ shortenedAddress }}</p>
+                        </v-sheet>
+                        <v-sheet>
+                            <h3 class="text-h6 font-weight-light text-right">
+                                Measured Area
+                            </h3>
+                            <p class="text-subtitle-1 pb-4 font-weight-light text-right">{{ formattedArea }} Sq Feet</p>
+                        </v-sheet>
+                    </v-sheet>
+                    <v-text-field
+                        v-model="customerName"
+                        label="Customer"
+                        variant="outlined"
+                        density="comfortable"
+                        class="bg-white mb-4"
+                        :color="isFocused == 'customer' ? 'darkbrand' : 'dark' "
+                        @focus="isFocused = 'customer'"
+                        @blur="isFocused != 'customer'"
+                        required
+                        clearable
+                        autofocus
+                    />
+                    <v-select 
+                        v-model="customerStatus"
+                        :items="statuses"    
+                        label="Customer Status"
+                        variant="outlined"
+                        density="comfortable"
+                        class="bg-white"
+                        :color="isFocused == 'status' ? 'darkbrand' : 'dark' "
+                        @focus="isFocused = 'status'"
+                        @blur="isFocused != 'status'"
+                        required
+                        hide-details
+                    />
+                    <v-sheet class="d-flex justify-end align-center my-8">
+                        <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="closeForm">Close</v-btn>
+                        <v-btn color="brand" class="px-4" @click="closeForm">Submit</v-btn>
+                    </v-sheet>
+                </v-col>
+            </v-row>
         </v-form>
     </v-card>
 </template>
@@ -37,13 +58,22 @@
 export default {
     name: 'SubmitLocation',
     props: {
-        area: Number,
+        area: Number
     },
     data() {
         return {
             customerName: '',
             customerStatus: '',
-            address: ''
+            statuses: ['Customer', 'Prospect', 'Churned'],
+            isFocused: ''
+        }
+    },
+    computed: {
+        shortenedAddress() {
+            return this.$store.state.address.replace(', United States of America', '')
+        },
+        formattedArea() {
+            return Math.round(this.area * 100) / 100
         }
     },
     methods: {

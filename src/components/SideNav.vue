@@ -42,8 +42,8 @@
                 >
                 </v-avatar>
                 <div class="text-left px-4">
-                    <h5 class="text-subtitle-1 font-weight-semibold">{{ userName }}</h5>
-                    <p class="text-subtitle-2 font-weight-regular">{{ company }}</p>
+                    <!-- <h5 class="text-subtitle-1 font-weight-semibold">{{ userName }}</h5>
+                    <p class="text-subtitle-2 font-weight-regular">{{ company }}</p> -->
                 </div>
             </div>
             <div class="d-flex justify-space-around text-center pt-8">
@@ -87,16 +87,17 @@ export default {
         console.log(this.activeLink)
     },
     async mounted() {
-        if (this.session) {
-            const { data, error, status } = await supabase
-                .from('profiles')
-                .select('full_name, company')
-                .eq('id', this.session.user.id)
-                .single()
+        // convert to state like done for user id
+        // if (this.session) {
+        //     const { data, error, status } = await supabase
+        //         .from('profiles')
+        //         .select('full_name, company')
+        //         .eq('id', this.session.user.id)
+        //         .single()
             
-            this.userName = data.full_name
-            this.company = data.company
-        }
+        //     this.userName = data.full_name
+        //     this.company = data.company
+        // }
     },
     methods: {
         setActiveLink() {

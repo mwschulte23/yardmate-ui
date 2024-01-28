@@ -2,7 +2,7 @@
     <v-container>
         <v-row class="mt-8">
             <v-col>
-                <LocationSearch /> <!-- @coordinates="handleCoordinates" />  -->
+                <LocationSearch />
             </v-col>
         </v-row>
         <v-row class="w-screen my-4" style="height: 600px">

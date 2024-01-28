@@ -57,6 +57,8 @@ export default {
             if (this.coordinates) {
                 // this.$emit('coordinates', this.coordinates)
                 this.$store.commit('setCoordinates', this.coordinates);
+                this.$store.dispatch('updateAddress', this.address)
+                console.log(this.$store.state.address)
             } else {
                 this.hint = 'Location not found. Try again.'
             }
