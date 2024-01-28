@@ -39,14 +39,14 @@ export const submitImage = async (formData) => {
 }
 
 // 3rd party APIs
-const GEOAPIFY_BASE_URL = 'https://api.geoapify.com/v1/geocode/autocomplete'
+const GEOAPIFY_BASE_URL = 'https://api.geoapify.com/v1/geocode/autocomplete?lang=en&limit=5&filter=rect:-125,24.396308,-66.93457,49.384358'
 
 export const addressAutoComplete = async (text) => {
-  try {
-    const apiKey = import.meta.env.VITE_GEOAPIFY_API_KEY
-    const response = await axios.get(`${GEOAPIFY_BASE_URL}?text=${text}&apiKey=${apiKey}`)
-    return response.data.features
-  } catch (error) {
-    console.log(error)
-  }
+    try {
+        const apiKey = import.meta.env.VITE_GEOAPIFY_API_KEY
+        const response = await axios.get(`${GEOAPIFY_BASE_URL}&text=${text}&apiKey=${apiKey}`)
+        return response.data.features
+    } catch (error) {
+        console.log(error)
+    }
 }

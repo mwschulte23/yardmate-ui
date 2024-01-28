@@ -3,6 +3,9 @@
         <v-sheet class="h-100" id="map" />
     </v-col>
     <v-col class="d-flex flex-column justify-start">
+        <v-btn prepend-icon="mdi-draw" class="" @click="togglePolygonMode">
+            Test Button
+        </v-btn>
         <v-btn class="pa-2 mb-2" color="brand" variant="tonal">
             Save
         </v-btn>
@@ -20,9 +23,7 @@
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-// import * as turf from '@turf/turf';
 import area from '@turf/area'
-// import { decimal } from '@vuelidate/validators';
 
 
 export default {
@@ -46,7 +47,7 @@ export default {
     },
     mounted() {
         this.loadMap(),
-        console.log(this.lat, this.lon)
+        this.setupCursorChange()
     },
     methods: {
         loadMap() {
@@ -72,10 +73,10 @@ export default {
         },
         updateArea(e) {
             const data = this.draw.getAll()
-
+            
             if (data.features.length > 0) {
                 this.measuredArea = area(data)
-                console.log(this.measuredArea)
+                // console.log(this.measuredArea)
                 // const rounded_area = Math.round(area * 100) / 100;
             } else {
                 if (e.type !== 'draw.delete') {
@@ -92,7 +93,34 @@ export default {
             this.map = null
             this.draw = null
             this.measuredArea = null
-        }
+        },
+        // TESTING OUT STUFF
+        zoomOut() {
+           this.map.zoomOut();
+        },
+        togglePolygonMode() {
+            if (this.isPolygonMode) {
+                this.draw.changeMode('simple_select');
+            } else {
+                this.draw.changeMode('draw_polygon');
+            }
+            this.isPolygonMode = !this.isPolygonMode;
+        },
+        setupCursorChange() {
+            this.map.on('mousemove', (e) => {
+            const mode = this.draw.getMode();
+            console.log(mode)
+            if (mode === 'draw_polygon' || mode === 'draw_line_string') {
+                this.map.getCanvas().style.cursor = 'crosshair'; // Cursor for drawing
+            } else if (mode === 'simple_select') {
+                this.map.getCanvas().style.cursor = 'pointer'; // Cursor for selecting
+            } else {
+                this.map.getCanvas().style.cursor = ''; // Default cursor
+            }
+            });
+        },
+        // open child component modal form
+        
     }
 }
 </script>

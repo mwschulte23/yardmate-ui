@@ -21,13 +21,13 @@ export default createVuetify({
       light: {
         dark: false,
         colors: {
-          brand: '#51CC5F',
+          brand: '#30B03E',
           light: '#ECECEC',
           dark: '#131212',
-          accent1: '#05668D',
+          accent1: '#4F5D75',
           accent2: '#D3BB1E',
-          lightbrand: '#caefcf',
-          darkbrand: '#304532',
+          lightbrand: '#70FF81',
+          darkbrand: '#214725',
           
           
         },
