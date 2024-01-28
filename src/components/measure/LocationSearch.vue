@@ -1,9 +1,3 @@
-<!-- 
-    TODOs:
-        on accept suggestion "tab" or "enter" - focus on submit magnify icon
-        test, make more intuitive
-
- -->
 <template>
     <v-text-field
         ref="addressSearch"
@@ -22,12 +16,7 @@
         autofocus
         single-line
     >
-        <!-- <span class="autofill" v-if="suggestion">{{ hint }}</span> -->
     </v-text-field>
-    
-    
-    <!-- <span>{{ address }}</span> -->
-    
 </template>
 
 <script>
@@ -53,17 +42,6 @@ export default {
 
     },
     methods: {
-        sendUpCoordinates() {
-            if (this.coordinates) {
-                // this.$emit('coordinates', this.coordinates)
-                this.$store.commit('setCoordinates', this.coordinates);
-                this.$store.dispatch('updateAddress', this.address)
-                console.log(this.$store.state.address)
-            } else {
-                this.hint = 'Location not found. Try again.'
-            }
-            this.resetSearch()
-        },
         async fetchAutocompleteSuggestions() {
             if (this.address.length < 4) {
                 this.suggestions = [];
@@ -92,13 +70,24 @@ export default {
         acceptSuggestion() {
             if (this.hint && this.hint != 'Location not found. Try again.') {
                 this.address = this.hint;
+                this.sendUpCoordinates()
             }
+        },
+        sendUpCoordinates() {
+            if (this.coordinates) {
+                // this.$emit('coordinates', this.coordinates)
+                this.$store.commit('setCoordinates', this.coordinates);
+                this.$store.dispatch('updateAddress', this.address)
+            } else {
+                this.hint = 'Location not found. Try again.'
+            }
+            this.resetSearch()
         },
         resetSearch() {
             this.address = ''
             this.suggestions = []
             this.suggestion = ''
-            this.coordinates = null
+            // this.coordinates = null
             this.hint = '',
             this.$nextTick(() => {
                 this.$refs.addressSearch.focus();

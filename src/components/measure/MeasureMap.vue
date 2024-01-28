@@ -1,4 +1,7 @@
 <template>
+    <div class="mb-8">
+        <p class="text-subtitle-1 "><span class="font-weight-thin">Location: </span>{{ $store.state.address }}</p>
+    </div>
     <div class="d-flex justify-space-between bg-transparent">
         <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">Save Measurement</v-btn>
         <v-dialog
@@ -55,11 +58,23 @@ export default {
         }
     },
     mounted() {
-        this.loadMap();
-        this.setupCursorChange();
-        this.map.on('draw.modechange', this.onModeChange)
+        this.forRendering();
+    },
+    computed: {
+        latLon() {
+            return [this.lat, this.lon];
+        }
+    },
+    watch: {
+        latLon() {
+            this.forRendering();
+        }
     },
     methods: {
+        forRendering() {
+            this.loadMap();
+            this.setupCursorChange();
+        },
         // core map methods
         loadMap() {
             mapboxgl.accessToken = 'pk.eyJ1IjoibXdzY2h1bHRlMjMiLCJhIjoiY2w4a2tpaGo1MDEwNDN2cncxMzV1bmp4eSJ9.uPejfD8btp768rOZpMiVyA';
@@ -133,7 +148,6 @@ export default {
             });
         },
         closeLocationForm(openForm) {
-            console.log(this.openForm)
             this.openForm = openForm
         },
     },

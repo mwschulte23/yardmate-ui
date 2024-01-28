@@ -3,6 +3,7 @@
         <v-form>
             <v-row cols="12">
                 <v-col>
+                    <p>{{ $store.state.coordinates }} </p>
                     <v-sheet class="d-flex justify-space-between mb-4 bg-transparent">
                         <v-sheet>
                             <h3 class="text-h6 font-weight-light">
@@ -45,15 +46,33 @@
                     />
                     <v-sheet class="d-flex justify-end align-center my-8">
                         <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="closeForm">Close</v-btn>
-                        <v-btn color="brand" class="px-4" @click="closeForm">Submit</v-btn>
+                        <v-btn color="brand" class="px-4" @click="submitMeasureForm">Submit</v-btn>
                     </v-sheet>
                 </v-col>
             </v-row>
         </v-form>
+        <!-- <v-snackbar
+            v-model="snackbar"
+            multi-line
+            >
+            Location Submitted <br>
+            Square Feet: {{ area }}
+
+            <template v-slot:actions>
+                <v-btn
+                color="red"
+                variant="text"
+                @click="confirmSnack = false"
+                >
+                Close
+                </v-btn>
+            </template>
+        </v-snackbar> -->
     </v-card>
 </template>
 
 <script>
+import { supabase } from '../../supabase'
 
 export default {
     name: 'SubmitLocation',
@@ -65,7 +84,8 @@ export default {
             customerName: '',
             customerStatus: '',
             statuses: ['Customer', 'Prospect', 'Churned'],
-            isFocused: ''
+            isFocused: '',
+            confirmSnack: false
         }
     },
     computed: {
@@ -77,6 +97,36 @@ export default {
         }
     },
     methods: {
+        async submitMeasureForm() {
+            // emit lat, lon
+            // write to db
+            
+            const { error } = await supabase
+                .from('locations')
+                .insert([
+                    {
+                        user_id: this.$store.state.userId,
+                        customer_name: this.customerName,
+                        status: this.customerStatus,
+                        address: this.$store.state.address,
+                        lat: this.$store.state.coordinates.lat,
+                        lon: this.$store.state.coordinates.lon,
+                        square_feet: this.area
+                    }
+                ]);
+                this.closeForm()
+                this.confirmSnack = true // emit this to parent for snackbar submission
+
+                alert('Less invasive version of this in future...but location saved :)')
+
+                // toast for confirmation
+            if (error) {
+                console.error('Error inserting data:', error);
+                return null;
+            }
+
+            return 'Data inserted successfully';
+        },
         closeForm() {
             this.$emit('openForm', false)
         },
