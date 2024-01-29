@@ -2,6 +2,7 @@
     <v-text-field
         ref="addressSearch"
         v-model="address"
+        placeholder="Enter Address"
         append-inner-icon="mdi-magnify"
         variant="outlined"
         density="compact"
