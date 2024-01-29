@@ -3,7 +3,6 @@
         <v-form>
             <v-row cols="12">
                 <v-col>
-                    <p>{{ $store.state.coordinates }} </p>
                     <v-sheet class="d-flex justify-space-between mb-4 bg-transparent">
                         <v-sheet>
                             <h3 class="text-h6 font-weight-light">
@@ -51,23 +50,6 @@
                 </v-col>
             </v-row>
         </v-form>
-        <!-- <v-snackbar
-            v-model="snackbar"
-            multi-line
-            >
-            Location Submitted <br>
-            Square Feet: {{ area }}
-
-            <template v-slot:actions>
-                <v-btn
-                color="red"
-                variant="text"
-                @click="confirmSnack = false"
-                >
-                Close
-                </v-btn>
-            </template>
-        </v-snackbar> -->
     </v-card>
 </template>
 
@@ -85,7 +67,6 @@ export default {
             customerStatus: '',
             statuses: ['Customer', 'Prospect', 'Churned'],
             isFocused: '',
-            confirmSnack: false
         }
     },
     computed: {
@@ -98,9 +79,6 @@ export default {
     },
     methods: {
         async submitMeasureForm() {
-            // emit lat, lon
-            // write to db
-            
             const { error } = await supabase
                 .from('locations')
                 .insert([
@@ -115,14 +93,14 @@ export default {
                     }
                 ]);
                 this.closeForm()
-                this.confirmSnack = true // emit this to parent for snackbar submission
-
-                alert('Less invasive version of this in future...but location saved :)')
-
-                // toast for confirmation
+                
             if (error) {
+                alert('Less invasive version of this in future...but location saved :)')
                 console.error('Error inserting data:', error);
                 return null;
+            } else {
+                // toast for confirmation
+                this.$store.dispatch('triggerLocationSubmitNotif', true)
             }
 
             return 'Data inserted successfully';

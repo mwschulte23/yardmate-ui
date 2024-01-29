@@ -17,10 +17,10 @@
         </v-dialog>
 
         <div class="d-flex justify-end bg-transparent">
-            <v-btn @click="changeMode('simple_select')" :class="!isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1" >
+            <v-btn @click="changeDrawMode" :class="!isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1" >
                 <v-icon size="large">mdi-cursor-pointer</v-icon>
             </v-btn>
-            <v-btn @click="changeMode('draw_polygon')" :class="isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1">
+            <v-btn @click="changeDrawMode" :class="isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1">
                 <v-icon size="large">mdi-vector-polyline-plus</v-icon>
             </v-btn>
         </div>
@@ -63,12 +63,12 @@ export default {
     computed: {
         latLon() {
             return [this.lat, this.lon];
-        }
+        },
     },
     watch: {
         latLon() {
             this.forRendering();
-        }
+        },
     },
     methods: {
         forRendering() {
@@ -82,28 +82,28 @@ export default {
                 container: 'map',
                 style: 'mapbox://styles/mapbox/satellite-v9',
                 center: [this.lon, this.lat],
-                zoom: 18 // probz set to 18 or so on search
+                zoom: 19 // probz set to 18 or so on search
             });
+            new mapboxgl.Marker()
+                .setLngLat([this.lon, this.lat])
+                .addTo(this.map);
+            
             this.draw = new MapboxDraw({
                 displayControlsDefault: false,
-                defaultMode: this.isPolygonMode ? 'draw_polygon' : 'simple_select',
-                // controls: {
-                //     polygon: true,
-                //     trash: false
-                // }
+                defaultMode: 'draw_polygon' // this.isPolygonMode ? 'draw_polygon' : 'simple_select',
             })
             this.map.addControl(this.draw);
             this.map.on('draw.create', this.updateArea);
             this.map.on('draw.delete', this.updateArea);
             this.map.on('draw.update', this.updateArea);
+
+            this.map.on('draw.modechange', this.changeDrawMode);
         },
         updateArea(e) {
-            console.log(this.draw.getMode())
             const data = this.draw.getAll()
 
             if (data.features.length > 0) {
                 this.measuredArea = area(data)
-                // const rounded_area = Math.round(area * 100) / 100;
             } else {
                 if (e.type !== 'draw.delete') {
                     alert('Click the map to draw a polygon.');
@@ -113,24 +113,13 @@ export default {
         // custom controls
 
         // draw mode change stuff
-        onModeChange() {
-            const drawMode = this.draw.getMode()
-            if (drawMode == 'draw_polygon') {
-                this.isPolygonMode = true
-            } else {
-                this.isPolygonMode = false
-            }
-        },
-        changeMode(newMode) {
-            if (!['simple_select', 'draw_polygon'].includes(newMode)) {
-                return;
-            } else {
-                this.draw.changeMode(newMode)
-
-                if (newMode == 'draw_polygon') {
-                    this.isPolygonMode = true
+        changeDrawMode() {
+            this.isPolygonMode = !this.isPolygonMode
+            if (this.draw) {
+                if (this.isPolygonMode) {
+                    this.draw.changeMode('draw_polygon')
                 } else {
-                    this.isPolygonMode = false
+                    this.draw.changeMode('simple_select')
                 }
             }
         },
@@ -150,8 +139,7 @@ export default {
         closeLocationForm(openForm) {
             this.openForm = openForm
         },
-    },
-        
+    },  
 }
 </script>
 

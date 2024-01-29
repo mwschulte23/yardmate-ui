@@ -53,6 +53,28 @@
                 </p>
             </v-col>
         </v-row> -->
+
+        <!-- MEASURE NOTIFS -->
+        <v-snackbar
+            v-model="locationSubmitted"
+            :timeout="2500"
+            elevation="24"
+            color="darkbrand"
+            multi-line
+            >
+            <p class="text-lightbrand font-weight-bold">Location Saved <v-icon>mdi-party</v-icon></p>
+
+            <template v-slot:actions>
+                <v-btn
+                color="red"
+                variant="text"
+                @click="locationSubmitted.set"
+                >
+                Close
+                </v-btn>
+        </template>
+    </v-snackbar>
+
     </v-container>
 </template>
 
@@ -75,6 +97,15 @@ export default {
         coordinates() {
             return this.$store.state.coordinates;
         },
+        locationSubmitted: {
+            get() {
+                return this.$store.state.locationSubmitted
+            },
+            set() {
+                console.log(this.$store.state.locationSubmitted)
+                this.$store.dispatch('triggerLocationSubmitNotif', false)
+            }
+        }
     },
     methods: {
         handleCoordinates(coordinates) {
@@ -83,7 +114,8 @@ export default {
         addressOnly(split_part) {
             const split_address = this.coordinates.address.toString().split(',');
             return split_address[split_part]
-        }
+        },
+        // closeSnack
     }
 }
 
