@@ -77,7 +77,7 @@ export default {
         sendUpCoordinates() {
             if (this.coordinates) {
                 // this.$emit('coordinates', this.coordinates)
-                this.$store.commit('setCoordinates', this.coordinates);
+                this.$store.commit('SET_COORDINATES', this.coordinates);
                 this.$store.dispatch('updateAddress', this.address)
             } else {
                 this.hint = 'Location not found. Try again.'

@@ -22,7 +22,7 @@
                     :key="i"
                     :to="item.to"
                     :value="item.to"
-                    :class="$route.path == item.to ? 'bg-darkbrand rounded-lg' : '' "
+                    :class="$route.path == item.to ? 'bg-accent1 rounded-lg' : '' "
                     :prepend-icon="item.icon"
                 >
                     <RouterLink :class="$route.path == item.to ? 'text-decoration-none text-white' : 'text-decoration-none text-black' " :to="item.to">
@@ -34,22 +34,22 @@
         
         <template v-slot:append>
             <v-divider class="mb-12"></v-divider>
-            <div class="d-flex flex-row justify-center align-center">
+            <div class="profile-div d-flex flex-row justify-center align-center" @click="profileGoesHere">
                 <v-avatar
                     class=""
-                    color="black"
-                    size="48"
+                    color="accent1"
+                    size="40"
                 >
                 </v-avatar>
                 <div class="text-left px-4">
-                    <!-- <h5 class="text-subtitle-1 font-weight-semibold">{{ userName }}</h5>
-                    <p class="text-subtitle-2 font-weight-regular">{{ company }}</p> -->
+                    <h5 class="text-subtitle-1 font-weight-semibold">{{ userName }}</h5>
+                    <p class="text-subtitle-2 font-weight-regular">{{ company }}</p>
                 </div>
             </div>
             <div class="d-flex justify-space-around text-center pt-8">
                 <SignOut />
                 <v-badge :content="10" color="brand" class="mr-8">
-                    <v-icon color="grey-lighten-2">mdi-bell</v-icon>
+                    <v-icon color="grey-lighten-1">mdi-bell</v-icon>
                 </v-badge>
             </div>
         </template>
@@ -69,7 +69,7 @@ export default {
         SignOut
     },
     props: {
-        session: Object
+        // session: Object
     },
     data: () => ({
         drawer: true,
@@ -84,27 +84,34 @@ export default {
     }),
     created() {
         this.setActiveLink()
-        console.log(this.activeLink)
     },
     async mounted() {
         // convert to state like done for user id
-        // if (this.session) {
-        //     const { data, error, status } = await supabase
-        //         .from('profiles')
-        //         .select('full_name, company')
-        //         .eq('id', this.session.user.id)
-        //         .single()
+        if (this.$store.state.userId) {
+            const { data, error, status } = await supabase
+                .from('profiles')
+                .select('full_name, company')
+                .eq('user_id', this.$store.state.userId)
+                .single()
             
-        //     this.userName = data.full_name
-        //     this.company = data.company
-        // }
+            this.userName = data.full_name
+            this.company = data.company
+        }
     },
     methods: {
         setActiveLink() {
             this.activeLink = this.$route.name
             console.log(this.activeLink )
+        },
+        profileGoesHere() {
+            console.log('eventually add profile view / router')
         }
     }
 }
-
 </script>
+
+<style>
+.profile-div {
+    cursor: pointer;
+}
+</style>

@@ -26,7 +26,7 @@ export default createVuetify({
           dark: '#131212',
           accent1: '#4F5D75',
           accent2: '#D3BB1E',
-          lightbrand: '#70FF81',
+          lightbrand: '#D2F7D7',
           darkbrand: '#214725',
           
           
