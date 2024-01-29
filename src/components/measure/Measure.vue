@@ -57,20 +57,20 @@
         <!-- MEASURE NOTIFS -->
         <v-snackbar
             v-model="locationSubmitted"
-            :timeout="2500"
+            :timeout="1500"
             elevation="24"
-            color="darkbrand"
+            color="lightbrand"
             multi-line
             >
-            <p class="text-lightbrand font-weight-bold">Location Saved <v-icon>mdi-party</v-icon></p>
+            <p class="text-dark font-weight-bold">Location Saved <v-icon>mdi-party</v-icon></p>
 
             <template v-slot:actions>
                 <v-btn
-                color="red"
-                variant="text"
+                color="dark"
+                variant="tonal"
                 @click="locationSubmitted.set"
                 >
-                Close
+                    Close
                 </v-btn>
         </template>
     </v-snackbar>

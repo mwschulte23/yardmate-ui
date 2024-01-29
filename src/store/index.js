@@ -21,10 +21,10 @@ export default createStore({
     
   },
   mutations: {
-    setUserId(state, userId) { // TODO update to all caps pattern
+    SET_USER_ID(state, userId) { // TODO update to all caps pattern
       state.userId = userId
     },
-    setCoordinates(state, coordinates) { // TODO update to all caps pattern
+    SET_COORDINATES(state, coordinates) { // TODO update to all caps pattern
       state.coordinates = coordinates
     },
     SET_ADDRESS(state, newAddress) {
