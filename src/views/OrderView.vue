@@ -1,17 +1,17 @@
 <template>
     <v-container>
-        <Temp />
+        <v-sheet class="ma-auto">
+            COMING SOON!!!
+        </v-sheet>
     </v-container>
 </template>
 
 <script>
-import Temp from '../components/measure-old/Temp.vue';
 
 export default {
     name: 'AcquireView',
 
     components: {
-        Temp
     },
 
     data: () => ({

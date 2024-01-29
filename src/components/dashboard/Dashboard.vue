@@ -1,13 +1,13 @@
 <template>
-    <v-container class="my-16">
+    <v-container class="">
         <!-- HEADER -->
         <v-row>
             <v-col>
                 <div class="d-flex justify-end align-end">
-                    <v-sheet class="text-right py-4 bg-transparent">
+                    <v-sheet class="text-right bg-transparent">
                         <v-btn 
                             prepend-icon="mdi-plus" size="large"  flat
-                            class="rounded-lg bg-darkbrand text-subtitle-1 font-weight-bold" 
+                            class="rounded-lg bg-darkbrand text-subtitle-1 font-weight-bold ma-0" 
                             @click="goToMeasure"
                           >
                             Add Location
@@ -18,7 +18,7 @@
         </v-row>
 
         <!-- METRICS -->
-        <DashboardMetrics />
+        <DashboardMetrics :locations="locationCount" :square_feet="totalSqFeet" />
         
         <!-- TABLE -->
         <v-row cols="12" class="mt-0">
@@ -85,6 +85,14 @@ export default {
         locations: [],
       };
     },
+    computed: {
+        locationCount() {
+            return this.locations.length
+        },
+        totalSqFeet() {
+            return this.locations.reduce((sum, item) => sum + item.square_feet, 0);
+        },
+    },
     mounted() {
         this.getLocations().then((data) => {
             this.locations = data;
@@ -104,9 +112,6 @@ export default {
                 return data
             }
         },
-        logStuff() {
-            console.log(this.selected)
-        }
     }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <SideNav v-if="session" :session="session" />
-    <v-main class="bg-grey-lighten-4">
+    <SideNav class="pt-16" v-if="session" :session="session" />
+    <v-main class="bg-grey-lighten-4 pt-16">
       <router-view />
     </v-main>
   </v-app>
