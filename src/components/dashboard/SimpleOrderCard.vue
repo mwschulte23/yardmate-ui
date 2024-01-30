@@ -1,11 +1,25 @@
 <template>
-    <v-card class="pa-2 bg-white text-dark rounded-lg elevation-1" min-height="250" max-height="500">
+    <v-card class="bg-white text-dark rounded-lg elevation-1" min-height="250" max-height="500">
         <v-card-title>
             Quick Order Calculator
         </v-card-title>
         <v-card-subtitle>
-            Pounds per Square Foot
+            Fertelizer (Lbs) per 1k Sq. Feet
         </v-card-subtitle>
+        <v-card-text>
+            <v-sheet class="d-flex flex-column justify-space-around bg-transparent">
+                <p>Yards Sq Feet: {{ selectedSquareFeet }}</p>
+                <p>Desired Lbs of Nitrogen per 1k Sq. Foot: 1 Lb</p>
+                <p>Fertelizer % Nitrogen: 20%</p>
+                <br>
+                <br>
+                <p>Lbs of Fertelizer Needed: {{ selectedSquareFeet * (1 / .2 / 1000) }}</p>
+                
+            </v-sheet>
+        </v-card-text>
+    </v-card>
+
+
         <v-sheet class="d-flex justify-space-around align-start my-8 bg-transparent mx-4">
             <v-sheet class="mb-4">
                 <p class="text-subtitle-2 font-weight-light mb-2">
@@ -15,7 +29,7 @@
                 <!-- <p>{{ selectedSquareFeet }}</p> -->
             </v-sheet>
             <v-sheet class="">
-                <p class="text-subtitle-2">Pounds per Sq. Foot: </p>
+                <p class="text-subtitle-2">Pounds per 1k Sq. Foot: </p>
                 <v-text-field
                     class="ml-2 text-center"
                     v-model="lbsPerSqFt"
@@ -36,10 +50,7 @@
                 Save
             </v-btn>
         </v-sheet>
-        <v-card-actions>
-            
-        </v-card-actions>
-    </v-card>
+ 
 </template>
 
 <script>

@@ -27,7 +27,7 @@ export default {
     async handleSignUp() {
         try {
             this.loading = true
-            const { error } = await supabase.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email: this.email,
                 password: this.password,
                 options: {
