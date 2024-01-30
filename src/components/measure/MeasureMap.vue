@@ -103,7 +103,9 @@ export default {
             const data = this.draw.getAll()
 
             if (data.features.length > 0) {
-                this.measuredArea = area(data)
+                const squareMeters = area(data)
+                this.measuredArea = squareMeters * 10.7639104167 // equivalent to 1 sq meter
+
             } else {
                 if (e.type !== 'draw.delete') {
                     alert('Click the map to draw a polygon.');
@@ -150,13 +152,4 @@ export default {
 .primary-button:hover {
     background-image: linear-gradient(to right, #30B03E 60%, #214725);
 }
-
-/* brand: '#51CC5F',
-          light: '#ECECEC',
-          dark: '#131212',
-          accent1: '#05668D',
-          accent2: '#D3BB1E',
-          lightbrand: '#caefcf',
-          darkbrand: '#304532', */
-
 </style>

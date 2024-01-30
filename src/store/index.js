@@ -7,13 +7,16 @@ export default createStore({
   state: {
     // past & maybe future use
     imageUrl: null,
-    
-    // actively used
-    address: '',
-    coordinates: null,
+    // identity
     userId: null,
     userName: '',
     userCompany: '',
+    // measure stuff
+    address: '',
+    coordinates: null,
+    // dash / ordering
+    selectedSquareFeet: 0,
+
     // notifs
     locationSubmitted: false
   },
@@ -33,17 +36,19 @@ export default createStore({
     SET_LOCATION_SUBMITTED(state, locationSubmitted) {
       state.locationSubmitted = locationSubmitted
     },
-
+    SET_SELECTED_SQUARE_FEET(state, selectedSquareFeet) {
+      state.selectedSquareFeet = selectedSquareFeet
+    },
     // past and probably future use
     SET_IMAGE_URL(state, url) {
       state.imageUrl = url;
     },
   },
   actions: {
-    updateAddress({ commit }, address) {
+    updateAddress({ commit }, address) { // TODO remove and just hit mutations direct (actions for async!!)
       commit('SET_ADDRESS', address)
     },
-    triggerLocationSubmitNotif({ commit }, locationSubmitted) {
+    triggerLocationSubmitNotif({ commit }, locationSubmitted) { // TODO remove and just hit mutations direct (actions for async!!)
       commit('SET_LOCATION_SUBMITTED', locationSubmitted)
     },
     

@@ -18,41 +18,18 @@
         </v-row>
 
         <!-- METRICS -->
-        <DashboardMetrics :locations="locationCount" :square_feet="totalSqFeet" />
+        <DashboardMetrics :locations="locationStats.locations" :square_feet="locationStats.squareFeet" />
         
         <!-- TABLE -->
         <v-row cols="12" class="mt-0">
             <v-col cols="12">
-                <v-card flat class="elevation-1">
-                    <template v-slot:text>
-                        <v-text-field
-                            v-model="search"
-                            label="Search"
-                            prepend-inner-icon="mdi-magnify"
-                            single-line
-                            density="compact"
-                            variant="outlined"
-                            hide-details
-                        ></v-text-field>
-                    </template>
-                    <v-data-table 
-                        :headers="headers" 
-                        :items="locations" 
-                        :search="search" 
-                        height="350" 
-                        density="compact"
-                        show-select
-                    ></v-data-table>
-                </v-card>
+                <LocationTable :locations="locations" />
             </v-col>
         </v-row>
       <!-- Orders Card -->
       <v-row>
         <v-col cols="12" md="6">
-          <v-sheet class="pa-2 bg-white text-dark rounded-lg elevation-1 overflow-y-auto" height="250">
-            <p class="pa-2 text-black text-h5" style="position: sticky; top: 0">Orders</p>
-              <TempTimeline />
-          </v-sheet>
+            <SimpleOrderCard />
         </v-col>
         <v-col cols="12" md="6">
           <v-sheet class="pa-2 bg-white text-dark rounded-lg elevation-1 overflow-y-auto" height="250">
@@ -65,32 +42,29 @@
   
 <script>
 import { supabase } from '../../supabase'
+
 import DashboardMetrics from './DashboardMetrics.vue'
-import TempTimeline from './TempTimeline.vue';
+import LocationTable from './LocationTable.vue';
+import SimpleOrderCard from './SimpleOrderCard.vue';
 
 export default {
     name: 'Dashboard',
     components: {
         DashboardMetrics,
-        TempTimeline
+        LocationTable,
+        SimpleOrderCard
     },
     data() {
-      return {
-        search: '',
-        headers: [
-          { title: 'Customer', key: 'customer_name' },
-          { title: 'Address', key: 'address' },
-          { title: 'Sq Feet', key: 'square_feet' },
-        ],
-        locations: [],
-      };
+        return {
+            locations: []
+        }
     },
     computed: {
-        locationCount() {
-            return this.locations.length
-        },
-        totalSqFeet() {
-            return this.locations.reduce((sum, item) => sum + item.square_feet, 0);
+        locationStats() {
+            return {
+                locations: this.locations.length,
+                squareFeet: this.locations.reduce((sum, item) => sum + item.square_feet, 0)
+            }
         },
     },
     mounted() {

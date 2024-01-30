@@ -36,7 +36,5 @@ export default {
         locations: Number,
         square_feet: Number
     },
-    mounted() {
-    },
 }
 </script>
