@@ -1,4 +1,5 @@
 <template>
+    <p class="my-2">Locations</p>
     <v-card flat class="elevation-1">
         <template v-slot:text>
             <v-text-field

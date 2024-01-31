@@ -1,8 +1,8 @@
 <template>
-    <v-container>
-        <v-row 
+        <p class="my-2">Totals</p>
+        <v-card 
             cols="12" 
-            class="py-2 mt-2 justify-space-evenly bg-white elevation-1 rounded-lg"
+            class="py-2 d-flex justify-space-evenly bg-white elevation-1 rounded-md"
         >
             <v-col cols="4" class="d-flex justify-center">
                 <v-sheet class="bg-transparent text-start">
@@ -23,8 +23,7 @@
                     <h5 class="text-h6 font-weight-regular">{{ locations / 20 }}</h5>
                 </v-sheet>
             </v-col>
-        </v-row>
-    </v-container>
+        </v-card>
 </template>
 
 <script>

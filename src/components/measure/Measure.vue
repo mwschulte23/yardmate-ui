@@ -1,7 +1,8 @@
 <template>
-    <v-container>
-        <v-row class="mt-8">
+    <v-container class="mt-0">
+        <v-row class="">
             <v-col>
+                <p class="mb-4">Address Lookup</p>
                 <LocationSearch />
             </v-col>
         </v-row>
@@ -46,13 +47,6 @@
                             
             </v-col>
         </v-row>
-        <!-- <v-row>
-            <v-col>
-                <p v-if="coordinates">
-                    {{ coordinates.lat }} and {{  coordinates.lon }}
-                </p>
-            </v-col>
-        </v-row> -->
 
         <!-- MEASURE NOTIFS -->
         <v-snackbar

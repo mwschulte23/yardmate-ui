@@ -95,7 +95,7 @@ export default {
                 this.closeForm()
                 
             if (error) {
-                alert('Less invasive version of this in future...but location saved :)')
+                alert('Issue with saving location. Contact abc for def')
                 console.error('Error inserting data:', error);
                 return null;
             } else {

@@ -3,6 +3,14 @@
         <p class="text-subtitle-1 "><span class="font-weight-thin">Location: </span>{{ $store.state.address }}</p>
     </div>
     <div class="d-flex justify-space-between bg-transparent">
+        <div class="d-flex justify-end bg-transparent">
+            <v-btn @click="changeDrawMode" :class="!isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1" >
+                <v-icon size="large">mdi-cursor-pointer</v-icon>
+            </v-btn>
+            <v-btn @click="changeDrawMode" :class="isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1">
+                <v-icon size="large">mdi-vector-polyline-plus</v-icon>
+            </v-btn>
+        </div>
         <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">Save Measurement</v-btn>
         <v-dialog
             v-model="openForm"
@@ -15,15 +23,6 @@
                 </v-card-title>
             </v-card>
         </v-dialog>
-
-        <div class="d-flex justify-end bg-transparent">
-            <v-btn @click="changeDrawMode" :class="!isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1" >
-                <v-icon size="large">mdi-cursor-pointer</v-icon>
-            </v-btn>
-            <v-btn @click="changeDrawMode" :class="isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1">
-                <v-icon size="large">mdi-vector-polyline-plus</v-icon>
-            </v-btn>
-        </div>
     </div>
     <v-sheet id="map" style="height: 100%; width: 100%;"/>
 </template>
