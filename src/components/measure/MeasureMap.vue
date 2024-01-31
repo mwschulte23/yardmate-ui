@@ -1,7 +1,4 @@
 <template>
-    <div class="mb-8">
-        <p class="text-subtitle-1 "><span class="font-weight-thin">Location: </span>{{ $store.state.address }}</p>
-    </div>
     <div class="d-flex justify-space-between bg-transparent">
         <div class="d-flex justify-end bg-transparent">
             <v-btn @click="changeDrawMode" :class="!isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1" >
@@ -12,6 +9,7 @@
             </v-btn>
         </div>
         <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">Save Measurement</v-btn>
+        <!-- Submission form -->
         <v-dialog
             v-model="openForm"
             width="w-screen"
@@ -24,7 +22,13 @@
             </v-card>
         </v-dialog>
     </div>
+    
+    <!-- MAP -->
     <v-sheet id="map" style="height: 100%; width: 100%;"/>
+    <!-- LOCATION INFO -->
+    <div class="mb-1">
+        <p class="text-subtitle-1 "><span class="font-weight-thin">Location: </span>{{ $store.state.address }}</p>
+    </div>
 </template>
 
 <script>

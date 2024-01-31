@@ -1,16 +1,31 @@
 <template>
+    <v-app-bar app flat id="header-nav" class="bg-white border-sm px-4">
+        <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->      
+        <v-app-bar-title class="text-h5 text-black font-weight-bold">
+            Yard <span id="logo-background" class="text-light">Mate</span>
+        </v-app-bar-title>
+        <v-spacer></v-spacer>
+        <v-btn>
+            <v-badge :content="2" size="small" color="brand" class="mr-2">
+                <v-icon size="x-large" color="grey-lighten-1">mdi-bell</v-icon>
+            </v-badge>
+        </v-btn>
+        <v-btn>
+            <v-badge :content="1" size="small" color="accent1" class="mr-2">
+                <v-icon size="x-large" color="grey-lighten-1">mdi-bullhorn</v-icon>
+            </v-badge>
+        </v-btn>
+        <SignOut />
+    </v-app-bar>
+
     <v-navigation-drawer 
         app 
-        class="bg-transparent border-0 pb-12"
+        class="bg-white py-4 px-6 w-auto"
         location="left"
         permanent
         v-model="drawer"
     >
-        <div class="d-flex flex-column justify-end align-center">
-            <v-sheet class="bg-transparent mb-8">
-                <h1 class="text-h5 text-black font-weight-bold">Yard <span class="px-2 bg-brand text-light">Mate</span> </h1>
-            </v-sheet>
-
+        <div class="d-flex flex-column justify-end align-start">
             <v-list
                 nav 
                 class="text-center"
@@ -33,8 +48,8 @@
         </div>
         
         <template v-slot:append>
-            <v-divider class="mb-12"></v-divider>
-            <div class="profile-div d-flex flex-row justify-center align-center" @click="profileGoesHere">
+            <v-divider class="mb-8"></v-divider>
+            <div class="profile-div d-flex flex-row justify-start align-center mb-6" @click="profileGoesHere">
                 <v-avatar
                     class=""
                     color="accent1"
@@ -45,12 +60,6 @@
                     <h5 class="text-subtitle-1 font-weight-semibold">{{ userName }}</h5>
                     <p class="text-subtitle-2 font-weight-regular">{{ company }}</p>
                 </div>
-            </div>
-            <div class="d-flex justify-space-around text-center pt-8">
-                <SignOut />
-                <v-badge :content="10" color="brand" class="mr-8">
-                    <v-icon color="grey-lighten-1">mdi-bell</v-icon>
-                </v-badge>
             </div>
         </template>
     </v-navigation-drawer>

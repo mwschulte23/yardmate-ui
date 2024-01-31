@@ -22,11 +22,11 @@ export default createVuetify({
         dark: false,
         colors: {
           brand: '#30B03E',
-          light: '#ECECEC',
+          light: '#F7F7F7',
           dark: '#131212',
           accent1: '#4F5D75',
           accent2: '#D3BB1E',
-          lightbrand: '#D2F7D7',
+          lightbrand: '#DEE7DF',
           darkbrand: '#214725',
           
           

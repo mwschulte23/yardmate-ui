@@ -1,5 +1,5 @@
 <template>
-    <Measure />
+    <Measure class="overflow-y-none" />
 </template>
 
 <script>

@@ -1,15 +1,18 @@
 <template>
-    <v-container class="mt-0">
-        <v-row class="">
-            <v-col>
-                <p class="mb-4">Address Lookup</p>
+    <v-container class="page-container py-0">
+        <v-row class="my-0 my-0">
+            <v-col class="my-0 py-0">
+                <p class="mb-1">Address Lookup</p>
                 <LocationSearch />
             </v-col>
         </v-row>
-        <v-row class="w-screen my-4" style="height: 600px">
+        <v-row class="mt-0 w-screen mb-12" style="height: 600px">
             <v-col v-if="coordinates" class="h-full w-full">
                 <MeasureMap :lat="coordinates.lat" :lon="coordinates.lon" />
             </v-col>
+        </v-row>
+        <v-row>
+
         </v-row>
         
 
@@ -66,8 +69,8 @@
                 >
                     Close
                 </v-btn>
-        </template>
-    </v-snackbar>
+            </template>
+        </v-snackbar>
 
     </v-container>
 </template>
@@ -112,5 +115,4 @@ export default {
         // closeSnack
     }
 }
-
 </script>
