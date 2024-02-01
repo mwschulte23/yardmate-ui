@@ -47,9 +47,10 @@
             </v-list>
         </div>
         
+        <!-- sidenav footer -->
         <template v-slot:append>
             <v-divider class="mb-8"></v-divider>
-            <div class="profile-div d-flex flex-row justify-start align-center mb-6" @click="profileGoesHere">
+            <div class="profile-div d-flex flex-row justify-start align-center mb-6" @click="openProfile = true">
                 <v-avatar
                     class=""
                     color="accent1"
@@ -63,22 +64,30 @@
             </div>
         </template>
     </v-navigation-drawer>
-    
+
+    <v-dialog
+        v-model="openProfile"
+        width="w-screen"
+    >
+        <UserProfile />
+    </v-dialog>    
 </template>
 
 <script>
 import { RouterLink } from 'vue-router'
 import { supabase } from '../supabase'
 import SignOut from './auth/SignOut.vue'
+import UserProfile from './UserProfile.vue'
 
 export default {
     name: 'SideNav',
     components: {
         RouterLink,
-        SignOut
+        SignOut,
+        UserProfile
     },
     props: {
-        // session: Object
+        session: Object
     },
     data: () => ({
         drawer: true,
@@ -89,32 +98,31 @@ export default {
             {title: 'Measure', to: '/measure', icon: 'mdi-ruler'},
             {title: 'Order', to: '/order', icon: 'mdi-clipboard'},
             {title: 'Acquire', to: '/acquire', icon: 'mdi-account'},
-        ]
+        ],
+        openProfile: false
     }),
     created() {
         this.setActiveLink()
     },
-    async mounted() {
-        // convert to state like done for user id
-        if (this.$store.state.userId) {
-            const { data, error, status } = await supabase
-                .from('profiles')
-                .select('full_name, company')
-                .eq('user_id', this.$store.state.userId)
-                .single()
-            
-            this.userName = data.full_name
-            this.company = data.company
-        }
+    mounted() {
+        this.getUserInfo()
     },
     methods: {
+        async getUserInfo() {
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('full_name, company')
+                .eq('id', this.session.user.id)
+                .single()
+            this.userName = data.full_name
+            this.company = data.company
+            if (error) {
+                throw error;
+            }
+        },
         setActiveLink() {
             this.activeLink = this.$route.name
-            console.log(this.activeLink )
         },
-        profileGoesHere() {
-            console.log('eventually add profile view / router')
-        }
     }
 }
 </script>

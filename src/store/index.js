@@ -45,6 +45,9 @@ export default createStore({
     },
   },
   actions: {
+    setUserId({ commit }, userId) {
+      commit('SET_USER_ID', userId)
+    },
     updateAddress({ commit }, address) { // TODO remove and just hit mutations direct (actions for async!!)
       commit('SET_ADDRESS', address)
     },

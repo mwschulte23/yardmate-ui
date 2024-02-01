@@ -9,6 +9,7 @@
             </v-btn>
         </div>
         <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">Save Measurement</v-btn>
+        
         <!-- Submission form -->
         <v-dialog
             v-model="openForm"

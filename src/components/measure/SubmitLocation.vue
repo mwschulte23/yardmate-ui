@@ -43,10 +43,14 @@
                         required
                         hide-details
                     />
-                    <v-sheet class="d-flex justify-end align-center my-8">
-                        <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="closeForm">Close</v-btn>
-                        <v-btn color="brand" class="px-4" @click="submitMeasureForm">Submit</v-btn>
+                    <v-sheet class="bg-transparent d-flex justify-space-between align-center">
+                        <p class="bg-accent2 text-white font-weight-semibold">{{ message }}</p>
+                        <v-sheet class="d-flex justify-end align-center my-8">
+                            <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="closeForm">Close</v-btn>
+                            <v-btn color="brand" class="px-4" @click="submitMeasureForm">Submit</v-btn>
+                        </v-sheet>
                     </v-sheet>
+                        
                 </v-col>
             </v-row>
         </v-form>
@@ -67,6 +71,8 @@ export default {
             customerStatus: '',
             statuses: ['Customer', 'Prospect', 'Churned'],
             isFocused: '',
+            locationId: null,
+            message: 'New Location'
         }
     },
     computed: {
@@ -77,32 +83,53 @@ export default {
             return Math.round(this.area * 100) / 100
         }
     },
+    mounted() {
+        this.checkAddressExists()
+    },
     methods: {
+        async checkAddressExists() {
+            try {
+                const { data, error } = await supabase
+                    .from('locations')
+                    .select('id')
+                    .eq('address', this.$store.state.address)
+                    .single()
+
+                this.locationId = data.id
+                this.message = 'Update Existing Location'
+            } catch {
+                console.log('New Location')
+            }
+        },
         async submitMeasureForm() {
+            console.log(this.locationId)
+
+            const records = {
+                user_id: this.$store.state.userId,
+                customer_name: this.customerName,
+                status: this.customerStatus,
+                address: this.$store.state.address,
+                lat: this.$store.state.coordinates.lat,
+                lon: this.$store.state.coordinates.lon,
+                square_feet: this.area
+            }
+            if (this.locationId) {
+                records['id'] = this.locationId
+            }
+
             const { error } = await supabase
                 .from('locations')
-                .insert([
-                    {
-                        user_id: this.$store.state.userId,
-                        customer_name: this.customerName,
-                        status: this.customerStatus,
-                        address: this.$store.state.address,
-                        lat: this.$store.state.coordinates.lat,
-                        lon: this.$store.state.coordinates.lon,
-                        square_feet: this.area
-                    }
-                ]);
-                this.closeForm()
+                .upsert(records);
                 
             if (error) {
                 alert('Issue with saving location. Contact abc for def')
                 console.error('Error inserting data:', error);
                 return null;
             } else {
+                this.closeForm()
                 // toast for confirmation
                 this.$store.dispatch('triggerLocationSubmitNotif', true)
             }
-
             return 'Data inserted successfully';
         },
         closeForm() {
