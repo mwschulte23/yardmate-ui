@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <SideNav v-if="session" />
+        <SideNav v-if="session" :session="session" />
         <v-main id="main" class="bg-light">
             <router-view />
         </v-main>
@@ -21,10 +21,11 @@ export default {
         session: null
       }
     },
+    
     mounted() {
       supabase.auth.getSession().then(({ data }) => {
         this.session = data.session
-        this.$store.commit('SET_USER_ID', data.session.user.id)
+        this.$store.dispatch('setUserId', data.session.user.id)
       })
       supabase.auth.onAuthStateChange((_, _session) => {
         this.session = _session
