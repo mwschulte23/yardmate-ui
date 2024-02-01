@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -153,6 +151,6 @@ export default {
     background-color: #30B03E;
 }
 .primary-button:hover {
-    background-image: linear-gradient(to right, #30B03E 60%, #214725);
+    background-image: linear-gradient(to right, #7fcb87, #30B03E 60%, #7fcb87);
 }
 </style>

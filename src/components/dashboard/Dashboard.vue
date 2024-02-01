@@ -29,12 +29,15 @@
       <!-- Orders Card -->
       <v-row>
         <v-col cols="12" md="6">
-            <SimpleOrderCard />
+            <OrderCalcCard />
         </v-col>
         <v-col cols="12" md="6">
-          <v-sheet class="pa-2 bg-white text-dark rounded-lg elevation-1 overflow-y-auto" height="250">
-            <p class="pa-2 text-black text-h5" style="position: sticky; top: 0">Map</p>
-          </v-sheet>
+            <OrderHistCard />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+            <LocationMapCard />
         </v-col>
       </v-row>
     </v-container>
@@ -45,14 +48,18 @@ import { supabase } from '../../supabase'
 
 import DashboardMetrics from './DashboardMetrics.vue'
 import LocationTable from './LocationTable.vue';
-import SimpleOrderCard from './SimpleOrderCard.vue';
+import OrderCalcCard from './OrderCalcCard.vue';
+import OrderHistCard from './OrderHistCard.vue';
+import LocationMapCard from './LocationMapCard.vue';
 
 export default {
     name: 'Dashboard',
     components: {
         DashboardMetrics,
         LocationTable,
-        SimpleOrderCard
+        OrderCalcCard,
+        OrderHistCard,
+        LocationMapCard
     },
     data() {
         return {

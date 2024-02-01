@@ -1,6 +1,6 @@
 <template>
     <p class="my-2">Locations</p>
-    <v-card flat class="elevation-1">
+    <v-card flat class="elevation-1 bg-white">
         <template v-slot:text>
             <v-text-field
                 v-model="search"
@@ -14,11 +14,13 @@
         </template>
         <v-data-table
             v-model="selected"
+            class="bg-transparent"
             item-value="address"
             :headers="headers" 
             :items="locations" 
             :search="search"
-            height="350" 
+            min-height="250" 
+            max-height="500"
             density="comfortable"
             show-select
         ></v-data-table>

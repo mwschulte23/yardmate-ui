@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <SideNav v-if="session" :session="session" />
+        <SideNav />
         <v-main id="main" class="bg-light">
             <router-view />
         </v-main>
@@ -34,15 +34,8 @@ export default {
 </script>
 
 <style>
-#header-nav {
-    border-color: #4F5D75;
-}
-#header-nav:hover {
-    background-image: linear-gradient(to right, #ECECEC, #999999);
-}
-
 #main {
-  margin-top: 3%;
+  margin-top: 2%;
 }
 
 #logo-background {
