@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <SideNav />
+        <SideNav v-if="session" />
         <v-main id="main" class="bg-light">
             <router-view />
         </v-main>
