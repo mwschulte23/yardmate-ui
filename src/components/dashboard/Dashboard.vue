@@ -37,7 +37,7 @@
       </v-row>
       <v-row>
         <v-col>
-            <LocationMapCard />
+            <LocationMapCard :locations="locations" />
         </v-col>
       </v-row>
     </v-container>
@@ -86,7 +86,7 @@ export default {
         async getLocations() {
             const { data, error } = await supabase
                 .from('locations')
-                .select('customer_name, address, square_feet')
+                .select('customer_name, status, address, square_feet, lat, lon')
             if (error) {
                 console.log(error)
             } else {

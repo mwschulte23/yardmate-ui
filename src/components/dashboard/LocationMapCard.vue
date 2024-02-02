@@ -1,7 +1,7 @@
 <template>
     <v-card class="bg-white text-dark rounded-lg elevation-1 mb-16" min-height="50">
-        <v-sheet class="bg-lightbrand d-flex justify-space-between pb-2">
-            <v-sheet class="bg-transparent">
+        <v-sheet class="bg-transparent d-flex justify-space-between pb-2">
+            <v-sheet class="bg-transparent pb-4">
                 <v-card-title>
                     Location Map
                 </v-card-title>
@@ -20,33 +20,74 @@
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
+import { supabase } from '../../supabase';
 
 export default {
     name: 'LocationMapCard',
+    props: {
+        locations: Array
+    },
     data() {
         return {
-            map: null
+            map: null,
+            centerLat: 38.93741,
+            centerLon: -94.700607,
+            markers: [],
         }
     },
-    computed: {
-        // 
-    },
     mounted() {
-        this.loadMap()
+        this.findCenter()
+        this.loadMap();
+        this.addMarkers();
+        
     },
     methods: {
+        getColor(status) {
+            if (status == 'Churned') {
+                return 'red'
+            } else if (status == 'Customer') {
+                return 'green'
+            } else {
+                return 'blue'
+            }
+        },
+        findCenter() {
+            // const coordinates = this.locations.map(location => [location.lon, location.lat]);
+            const first_result = this.locations[0]
+
+            if (first_result) {
+                this.centerLon = first_result.lon
+                this.centerLat = first_result.lat
+            }
+            console.log(first_result)
+        },
         loadMap() {
             mapboxgl.accessToken = 'pk.eyJ1IjoibXdzY2h1bHRlMjMiLCJhIjoiY2w4a2tpaGo1MDEwNDN2cncxMzV1bmp4eSJ9.uPejfD8btp768rOZpMiVyA';
             this.map = new mapboxgl.Map({
                 container: 'markerMap',
                 style: 'mapbox://styles/mapbox/light-v11',
-                center: [-96.094088, 41.223709],
-                zoom: 16
+                center: [this.centerLon, this.centerLat],
+                zoom: 6
             });
-            // new mapboxgl.Marker()
-            //     .setLngLat([-96.094088, 41.223709])
-            //     .addTo(this.map);
-        }
+            this.map.on('load', () => {
+                this.addMarkers();
+            });
+        },
+        addMarkers() {
+            this.locations.forEach((location) => {
+                const marker = new mapboxgl.Marker(
+                    {
+                        color: this.getColor(location.status), 
+                        label: location.customer_name
+                    }
+                )
+                    .setLngLat([location.lon, location.lat])
+                    .addTo(this.map);
+                const popup = new mapboxgl.Popup({ offset: 25 })
+                    .setText(location.customer_name);
+                marker.setPopup(popup)
+            });
+        },
     }
 }
 </script>

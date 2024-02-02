@@ -17,7 +17,7 @@
             <v-expand-transition>
                 <div class="bg-accent1" v-show="show">
                     <v-card-text>
-                        <v-form class="mt-4">
+                        <v-form class="mt-4" @submit.prevent>
                             <v-sheet class="bg-transparent">
                                 <div class="pl-1 mb-0 text-subtitle-2">% Nitrogen</div>
                                 <v-slider

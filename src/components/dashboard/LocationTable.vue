@@ -40,6 +40,7 @@ export default {
             search: '',
             headers: [
                 { title: 'Customer', key: 'customer_name' },
+                { title: 'Status', key: 'status' },
                 { title: 'Address', key: 'address' },
                 { title: 'Sq Feet', key: 'square_feet' },
             ],
