@@ -86,7 +86,7 @@ export default {
                 center: [this.lon, this.lat],
                 zoom: 19 // probz set to 18 or so on search
             });
-            new mapboxgl.Marker()
+            new mapboxgl.Marker({draggable: true})
                 .setLngLat([this.lon, this.lat])
                 .addTo(this.map);
             

@@ -102,8 +102,6 @@ export default {
             }
         },
         async submitMeasureForm() {
-            console.log(this.locationId)
-
             const records = {
                 user_id: this.$store.state.userId,
                 customer_name: this.customerName,
