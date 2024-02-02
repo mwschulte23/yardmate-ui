@@ -37,20 +37,44 @@
       </v-row>
       <v-row>
         <v-col>
-            <LocationMapCard :locations="locations" />
+            <v-card class="bg-white text-dark rounded-lg elevation-1 mb-16" min-height="50">
+                <v-sheet class="bg-transparent d-flex justify-space-between pb-2">
+                    <v-sheet class="bg-transparent pb-4">
+                        <v-card-title>
+                            Location Map
+                        </v-card-title>
+                        <v-card-subtitle>
+                            View Selected Locations on Map
+                        </v-card-subtitle>
+                    </v-sheet>
+                    <v-btn flat class="ma-4" variant="outlined" color="brand" @click="isMapVisible = true">Load Map</v-btn>
+                </v-sheet>
+                <div class="h-screen w-screen" style="min-height: 150px; max-height: 600px;">
+                    <LocationMapCard v-if="isMapVisible" :locations="locations" />
+                </div>
+            </v-card>
         </v-col>
       </v-row>
     </v-container>
   </template>
   
 <script>
+import { defineAsyncComponent } from 'vue';
 import { supabase } from '../../supabase'
-
 import DashboardMetrics from './DashboardMetrics.vue'
 import LocationTable from './LocationTable.vue';
 import OrderCalcCard from './OrderCalcCard.vue';
 import OrderHistCard from './OrderHistCard.vue';
-import LocationMapCard from './LocationMapCard.vue';
+// import LocationMapCard from './LocationMapCard.vue';
+
+const LocationMapCard = defineAsyncComponent({
+  loader: () => import('./LocationMapCard.vue'),
+//   loadingComponent: LoadingComponent, TODO add components these components in distant future
+//   errorComponent: ErrorComponent,
+  delay: 100, 
+  timeout: 5000
+});
+
 
 export default {
     name: 'Dashboard',
@@ -63,7 +87,8 @@ export default {
     },
     data() {
         return {
-            locations: []
+            locations: [],
+            isMapVisible: false
         }
     },
     computed: {

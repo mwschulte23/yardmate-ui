@@ -1,26 +1,10 @@
 <template>
-    <v-card class="bg-white text-dark rounded-lg elevation-1 mb-16" min-height="50">
-        <v-sheet class="bg-transparent d-flex justify-space-between pb-2">
-            <v-sheet class="bg-transparent pb-4">
-                <v-card-title>
-                    Location Map
-                </v-card-title>
-                <v-card-subtitle>
-                    View Selected Locations on Map
-                </v-card-subtitle>
-            </v-sheet>
-        </v-sheet>
-        <div class="h-screen w-screen" style="min-height: 150px; max-height: 600px;">
-            <!-- MAP HERE -->
-            <div id="markerMap" style="height: 100%; width: 100%;"/>
-        </div>
-    </v-card>
+    <div id="markerMap" style="height: 100%; width: 100%;"/>
 </template>
 
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
-import { supabase } from '../../supabase';
 
 export default {
     name: 'LocationMapCard',

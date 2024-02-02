@@ -76,8 +76,18 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue';
 import LocationSearch from './LocationSearch.vue';
-import MeasureMap from './MeasureMap.vue'
+
+// lazy load map
+const MeasureMap = defineAsyncComponent({
+  loader: () => import('./MeasureMap.vue'),
+//   loadingComponent: LoadingComponent, TODO add components these components in distant future
+//   errorComponent: ErrorComponent,
+  delay: 100, 
+  timeout: 5000
+});
+
 
 export default {
     name: 'Measure',
@@ -99,7 +109,6 @@ export default {
                 return this.$store.state.locationSubmitted
             },
             set() {
-                console.log(this.$store.state.locationSubmitted)
                 this.$store.dispatch('triggerLocationSubmitNotif', false)
             }
         }
