@@ -11,15 +11,34 @@
             </v-sheet>
             <v-sheet class="bg-transparent mx-3 mt-3">
                 <p class="text-center font-weight-light mb-2">Past Orders</p>
-                <p class="text-center">0</p>
+                <p class="text-center">{{ orderCt }}</p>
             </v-sheet>
         </v-sheet>
         <v-expand-transition>
-            <div class="bg-accent1" v-show="show">
-                <v-card-text>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Et saepe maxime nihil modi itaque eos eligendi magni, error totam alias ab dolorum vitae quas. Adipisci natus deleniti fuga aliquid accusantium.
-                </v-card-text>
-            </div>
+            <!-- <div class="bg-accent1 d-flex justify-center" v-show="show"> -->
+                <v-table v-show="show" class="bg-accent1 rounded-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Order ID</th>
+                            <th class="text-center">Type</th>
+                            <th class="text-center">Bags</th>
+                            <th class="text-center">Created</th>
+                        </tr>
+                    </thead>
+                    <tbody> <!-- TODO each order clickable w/ order_detail & location list -->
+                        <tr
+                            v-for="(order, index) in orders"
+                            :key="index"
+                        >
+                        <td class="text-center font-weight-light">{{ order.id }}</td>
+                        <td class="text-center">{{ order.type }}</td>
+                        <td class="text-center">{{ order.order_info.bags_needed }}</td>
+                        <td class="text-center">{{ order.created_at.slice(0, 10) }}</td>
+                    </tr>
+                    </tbody>
+                </v-table>
+
+            <!-- </div> -->
         </v-expand-transition>
         <div @click="show = !show" class="expandable-div d-flex justify-center bg-accent1 w-full">
             <v-icon size="large" class="text-center">{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
@@ -28,29 +47,35 @@
 </template>
 
 <script>
+import { supabase } from '../../supabase'
 
 export default {
-    name: 'SimpleOrderCard',
+    name: 'OrderHistCard',
     data() {
         return {
             show: false,
-            lbsPerBag: 50,
-            fertilizerPer1k: 1,
-            percentNitrogen: 5,
-            // lbsPerSqFt: 0,
+            orderCt: 0,
+            orders: []
         }
     },
     computed: {
-        selectedSquareFeet() {
-            return Math.round(this.$store.state.selectedSquareFeet)
-        },
-        fertilizerBags() {
-            const bagsNeeded = (this.$store.state.selectedSquareFeet / 1000) * (this.fertilizerPer1k / (this.percentNitrogen / 100) ) / this.lbsPerBag
-            return Math.round(bagsNeeded * 10) / 10
-        }
+        // 
+    },
+    mounted() {
+        this.getOrderCount().then((orders) => {
+            this.orderCt = orders.length
+            this.orders = orders.slice(0, 4)
+        })
     },
     methods: {
-        // 
+        async getOrderCount() {
+            const { data, error } = await supabase
+                .from('orders')
+                .select('id, type, order_info, created_at')
+                .order('created_at', {ascending: false})
+            
+            return data
+        }
     }
 }
 </script>

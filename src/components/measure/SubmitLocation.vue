@@ -103,7 +103,7 @@ export default {
         },
         async submitMeasureForm() {
             const records = {
-                user_id: this.$store.state.userId,
+                company_id: this.$store.state.companyId,
                 customer_name: this.customerName,
                 status: this.customerStatus,
                 address: this.$store.state.address,

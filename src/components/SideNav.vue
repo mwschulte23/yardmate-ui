@@ -6,12 +6,12 @@
         </v-app-bar-title>
         <v-spacer></v-spacer>
         <v-btn>
-            <v-badge :content="2" size="small" color="brand" class="mr-2">
+            <v-badge :content="0" size="small" color="brand" class="mr-2">
                 <v-icon size="x-large" color="grey-lighten-1">mdi-bell</v-icon>
             </v-badge>
         </v-btn>
         <v-btn>
-            <v-badge :content="1" size="small" color="accent1" class="mr-2">
+            <v-badge :content="0" size="small" color="accent1" class="mr-2">
                 <v-icon size="x-large" color="grey-lighten-1">mdi-bullhorn</v-icon>
             </v-badge>
         </v-btn>
@@ -33,7 +33,7 @@
             >
                 <v-list-item
                     class="pr-4 my-4 text-start text-subtitle-2 font-weight-semibold"
-                    v-for="(item, i) in items"
+                    v-for="(item, i) in filteredItems"
                     :key="i"
                     :to="item.to"
                     :value="item.to"
@@ -94,31 +94,39 @@ export default {
         userName: 'Unknown',
         company: 'Unknown',
         items: [
-            {title: 'Dashboard', to: '/', icon: 'mdi-home'},
-            {title: 'Measure', to: '/measure', icon: 'mdi-ruler'},
-            {title: 'Order', to: '/order', icon: 'mdi-clipboard'},
-            {title: 'Acquire', to: '/acquire', icon: 'mdi-account'},
+            {title: 'Dashboard', to: '/', icon: 'mdi-home', enabled: true},
+            {title: 'Measure', to: '/measure', icon: 'mdi-ruler', enabled: true},
+            {title: 'Order', to: '/order', icon: 'mdi-clipboard', enabled: false},
+            {title: 'Acquire', to: '/acquire', icon: 'mdi-account', enabled: false},
         ],
         openProfile: false
     }),
+    computed: {
+        filteredItems() {
+            return this.items.filter(item => item.enabled)
+        }
+    },
     created() {
         this.setActiveLink()
     },
     mounted() {
-        this.getUserInfo()
+        this.getUserInfo().then((data) => {
+            this.userName = data.full_name
+            this.company = data.company.name
+            this.$store.dispatch('setCompanyId', data.company.id)
+        })
     },
     methods: {
         async getUserInfo() {
             const { data, error } = await supabase
-                .from('profiles')
-                .select('full_name, company')
+                .from('user')
+                .select(`full_name, company ( id, name )`)
                 .eq('id', this.session.user.id)
                 .single()
-            this.userName = data.full_name
-            this.company = data.company
             if (error) {
                 throw error;
             }
+            return data
         },
         setActiveLink() {
             this.activeLink = this.$route.name
