@@ -29,7 +29,7 @@
       <!-- Orders Card -->
       <v-row>
         <v-col cols="12" md="6">
-            <OrderCalcCard />
+            <OrderCalcCard :locations="locations" />
         </v-col>
         <v-col cols="12" md="6">
             <OrderHistCard />
@@ -50,7 +50,7 @@
                     <v-btn flat class="ma-4" variant="outlined" color="brand" @click="isMapVisible = true">Load Map</v-btn>
                 </v-sheet>
                 <div class="h-screen w-screen" style="min-height: 150px; max-height: 600px;">
-                    <LocationMapCard v-if="isMapVisible" :locations="locations" />
+                    <LocationMapCard :locations="locations" v-if="isMapVisible" />
                 </div>
             </v-card>
         </v-col>
@@ -111,12 +111,11 @@ export default {
         async getLocations() {
             const { data, error } = await supabase
                 .from('locations')
-                .select('customer_name, status, address, square_feet, lat, lon')
-            if (error) {
-                console.log(error)
-            } else {
-                return data
-            }
+                .select('id, customer_name, status, address, square_feet, lat, lon')
+            
+            if (error) throw error;
+            
+            return data
         },
     }
 };

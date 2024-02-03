@@ -10,12 +10,15 @@ export default createStore({
     // identity
     userId: null,
     userName: '',
-    userCompany: '',
+    companyId: null,
+
+    // dash / ordering
+    selectedSquareFeet: 0,
+    locationIds: [],
+
     // measure stuff
     address: '',
     coordinates: null,
-    // dash / ordering
-    selectedSquareFeet: 0,
 
     // notifs
     locationSubmitted: false
@@ -24,15 +27,27 @@ export default createStore({
     
   },
   mutations: {
-    SET_USER_ID(state, userId) { // TODO update to all caps pattern
+    // identity
+    SET_USER_ID(state, userId) {
       state.userId = userId
     },
-    SET_COORDINATES(state, coordinates) { // TODO update to all caps pattern
+    SET_COMPANY_ID(state, companyId) {
+      state.companyId = companyId
+    },
+
+    // dashboard
+    SET_SELECTED_LOCATION_IDS(state, locationIds) {
+      state.locationIds = locationIds
+    },
+
+    // measure
+    SET_COORDINATES(state, coordinates) {
       state.coordinates = coordinates
     },
     SET_ADDRESS(state, newAddress) {
       state.address = newAddress;
     },
+    
     SET_LOCATION_SUBMITTED(state, locationSubmitted) {
       state.locationSubmitted = locationSubmitted
     },
@@ -48,6 +63,10 @@ export default createStore({
     setUserId({ commit }, userId) {
       commit('SET_USER_ID', userId)
     },
+    setCompanyId({ commit }, companyId) {
+      commit('SET_COMPANY_ID', companyId)
+    },
+
     updateAddress({ commit }, address) { // TODO remove and just hit mutations direct (actions for async!!)
       commit('SET_ADDRESS', address)
     },

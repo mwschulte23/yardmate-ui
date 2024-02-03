@@ -15,7 +15,7 @@
         <v-data-table
             v-model="selected"
             class="bg-transparent"
-            item-value="address"
+            item-value="id"
             :headers="headers" 
             :items="locations" 
             :search="search"
@@ -48,10 +48,11 @@ export default {
     watch: {
         selected: {
             handler(newVal) {
-                const total = newVal.reduce((accumulator, address) => {
-                    const location = this.locations.find(location => location.address == address);
+                const total = newVal.reduce((accumulator, locationId) => {
+                    const location = this.locations.find(location => location.id == locationId);
                     return accumulator + (location ? location.square_feet : 0)
                 }, 0)
+                this.$store.commit('SET_SELECTED_LOCATION_IDS', newVal)
                 this.$store.commit('SET_SELECTED_SQUARE_FEET', total)
             },
             immediate: true, // This will run the handler immediately upon component creation

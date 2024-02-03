@@ -17,7 +17,7 @@
             <v-expand-transition>
                 <div class="bg-accent1" v-show="show">
                     <v-card-text>
-                        <v-form class="mt-4" @submit.prevent>
+                        <v-form class="mt-4" @submit.prevent="submitOrderCalc">
                             <v-sheet class="bg-transparent">
                                 <div class="pl-1 mb-0 text-subtitle-2">% Nitrogen</div>
                                 <v-slider
@@ -95,15 +95,18 @@
 </template>
 
 <script>
+import { supabase } from '../../supabase'
 
 export default {
     name: 'SimpleOrderCard',
+    
     data() {
         return {
             show: false,
             lbsPerBag: 50,
             fertilizerPer1k: 1,
             percentNitrogen: 5,
+            bagsNeeded: null
             // lbsPerSqFt: 0,
         }
     },
@@ -117,7 +120,59 @@ export default {
         }
     },
     methods: {
-        // 
+        submitOrderCalc() {
+            this.saveOrder().then((orderId) => {
+                if (orderId) {
+                    this.saveOrderLocations(orderId)
+                    console.log('order locations updated')
+                }
+            })
+        },
+        async saveOrder() {
+            if (this.selectedSquareFeet > 0) {
+                const records = {
+                    company_id: this.$store.state.companyId,
+                    type: 'fertilizer',
+                    order_info: {
+                        'square_feet': this.selectedSquareFeet,
+                        'percent_nitrogen': this.percentNitrogen,
+                        'lbs_per_bag': this.lbsPerBag,
+                        'fertilizer_per_thousand': this.fertilizerPer1k,
+                        'bags_needed': this.fertilizerBags,
+                    }
+                }
+                const { data, error } = await supabase
+                    .from('orders')
+                    .insert(records)
+                    .select()
+                    .single()
+                
+                if (error) throw error;
+                console.log('order updated')
+                return data.id
+            } else {
+                alert('Please select locations from table to build order')
+            }
+        },
+        async saveOrderLocations(order_id) {
+            const locationIds = this.$store.state.locationIds
+
+            if (locationIds) {
+                console.log(locationIds)
+
+                const records = locationIds.map(locationId => ({
+                    order_id: order_id,
+                    location_id: locationId
+                }))
+                console.log('records:   ', records)
+
+                const { error} = await supabase
+                    .from('order_locations')
+                    .insert(records)
+
+            if (error) throw error;
+            }
+        }
     }
 }
 </script>

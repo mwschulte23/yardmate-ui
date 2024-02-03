@@ -26,6 +26,7 @@ export default {
   methods: {
     async handleSignUp() {
         try {
+            console.log('starting signup')
             this.loading = true
             const { data, error } = await supabase.auth.signUp({
                 email: this.email,
@@ -41,7 +42,7 @@ export default {
             })
             if (error) throw error
 
-            if (data) this.$router.push('/')
+            if (!error) this.$router.push('/')
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
