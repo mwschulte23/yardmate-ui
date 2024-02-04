@@ -2,7 +2,7 @@
         <p class="my-2">Totals</p>
         <v-card 
             cols="12" 
-            class="py-2 d-flex justify-space-evenly bg-white elevation-1 rounded-md"
+            class="py-2 d-flex justify-space-evenly bg-accent1 elevation-1 rounded-md"
         >
             <v-col cols="4" class="d-flex justify-center">
                 <v-sheet class="bg-transparent text-start">

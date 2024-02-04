@@ -25,7 +25,7 @@ export default {
     mounted() {
       supabase.auth.getSession().then(({ data }) => {
         this.session = data.session
-        this.$store.dispatch('setUserId', data.session.user.id)
+        this.$store.dispatch('setUserId', this.session.user.id)
       })
       supabase.auth.onAuthStateChange((_, _session) => {
         this.session = _session

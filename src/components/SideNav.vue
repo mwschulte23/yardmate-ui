@@ -67,9 +67,12 @@
 
     <v-dialog
         v-model="openProfile"
-        width="w-screen"
+        fullscreen
     >
         <UserProfile />
+        <v-btn @click="openProfile = false" color="dark" variant="text" class="absolute-top-right mt-4 mr-2">
+            <v-icon class="text-h4">mdi-close</v-icon>
+        </v-btn>
     </v-dialog>    
 </template>
 
@@ -77,7 +80,7 @@
 import { RouterLink } from 'vue-router'
 import { supabase } from '../supabase'
 import SignOut from './auth/SignOut.vue'
-import UserProfile from './UserProfile.vue'
+import UserProfile from './profile/UserProfile.vue'
 
 export default {
     name: 'SideNav',
@@ -138,5 +141,12 @@ export default {
 <style>
 .profile-div {
     cursor: pointer;
+}
+
+.absolute-top-right {
+  position: absolute;
+  top: 0; /* Adjust as needed */
+  right: 0; /* Adjust as needed */
+  z-index: 5; /* Ensure it's above other content */
 }
 </style>

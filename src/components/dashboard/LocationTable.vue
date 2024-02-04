@@ -1,6 +1,6 @@
 <template>
     <p class="my-2">Locations</p>
-    <v-card flat class="elevation-1 bg-white">
+    <v-card flat class="elevation-1 bg-lightbrand">
         <template v-slot:text>
             <v-text-field
                 v-model="search"

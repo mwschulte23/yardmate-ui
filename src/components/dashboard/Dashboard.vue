@@ -38,7 +38,7 @@
       <v-row>
         <v-col>
             <v-card class="bg-white text-dark rounded-lg elevation-1 mb-16" min-height="50">
-                <v-sheet class="bg-transparent d-flex justify-space-between pb-2">
+                <v-sheet class="bg-white d-flex justify-space-between pb-2">
                     <v-sheet class="bg-transparent pb-4">
                         <v-card-title>
                             Location Map
@@ -49,6 +49,7 @@
                     </v-sheet>
                     <v-btn flat class="ma-4" variant="outlined" color="brand" @click="isMapVisible = true">Load Map</v-btn>
                 </v-sheet>
+                <v-divider></v-divider>
                 <div class="h-screen w-screen" style="min-height: 150px; max-height: 600px;">
                     <LocationMapCard :locations="locations" v-if="isMapVisible" />
                 </div>
