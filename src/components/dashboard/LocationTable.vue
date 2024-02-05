@@ -1,6 +1,5 @@
 <template>
-    <v-card flat class="elevation-1 bg-lightbrand">
-        <v-card-title>Locations</v-card-title>
+    <v-card flat class="mb-8 mx-12">
         <template v-slot:text>
             <v-text-field
                 v-model="search"
@@ -9,7 +8,7 @@
                 single-line
                 density="compact"
                 variant="outlined"
-                bg-color="light"
+                bg-color="white"
                 hide-details
             ></v-text-field>
         </template>
@@ -46,14 +45,14 @@
 
     <!-- edit modal -->
     <v-dialog v-model="editClicked">
-        <LocationProfile v-show="editClicked" :location="targetLocation" />
+        <LocationProfile v-show="editClicked" :location="targetLocation" @editClicked="closeEdit"  />
     </v-dialog>
 
     <!-- delete modal -->
     <v-dialog v-model="deleteClicked">
-        <div class="bg-darkbrand" v-show="deleteClicked">
+        <div class="bg-dark" v-show="deleteClicked">
             Delete functionality is for "Full Time" customers. Please visit account page to signup <br>
-            {{ targetLocation }}
+            
         </div>
     </v-dialog>
 </template>
@@ -110,6 +109,9 @@ export default {
         deleteLocation(location) {
             this.deleteClicked = true
             this.targetLocation = location
+        },
+        closeEdit(editClicked) {
+            this.editClicked = editClicked
         }
     }
 }

@@ -12,7 +12,6 @@
             <v-col>
                 <v-text-field
                         v-model="customerName"
-                        :placeholder="location.customer_name"
                         hint="Customer Name"
                         persistent-hint
                         
@@ -95,7 +94,7 @@
             <v-col>
                 <v-sheet class="bg-transparent d-flex justify-end align-center mt-8 mb-4">
                     <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="console.log('ahh')">Close</v-btn>
-                    <v-btn color="brand" class="px-4" @click="console.log('hooray')">Save</v-btn>
+                    <v-btn color="brand" class="px-4" @click="updateLocation">Save</v-btn>
                 </v-sheet>
             </v-col>
         </v-row>
@@ -103,7 +102,7 @@
 </template>
 
 <script>
-
+import { supabase } from '../../supabase'
 
 export default {
     name: 'LocationProfile',
@@ -112,7 +111,7 @@ export default {
     },
     data() {
         return {
-            customerName: '',
+            customerName: this.location.customer_name,
             customerStatus: this.location.status,
             statuses: ['Customer', 'Prospect', 'Churned'],
             isFocused: '',
@@ -135,7 +134,30 @@ export default {
             }  else if (adjustment == 'bigIncrease') {
                 this.adjustedSqFeet += 100
             }
-        }
+        },
+        async updateLocation() {
+            const records = {
+                customer_name: this.customerName,
+                status: this.customerStatus,
+                square_feet: this.adjustedSqFeet
+            }
+            const { data, error } = await supabase
+                .from('locations')
+                .update(records)
+                .eq('id', this.location.id)
+            
+            if (error) {
+                alert('Issue with updating location. Contact abc for def')
+                console.error('Error inserting data:', error);
+                return null;
+            } else {
+                console.log('goodie goodie')
+                this.closeEdit()
+            }
+        },
+        closeEdit() {
+            this.$emit('editClicked', false)
+        },
     }
 }
 </script>

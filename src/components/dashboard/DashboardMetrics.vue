@@ -1,8 +1,8 @@
 <template>
-        <p class="my-2">Totals</p>
-        <v-card 
-            cols="12" 
-            class="py-2 d-flex justify-space-evenly bg-lightbrand elevation-1 rounded-md"
+        <!-- <p class="my-2">Totals</p> -->
+        <v-card
+            flat
+            class="py-2 d-flex justify-space-evenly bg-white rounded-lg"
         >
             <v-col cols="4" class="d-flex justify-center">
                 <v-sheet class="bg-transparent text-center">

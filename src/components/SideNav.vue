@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar app flat id="header-nav" class="bg-white border-sm px-4">
+    <v-app-bar app flat id="header-nav" class="bg-lightbrand border-sm px-4">
         <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->      
         <v-app-bar-title class="text-h5 text-black font-weight-bold" @click="$router.push('/')">
             Yard <span id="logo-background" class="text-light">Mate</span>
@@ -20,7 +20,7 @@
 
     <v-navigation-drawer 
         app 
-        class="bg-white py-4 px-6 w-auto"
+        class="bg-lightbrand py-4 px-6 w-auto"
         location="left"
         permanent
         v-model="drawer"
