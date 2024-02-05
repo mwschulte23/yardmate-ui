@@ -1,17 +1,17 @@
 <template>
     <v-app-bar app flat id="header-nav" class="bg-white border-sm px-4">
         <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->      
-        <v-app-bar-title class="text-h5 text-black font-weight-bold">
+        <v-app-bar-title class="text-h5 text-black font-weight-bold" @click="$router.push('/')">
             Yard <span id="logo-background" class="text-light">Mate</span>
         </v-app-bar-title>
         <v-spacer></v-spacer>
-        <v-btn>
-            <v-badge :content="0" size="small" color="brand" class="mr-2">
+        <v-btn class="text-center">
+            <v-badge :content="1" size="small" color="darkbrand">
                 <v-icon size="x-large" color="grey-lighten-1">mdi-bell</v-icon>
             </v-badge>
         </v-btn>
         <v-btn>
-            <v-badge :content="0" size="small" color="accent1" class="mr-2">
+            <v-badge :content="0" size="small" color="accent2">
                 <v-icon size="x-large" color="grey-lighten-1">mdi-bullhorn</v-icon>
             </v-badge>
         </v-btn>

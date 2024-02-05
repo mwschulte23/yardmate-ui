@@ -1,6 +1,6 @@
 <template>
     <p class="my-2">Locations</p>
-    <v-card flat class="elevation-1 bg-lightbrand">
+    <v-card flat class="elevation-1 bg-white">
         <template v-slot:text>
             <v-text-field
                 v-model="search"
@@ -9,6 +9,7 @@
                 single-line
                 density="compact"
                 variant="outlined"
+                bg-color="light"
                 hide-details
             ></v-text-field>
         </template>
@@ -23,8 +24,41 @@
             max-height="500"
             density="comfortable"
             show-select
-        ></v-data-table>
+        >
+            <!-- Update, Delete: EDIT > PROFILE -->
+            <template v-slot:item.actions="{ item }">
+                <v-icon
+                    size="small"
+                    class="me-2"
+                    @click="getLocationProfile(item)"
+                >
+                    mdi-pencil
+                </v-icon>
+                <v-icon
+                    size="small"
+                    @click="deleteLocation(item)"
+                >
+                    mdi-delete
+                </v-icon>
+            </template>
+        </v-data-table>
     </v-card>
+
+    <!-- edit modal -->
+    <v-dialog v-model="editClicked">
+        <div class="bg-accent2" v-show="editClicked">
+            EDIT WAS CLICKED!!! LOCATION EDIT COMPONENT HERE <br>
+            {{ targetLocation }}
+        </div>
+    </v-dialog>
+
+    <!-- delete modal -->
+    <v-dialog v-model="deleteClicked">
+        <div class="bg-darkbrand" v-show="deleteClicked">
+            Delete functionality is for "Full Time" customers. Please visit account page to signup <br>
+            {{ targetLocation }}
+        </div>
+    </v-dialog>
 </template>
 
 <script>
@@ -41,8 +75,13 @@ export default {
                 { title: 'Status', key: 'status' },
                 { title: 'Address', key: 'address' },
                 { title: 'Sq Feet', key: 'square_feet' },
+                { title: 'Actions', key: 'actions', sortable: false },
             ],
-            selected: []
+            selected: [],
+            // update & delete
+            editClicked: false,
+            targetLocation: '',
+            deleteClicked: false
         };
     },
     watch: {
@@ -62,7 +101,14 @@ export default {
     mounted() {
     },
     methods: {
-        // 
+        getLocationProfile(location) {
+            this.editClicked = true
+            this.targetLocation = location
+        },
+        deleteLocation(location) {
+            this.deleteClicked = true
+            this.targetLocation = location
+        }
     }
 }
 </script>

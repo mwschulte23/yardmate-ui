@@ -7,7 +7,7 @@
                     <v-sheet class="text-right bg-transparent">
                         <v-btn 
                             prepend-icon="mdi-plus" size="large"  flat
-                            class="rounded-lg bg-darkbrand text-subtitle-1 font-weight-bold ma-0" 
+                            class="rounded-lg bg-brand text-subtitle-1 font-weight-bold ma-0" 
                             @click="goToMeasure"
                           >
                             Add Location
