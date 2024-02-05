@@ -1,6 +1,6 @@
 <template>
     <p class="my-2">Locations</p>
-    <v-card flat class="elevation-1 bg-white">
+    <v-card flat class="elevation-1 bg-accent1">
         <template v-slot:text>
             <v-text-field
                 v-model="search"
@@ -46,10 +46,7 @@
 
     <!-- edit modal -->
     <v-dialog v-model="editClicked">
-        <div class="bg-accent2" v-show="editClicked">
-            EDIT WAS CLICKED!!! LOCATION EDIT COMPONENT HERE <br>
-            {{ targetLocation }}
-        </div>
+        <LocationProfile v-show="editClicked" :location="targetLocation" />
     </v-dialog>
 
     <!-- delete modal -->
@@ -62,8 +59,13 @@
 </template>
 
 <script>
+import LocationProfile from './LocationProfile.vue'
+
 export default {
     name: 'LocationTable',
+    components: {
+        LocationProfile
+    },
     props: {
         locations: Array
     },

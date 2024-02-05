@@ -7,7 +7,7 @@
                     <v-sheet class="text-right bg-transparent">
                         <v-btn 
                             prepend-icon="mdi-plus" size="large"  flat
-                            class="rounded-lg bg-brand text-subtitle-1 font-weight-bold ma-0" 
+                            class="primary-button rounded-lg text-white text-subtitle-1 font-weight-bold ma-0" 
                             @click="goToMeasure"
                           >
                             Add Location
@@ -18,10 +18,14 @@
         </v-row>
 
         <!-- METRICS -->
-        <DashboardMetrics :locations="locationStats.locations" :square_feet="locationStats.squareFeet" />
-        
+        <v-row>
+            <v-col>
+                <DashboardMetrics :locations="locationStats.locations" :square_feet="locationStats.squareFeet" />
+            </v-col>
+        </v-row>
+
         <!-- TABLE -->
-        <v-row cols="12" class="mt-0">
+        <v-row cols="12" class="mt-0 mb-4">
             <v-col cols="12">
                 <LocationTable :locations="locations" />
             </v-col>
@@ -38,7 +42,7 @@
       <v-row>
         <v-col>
             <v-card class="bg-white text-dark rounded-lg elevation-1 mb-16" min-height="50">
-                <v-sheet class="bg-white d-flex justify-space-between pb-2">
+                <v-sheet class="bg-white d-flex justify-space-between align-center pb-2">
                     <v-sheet class="bg-transparent pb-4">
                         <v-card-title>
                             Location Map
@@ -47,7 +51,7 @@
                             View Selected Locations on Map
                         </v-card-subtitle>
                     </v-sheet>
-                    <v-btn flat class="ma-4" variant="outlined" color="brand" @click="isMapVisible = true">Load Map</v-btn>
+                    <v-btn flat class="ma-4" variant="tonal" color="brand" @click="isMapVisible = true">Load Map</v-btn>
                 </v-sheet>
                 <v-divider></v-divider>
                 <div class="h-screen w-screen" style="min-height: 150px; max-height: 600px;">
@@ -62,6 +66,7 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 import { supabase } from '../../supabase'
+
 import DashboardMetrics from './DashboardMetrics.vue'
 import LocationTable from './LocationTable.vue';
 import OrderCalcCard from './OrderCalcCard.vue';
@@ -121,3 +126,12 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.primary-button {
+    background-color: #30B03E;
+}
+.primary-button:hover {
+    background-image: linear-gradient(to right, #7fcb87, #30B03E 60%, #7fcb87);
+}
+</style>

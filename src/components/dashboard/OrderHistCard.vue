@@ -1,5 +1,5 @@
 <template>
-    <v-card class="bg-white text-dark rounded-lg elevation-1" min-height="50" max-height="500">
+    <v-card class="bg-lightbrand text-dark rounded-lg elevation-1" min-height="50" max-height="500">
         <v-sheet class="bg-transparent d-flex justify-space-between pb-2">
             <v-sheet class="bg-transparent">
                 <v-card-title>
@@ -16,7 +16,7 @@
         </v-sheet>
         <v-expand-transition>
             <!-- <div class="bg-accent1 d-flex justify-center" v-show="show"> -->
-                <v-table v-show="show" class="bg-accent1 rounded-0">
+                <v-table v-show="show" class="bg-lightbrand rounded-0">
                     <thead>
                         <tr>
                             <th class="text-center">Order ID</th>
@@ -40,7 +40,7 @@
 
             <!-- </div> -->
         </v-expand-transition>
-        <div @click="show = !show" class="expandable-div d-flex justify-center bg-accent1 w-full">
+        <div @click="show = !show" class="expandable-div d-flex justify-center bg-lightbrand w-full">
             <v-icon size="large" class="text-center">{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
         </div>
     </v-card>
