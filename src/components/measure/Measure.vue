@@ -2,7 +2,6 @@
     <v-container class="page-container py-0">
         <v-row class="my-0 my-0">
             <v-col class="my-0 py-0">
-                <p class="mb-1">Address Lookup</p>
                 <LocationSearch />
             </v-col>
         </v-row>

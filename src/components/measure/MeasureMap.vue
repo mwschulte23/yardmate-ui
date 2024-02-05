@@ -1,12 +1,13 @@
 <template>
     <div class="d-flex justify-space-between bg-transparent">
-        <div class="d-flex justify-end bg-transparent">
+        <div class="d-flex justify-end align-center bg-transparent">
             <v-btn @click="changeDrawMode" :class="!isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1" >
                 <v-icon size="large">mdi-cursor-pointer</v-icon>
             </v-btn>
             <v-btn @click="changeDrawMode" :class="isPolygonMode ? 'bg-accent1 elevation-0' : '' " class="font-weight-bold ma-1">
                 <v-icon size="large">mdi-vector-polyline-plus</v-icon>
             </v-btn>
+            <p class="ml-1 text-grey-darken-2 ">{{ isPolygonMode ? 'Draw Mode' : 'Select Mode' }}</p>
         </div>
         <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">Save Measurement</v-btn>
         

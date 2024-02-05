@@ -1,6 +1,6 @@
 <template>
-    <p class="my-2">Locations</p>
-    <v-card flat class="elevation-1 bg-accent1">
+    <v-card flat class="elevation-1 bg-lightbrand">
+        <v-card-title>Locations</v-card-title>
         <template v-slot:text>
             <v-text-field
                 v-model="search"
