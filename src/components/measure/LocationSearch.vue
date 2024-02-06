@@ -72,6 +72,7 @@ export default {
             if (this.hint && this.hint != 'Location not found. Try again.') {
                 this.address = this.hint;
                 this.sendUpCoordinates()
+                this.resetSearch()
             }
         },
         sendUpCoordinates() {
@@ -82,7 +83,7 @@ export default {
             } else {
                 this.hint = 'Location not found. Try again.'
             }
-            this.resetSearch()
+            
         },
         resetSearch() {
             this.address = ''

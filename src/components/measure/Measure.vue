@@ -3,6 +3,7 @@
         <v-row class="my-0 my-0">
             <v-col class="my-0 py-0">
                 <LocationSearch />
+                <!-- <Test /> -->
             </v-col>
         </v-row>
         <v-row class="mt-0 w-screen mb-12" style="height: 600px">
@@ -77,6 +78,7 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 import LocationSearch from './LocationSearch.vue';
+import Test from './Test.vue';
 
 // lazy load map
 const MeasureMap = defineAsyncComponent({
@@ -93,6 +95,7 @@ export default {
     components: {
         LocationSearch,
         MeasureMap,
+        Test
     },
     data() {
         return {
