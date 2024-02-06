@@ -14,7 +14,7 @@
                     <v-btn @click="closeDelete" variant="text" color="dark" class="text-center">
                         Cancel
                     </v-btn>
-                    <v-btn @click="closeDelete" variant="outlined" color="error" class="text-center">
+                    <v-btn @click="softDeleteLocation" variant="outlined" color="error" class="text-center">
                         Delete Location
                     </v-btn>
                 </v-sheet>
@@ -41,24 +41,17 @@ export default {
         }
     },
     methods: {
-        async deleteLocation() {
-            const records = {
-                customer_name: this.customerName,
-                status: this.customerStatus,
-                square_feet: this.adjustedSqFeet
-            }
-            const { data, error } = await supabase
+        async softDeleteLocation() {
+            const { error } = await supabase
                 .from('locations')
-                .update(records)
+                .update({'is_deleted': true})
                 .eq('id', this.location.id)
             
             if (error) {
-                alert('Issue with updating location. Contact abc for def')
-                console.error('Error inserting data:', error);
+                alert('Issue deleting location. Contact abc for def')
                 return null;
             } else {
-                console.log('goodie goodie')
-                this.closeEdit()
+                this.closeDelete()
             }
         },
         closeDelete() {

@@ -3,7 +3,7 @@
         <v-text-field label="Email" required v-model="email"></v-text-field>
         <v-text-field label="Password" type="password" required v-model="password"></v-text-field>
         <v-card-actions class="justify-center mb-4">
-                <v-btn type="submit" class="bg-primary text-blue-lighten-5 px-8" size="large">Submit</v-btn>
+                <v-btn type="submit" class="bg-brand px-8" size="large">Submit</v-btn>
         </v-card-actions>
     </v-form>
 </template>

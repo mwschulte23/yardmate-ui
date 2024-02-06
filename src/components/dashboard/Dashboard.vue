@@ -43,7 +43,12 @@
             <v-divider class="my-4 mx-8"></v-divider>
             <v-row>
                 <v-col class="mx-12">
-                    <v-card flat class="bg-transparent text-dark rounded-lg mb-16" min-height="50">
+                    <v-card 
+                        flat 
+                        class="bg-transparent text-dark rounded-lg mb-16" 
+                        :class="isMapVisible ? 'border-sm' : ''"
+                        min-height="50"
+                    >
                         <v-sheet class="bg-transparent d-flex justify-space-between align-center pb-2">
                             <v-sheet class="bg-transparent pb-4">
                                 <v-card-title>
@@ -53,10 +58,18 @@
                                     View Selected Locations on Map
                                 </v-card-subtitle>
                             </v-sheet>
-                            <v-btn flat class="ma-4" variant="tonal" color="brand" @click="isMapVisible = true">Load Map</v-btn>
                         </v-sheet>
                         <!-- <v-divider></v-divider> -->
-                        <div class="h-screen w-screen" style="min-height: 150px; max-height: 600px;">
+                        <div 
+                            v-intersect="{
+                                handler: onIntersect,
+                                options: {
+                                    threshold: 0.4
+                                }   
+                            }"
+                            class="h-screen w-screen" 
+                            style="min-height: 150px; max-height: 600px;"
+                        >
                             <LocationMapCard :locations="locations" v-if="isMapVisible" />
                         </div>
                     </v-card>
@@ -128,10 +141,14 @@ export default {
             const { data, error } = await supabase
                 .from('locations')
                 .select('id, customer_name, status, address, square_feet, lat, lon')
+                .eq('is_deleted', false)
             
             if (error) throw error;
             
             return data
+        },
+        onIntersect(isMapVisible, entries, observer) {
+            this.isMapVisible = isMapVisible
         }
     }
 };

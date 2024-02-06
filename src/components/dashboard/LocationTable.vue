@@ -27,17 +27,17 @@
             <!-- Update, Delete: EDIT > PROFILE -->
             <template v-slot:item.actions="{ item }">
                 <v-icon
-                    size="small"
-                    class="me-2"
+                    color="accent1"
+                    class="mr-2 text-center rounded-lg py-1 px-4"
                     @click="getLocationProfile(item)"
                 >
                     mdi-pencil
                 </v-icon>
                 <v-icon
-                    size="small"
+                    color="accent1"
                     @click="deleteLocation(item)"
                 >
-                    mdi-delete
+                    mdi-delete-outline
                 </v-icon>
             </template>
         </v-data-table>

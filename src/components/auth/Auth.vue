@@ -4,7 +4,7 @@
         <v-col cols="12" sm="8" md="6">
           <v-card elevation="2" class="px-8 pt-8 pb-2">
             <v-card-title class="text-h4 text-center mb-8">
-                {{ signUp ? 'Join Fertewiser': 'Welcome Back!' }}
+                {{ signUp ? 'Sign Up': 'Welcome Back!' }}
             </v-card-title>
             
             <div v-if="signUp">
