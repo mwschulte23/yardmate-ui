@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar app flat id="header-nav" class="bg-lightbrand border-sm px-4">
+    <v-app-bar app flat id="header-nav" class="bg-grey-lighten-5 border-sm px-4">
         <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->      
         <v-app-bar-title class="text-h5 text-black font-weight-bold" @click="$router.push('/')">
             Yard <span id="logo-background" class="text-light">Mate</span>
@@ -20,7 +20,7 @@
 
     <v-navigation-drawer 
         app 
-        class="bg-lightbrand py-4 px-6 w-auto"
+        class="bg-grey-lighten-5 py-4 px-6 w-auto"
         location="left"
         permanent
         v-model="drawer"
@@ -99,7 +99,7 @@ export default {
         items: [
             {title: 'Dashboard', to: '/', icon: 'mdi-home', enabled: true},
             {title: 'Measure', to: '/measure', icon: 'mdi-ruler', enabled: true},
-            {title: 'Order', to: '/order', icon: 'mdi-clipboard', enabled: false},
+            {title: 'Order', to: '/order', icon: 'mdi-clipboard', enabled: true},
             {title: 'Acquire', to: '/acquire', icon: 'mdi-account', enabled: false},
         ],
         openProfile: false

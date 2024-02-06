@@ -37,7 +37,7 @@
             </tbody>
         </v-table>
         <div class="w-100">
-            <v-btn @click="" variant="text" color="darkbrand" class="text-center w-100">
+            <v-btn @click="$router.push('/order')" variant="text" color="darkbrand" class="text-center w-100">
                 See More
             </v-btn>
         </div>
@@ -62,7 +62,7 @@ export default {
     mounted() {
         this.getOrderCount().then((orders) => {
             this.orderCt = orders.length
-            this.orders = orders.slice(0, 4)
+            this.orders = orders.slice(0, 3)
         })
     },
     methods: {

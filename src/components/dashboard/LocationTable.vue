@@ -1,14 +1,14 @@
 <template>
-    <v-card flat class="mb-8 mx-12">
+    <v-card flat class="mb-4 mx-12 bg-transparent">
         <template v-slot:text>
             <v-text-field
                 v-model="search"
                 label="Search"
                 prepend-inner-icon="mdi-magnify"
                 single-line
-                density="compact"
+                density="comfortable"
                 variant="outlined"
-                bg-color="white"
+                bg-color="bg-transparent"
                 hide-details
             ></v-text-field>
         </template>
@@ -50,20 +50,19 @@
 
     <!-- delete modal -->
     <v-dialog v-model="deleteClicked">
-        <div class="bg-dark" v-show="deleteClicked">
-            Delete functionality is for "Full Time" customers. Please visit account page to signup <br>
-            
-        </div>
+        <DeleteLocation v-show="deleteClicked" :location="targetLocation" @deleteClicked="closeDelete"  />
     </v-dialog>
 </template>
 
 <script>
 import LocationProfile from './LocationProfile.vue'
+import DeleteLocation from './DeleteLocation.vue';
 
 export default {
     name: 'LocationTable',
     components: {
-        LocationProfile
+        LocationProfile,
+        DeleteLocation
     },
     props: {
         locations: Array
@@ -112,6 +111,9 @@ export default {
         },
         closeEdit(editClicked) {
             this.editClicked = editClicked
+        },
+        closeDelete(deleteClicked) {
+            this.deleteClicked = deleteClicked
         }
     }
 }
