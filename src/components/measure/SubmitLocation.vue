@@ -1,5 +1,5 @@
 <template>
-    <v-card class="pt-8 px-12 mx-16 mb-0 h-full">
+    <v-card class="pt-8 px-12 mx-16 mb-4 h-100 overflow-y-hidden">
         <v-form>
             <v-row cols="12">
                 <v-col>
@@ -44,7 +44,7 @@
                         hide-details
                     />
                     <v-sheet class="bg-transparent d-flex justify-space-between align-center">
-                        <p class="bg-accent2 text-white font-weight-semibold">{{ message }}</p>
+                        <v-chip color="accent2" class="font-weight-bold">{{ message }}</v-chip>
                         <v-sheet class="d-flex justify-end align-center my-8">
                             <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="closeForm">Close</v-btn>
                             <v-btn color="brand" class="px-4" @click="submitMeasureForm">Submit</v-btn>

@@ -2,8 +2,8 @@
     <v-container class="page-container py-0">
         <v-row class="my-0 my-0">
             <v-col class="my-0 py-0">
-                <LocationSearch />
-                <!-- <Test /> -->
+                <!-- <LocationSearch /> -->
+                <Test />
             </v-col>
         </v-row>
         <v-row class="mt-0 w-screen mb-12" style="height: 600px">
@@ -54,7 +54,7 @@
         <!-- MEASURE NOTIFS -->
         <v-snackbar
             v-model="locationSubmitted"
-            :timeout="1500"
+            :timeout="4000"
             elevation="24"
             color="lightbrand"
             multi-line
@@ -64,10 +64,10 @@
             <template v-slot:actions>
                 <v-btn
                 color="dark"
-                variant="tonal"
-                @click="locationSubmitted.set"
+                variant="outlined"
+                @click="$router.push('/')"
                 >
-                    Close
+                    View
                 </v-btn>
             </template>
         </v-snackbar>

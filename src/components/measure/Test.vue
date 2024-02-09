@@ -1,72 +1,96 @@
 <template>
-    <v-app>
-      <v-container>
-        <!-- Text Field for Search Input -->
-        <v-text-field
-          label="Search"
-          v-model="searchQuery"
-          @input="filterOptions"
-          @focus="menuOpen = true"
-          @blur="menuOpen = false"
-          append-outer-icon="mdi-search"
-          :class="{ 'menu-active': menuOpen }"
-        ></v-text-field>
-  
-        <v-menu
-          v-model="menuOpen"
-          :close-on-content-click="false"
-          offset-y
-          attach
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <!-- Binding the activator directly is not needed here as we manage the menu through v-model -->
-          </template>
-  
-          <v-list dense>
-            <v-list-item
-              v-for="(item, index) in filteredOptions"
-              :key="index"
-              @click="selectItem(item)"
-            >
-              <v-list-item-title>{{ item }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-container>
-    </v-app>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  const searchQuery = ref('');
-  const menuOpen = ref(false);
-  const options = ['Apple', 'Banana', 'Orange', 'Mango', 'Grape', 'Watermelon'];
-  const filteredOptions = ref([]);
-  
-  const filterOptions = () => {
-    if (searchQuery.value.length > 3) {
-      filteredOptions.value = options.filter(option =>
-        option.toLowerCase().includes(searchQuery.value.toLowerCase())
-      );
-      menuOpen.value = filteredOptions.value.length > 0;
-    } else {
-      filteredOptions.value = [];
-      menuOpen.value = false;
+    <v-autocomplete
+        placeholder="Search Google or type a URL"
+        append-inner-icon="mdi-magnify"
+        density="comfortable"
+        variant="outlined"
+        menu-icon=""
+        
+        :color="isFocused == 'address' ? 'accent1' : 'dark' "
+        @focus="isFocused = 'address'"
+        @blur="isFocused != 'address'"
+        :items="suggestedAddresses"
+        v-model="address"
+        @update:search="fetchAutocompleteSuggestions"
+        
+        @keydown.enter="acceptSuggestion"
+        @keydown.tab="acceptSuggestion"
+        @click:append-inner="acceptSuggestion" 
+        hide-no-data
+        auto-select-first
+        autofocus
+      ></v-autocomplete>
+
+
+</template>
+
+<script>
+import { addressAutoComplete } from '../../services/apiService'
+
+export default {
+    name: 'LocationSearch',
+    data() {
+        return {
+            address: '',
+            isFocused: '',
+            coordinates: null,
+            suggestions: [],
+            suggestion: '',
+        }
+    },
+    computed: {
+        suggestedAddresses() {
+            return this.suggestions.map(suggestion => suggestion.properties.formatted)
+        }
+    },    
+    methods: {
+        async fetchAutocompleteSuggestions(address) {
+            if (address.length < 1) {
+                this.suggestions = [];
+                return;
+            } else {
+                const newSuggestions = await addressAutoComplete(address)
+                
+                if (newSuggestions && newSuggestions[0]) {
+                    // console.log(newSuggestions[0].properties.formatted)
+                    this.address = address;
+                    this.updateSuggestion(newSuggestions[0])
+                    this.suggestions = newSuggestions
+                }
+            }  
+        },
+        updateSuggestion(suggestion) {
+            const propertyDetails = suggestion.properties
+            if (propertyDetails && propertyDetails.formatted && propertyDetails.lat && propertyDetails.lon ) {
+                this.coordinates = {
+                    lat: suggestion.properties.lat,
+                    lon: suggestion.properties.lon,
+                    address: suggestion.properties.formatted
+                } 
+            }
+        },
+        acceptSuggestion() {
+            if (this.coordinates) {
+                this.sendUpCoordinates()
+                this.resetSearch()
+            }
+        },
+        sendUpCoordinates() {
+            if (this.coordinates) {
+                const trimmedAddress = this.address.replace(', United States of America', '')
+                this.$store.commit('SET_COORDINATES', this.coordinates);
+                this.$store.dispatch('updateAddress', trimmedAddress)
+            } else {
+                this.hint = 'Location not found. Try again.'
+            }
+            
+        },
+        resetSearch() {
+            this.address = ''
+            this.suggestions = []
+            this.suggestion = ''
+            this.coordinates = null
+        },
     }
-  };
-  
-  const selectItem = (item) => {
-    console.log("Selected item:", item);
-    // Perform action on item select
-    // Close menu upon selection
-    menuOpen.value = false;
-  };
-  </script>
-  
-  <style>
-  .menu-active {
-    /* Styles to indicate active state, if needed */
-  }
-  </style>
-  
+}
+</script>

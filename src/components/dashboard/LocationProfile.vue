@@ -93,7 +93,7 @@
         <v-row>
             <v-col>
                 <v-sheet class="bg-transparent d-flex justify-end align-center mt-8 mb-4">
-                    <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="console.log('ahh')">Close</v-btn>
+                    <v-btn variant="outlined" color="accent1" class="mr-4 px-4" @click="closeEdit">Close</v-btn>
                     <v-btn color="brand" class="px-4" @click="updateLocation">Save</v-btn>
                 </v-sheet>
             </v-col>

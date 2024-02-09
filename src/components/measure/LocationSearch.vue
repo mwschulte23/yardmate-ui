@@ -14,8 +14,8 @@
         @input="fetchAutocompleteSuggestions"
         @click:append-inner="sendUpCoordinates"
         :hint="hint"
-        autofocus
         single-line
+        autofocus
     >
     </v-text-field>
 </template>

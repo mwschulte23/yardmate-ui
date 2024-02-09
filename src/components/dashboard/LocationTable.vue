@@ -28,13 +28,14 @@
             <template v-slot:item.actions="{ item }">
                 <v-icon
                     color="accent1"
-                    class="mr-2 text-center rounded-lg py-1 px-4"
+                    class="pa-1"
                     @click="getLocationProfile(item)"
                 >
                     mdi-pencil
                 </v-icon>
                 <v-icon
                     color="accent1"
+                    class="pa-1"
                     @click="deleteLocation(item)"
                 >
                     mdi-delete-outline

@@ -28,8 +28,11 @@
     <!-- MAP -->
     <v-sheet id="map" style="height: 100%; width: 100%;"/>
     <!-- LOCATION INFO -->
-    <div class="mb-1">
-        <p class="text-subtitle-1 "><span class="font-weight-thin">Location: </span>{{ $store.state.address }}</p>
+    <div class="mb-1 d-flex justify-space-between align-center">
+        <p class="mb-1 text-subtitle-1 "><span class="font-weight-thin">Location: </span>{{ $store.state.address }}</p>
+        <p class="text-caption font-style-italic">
+            <v-icon size="small" color="grey-darken-1" class="mr-2">mdi-help</v-icon>In draw mode, click to add points to drawing. Double-click or click on first marker to close shape.
+        </p>
     </div>
 </template>
 
@@ -85,7 +88,7 @@ export default {
                 container: 'map',
                 style: 'mapbox://styles/mapbox/satellite-v9',
                 center: [this.lon, this.lat],
-                zoom: 19 // probz set to 18 or so on search
+                zoom: 19
             });
             new mapboxgl.Marker({draggable: true})
                 .setLngLat([this.lon, this.lat])
@@ -118,7 +121,7 @@ export default {
         // custom controls
 
         // draw mode change stuff
-        changeDrawMode() {
+        changeDrawMode(event) {
             this.isPolygonMode = !this.isPolygonMode
             if (this.draw) {
                 if (this.isPolygonMode) {
