@@ -3,7 +3,6 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import colors from 'vuetify/lib/util/colors'
 import '@mdi/font/css/materialdesignicons.css'
 
 
@@ -27,10 +26,11 @@ export default createVuetify({
           accent1: '#4F5D75',
           accent2: '#D3BB1E',
           lightbrand: '#DEE7DF',
-          darkbrand: '#214725',
-          
-          
+          darkbrand: '#214725',          
         },
+      },
+      typography: {
+        fontFamily: 'Roboto, sans-serif', // Add your font followed by fallbacks
       },
     },
   },

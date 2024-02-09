@@ -63,7 +63,7 @@
                             density="compact"
                             color="brand"
                             type="number"
-                            hint="Fertilizer (Lbs per 1k Sq. Feet"
+                            hint="Fertilizer (Lbs) per 1k Sq. Feet"
                             class="ml-2"
                             flat
                             persistent-hint

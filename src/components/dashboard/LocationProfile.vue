@@ -53,16 +53,16 @@
                 <v-sheet class="bg-transparent">
                     <p class="mb-2 font-weight-thin">Adjust Square Footage</p>
                     <v-btn @click="adjustSqFootage('bigDecrease')" variant="tonal" color="red-darken-4 mr-1 mb-1">
-                        <v-icon>mdi-chevron-double-down</v-icon>
+                        <v-icon>mdi-chevron-double-down</v-icon>100
                     </v-btn>
                     <v-btn @click="adjustSqFootage('decrease')" variant="tonal" color="red-lighten-2 mr-1 mb-1">
-                        <v-icon>mdi-chevron-down</v-icon>
+                        <v-icon>mdi-chevron-down</v-icon>50
                     </v-btn>
-                    <v-btn @click="adjustSqFootage('increase')" variant="tonal" color="indigo-lighten-2 mr-1 mb-1">
-                        <v-icon>mdi-chevron-up</v-icon>
-                    </v-btn>
+                        <v-btn @click="adjustSqFootage('increase')" variant="tonal" color="indigo-lighten-2 mr-1 mb-1">
+                            <v-icon>mdi-chevron-up</v-icon>50
+                        </v-btn>
                     <v-btn @click="adjustSqFootage('bigIncrease')" variant="tonal" color="indigo-darken-4 mr-1 mb-1">
-                        <v-icon>mdi-chevron-double-up</v-icon>
+                        <v-icon>mdi-chevron-double-up</v-icon>100
                     </v-btn>
                 </v-sheet>
             </v-col>
