@@ -1,5 +1,5 @@
 <template>
-    <v-card flat class="mb-4 mx-12 bg-transparent">
+    <v-card flat class="mb-0 mx-12 bg-transparent">
         <template v-slot:text>
             <v-text-field
                 v-model="search"
@@ -21,7 +21,7 @@
             :search="search"
             min-height="250" 
             max-height="500"
-            density="comfortable"
+            density="compact"
             show-select
         >
             <!-- Update, Delete: EDIT > PROFILE -->

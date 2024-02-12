@@ -90,6 +90,13 @@ export default {
                 center: [this.lon, this.lat],
                 zoom: 19
             });
+            if (!this.map.touchZoomRotate.isEnabled()) {
+                this.map.touchZoomRotate.enable();
+            }
+            if (!this.map.dragPan.isEnabled()) {
+                this.map.dragPan.enable();
+            }
+            
             new mapboxgl.Marker({draggable: true})
                 .setLngLat([this.lon, this.lat])
                 .addTo(this.map);

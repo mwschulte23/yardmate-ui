@@ -16,7 +16,7 @@
         </v-row>
         <v-sheet class="bg-white rounded-lg elevation-4">
             <!-- TABLE -->
-            <v-row cols="12" class="mt-4">
+            <v-row cols="12" class="mt-2">
                 <v-col cols="12">
                     <p class="ml-16 text-h6 text-dark font-weight-semibold">Locations</p>
                     <LocationTable :locations="locations" />

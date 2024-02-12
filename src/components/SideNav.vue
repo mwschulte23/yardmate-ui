@@ -1,6 +1,6 @@
 <template>
     <v-app-bar app flat id="header-nav" class="bg-grey-lighten-5 border-sm px-4">
-        <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->      
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>      
         <v-app-bar-title class="text-h5 text-black font-weight-bold" @click="$router.push('/')">
             Yard <span id="logo-background" class="text-light">Mate</span>
         </v-app-bar-title>
@@ -19,11 +19,11 @@
     </v-app-bar>
 
     <v-navigation-drawer 
-        app 
+        app
         class="bg-grey-lighten-5 py-4 px-6 w-auto"
         location="left"
-        permanent
         v-model="drawer"
+
     >
         <div class="d-flex flex-column justify-end align-start">
             <v-list
@@ -93,7 +93,7 @@ export default {
         session: Object
     },
     data: () => ({
-        drawer: true,
+        drawer: window.innerWidth > 800,
         userName: 'Unknown',
         company: 'Unknown',
         items: [
