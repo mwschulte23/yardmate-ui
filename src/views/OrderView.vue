@@ -1,21 +1,15 @@
 <template>
-    <v-container>
-        <v-sheet class="ma-auto">
-            COMING SOON!!!
-        </v-sheet>
-    </v-container>
+    <Order />
 </template>
 
 <script>
 
+import Order from '../components/order/Order.vue';
+
 export default {
-    name: 'AcquireView',
-
+    name: 'OrderView',
     components: {
-    },
-
-    data: () => ({
-      //
-    }),
+        Order
+    }
 }
 </script>

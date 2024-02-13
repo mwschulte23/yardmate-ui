@@ -9,7 +9,17 @@
             </v-btn>
             <p class="ml-1 text-grey-darken-2 ">{{ isPolygonMode ? 'Draw Mode' : 'Select Mode' }}</p>
         </div>
-        <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">Save Measurement</v-btn>
+        <div class="d-flex justify-space-between align-center">
+            <v-fade-transition>
+                <v-btn v-if="showDelete" variant="text" prepend-icon="mdi-delete-outline" class="text-caption border-sm mr-2" color="dark" @click="deletePolygon">
+                    Delete Selected
+                </v-btn>
+            </v-fade-transition>
+            <v-btn @click="openForm = true" :class="measuredArea > 0 ? 'primary-button' : 'bg-grey-darken-1' " class="text-white font-weight-bold px-8">
+                Save Measurement
+            </v-btn>
+        </div>
+        
         
         <!-- Submission form -->
         <v-dialog
@@ -60,7 +70,8 @@ export default {
             draw: null,
             measuredArea: 0,
             isPolygonMode: true,
-            openForm: false
+            openForm: false,
+            showDelete: false
         }
     },
     mounted() {
@@ -96,7 +107,7 @@ export default {
             if (!this.map.dragPan.isEnabled()) {
                 this.map.dragPan.enable();
             }
-            
+
             new mapboxgl.Marker({draggable: true})
                 .setLngLat([this.lon, this.lat])
                 .addTo(this.map);
@@ -111,6 +122,7 @@ export default {
             this.map.on('draw.update', this.updateArea);
 
             this.map.on('draw.modechange', this.changeDrawMode);
+            this.map.on('draw.selectionchange', this.handleSelectionChange);
         },
         updateArea(e) {
             const data = this.draw.getAll()
@@ -123,6 +135,20 @@ export default {
                 if (e.type !== 'draw.delete') {
                     alert('Click the map to draw a polygon.');
                 }
+            }
+        },
+        handleSelectionChange() {
+            const selectedFeatures = this.draw.getSelected();
+            if (selectedFeatures.features.length > 0) {
+                this.showDelete = true
+            } else {
+                this.showDelete = false
+            }
+        },
+        deletePolygon() {
+            const selectedFeatures = this.draw.getSelected();
+            if (selectedFeatures.features.length > 0) {
+                this.draw.delete(selectedFeatures.features[0].id);
             }
         },
         // custom controls

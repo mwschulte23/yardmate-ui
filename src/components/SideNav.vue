@@ -5,7 +5,7 @@
             Yard <span id="logo-background" class="text-light">Mate</span>
         </v-app-bar-title>
         <v-spacer></v-spacer>
-        <v-btn class="text-center">
+        <!-- <v-btn class="text-center">
             <v-badge :content="1" size="small" color="darkbrand">
                 <v-icon size="x-large" color="grey-lighten-1">mdi-bell</v-icon>
             </v-badge>
@@ -14,7 +14,7 @@
             <v-badge :content="0" size="small" color="accent2">
                 <v-icon size="x-large" color="grey-lighten-1">mdi-bullhorn</v-icon>
             </v-badge>
-        </v-btn>
+        </v-btn> -->
         <SignOut />
     </v-app-bar>
 

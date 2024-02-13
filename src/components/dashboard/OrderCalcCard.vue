@@ -74,13 +74,18 @@
                     
                     <v-sheet class="bg-transparent d-flex justify-space-between">
                         <p class="pa-2 text-subtitle-2">Bags Needed: {{ fertilizerBags }} </p>
-                        <v-btn
-                            variant="tonal"
-                            color="accent2"
-                            type="submit"
-                        >
-                            Save
-                        </v-btn>
+                        <v-sheet class=bg-transparent>
+                            <v-btn variant="tonal" color="dark" class="text-caption mr-2" @click="$router.push('/order')">
+                                Advanced
+                            </v-btn>
+                            <v-btn
+                                flat
+                                color="accent2"
+                                type="submit"
+                            >
+                                Save
+                            </v-btn>
+                        </v-sheet>
                     </v-sheet>
                 </v-form>
                 
