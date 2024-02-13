@@ -12,7 +12,7 @@ loadFonts()
 
 createApp(App)
   .use(vuetify)
-  // .use(posthogPlugin)
+  .use(posthogPlugin)
   .use(router)
   .use(store)
   .mount('#app')
