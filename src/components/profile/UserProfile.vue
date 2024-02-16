@@ -1,10 +1,12 @@
 <template>
-    <div class="bg-light h-100 w-100">
+    <div class="bg-light h-100 w-100" min-height="500">
         <div class="d-flex flex-row h-100">
-            <v-tabs v-model="profileTabs" direction="vertical" bg-color="light" slider-color="brand" class="pt-12 px-8 border-sm">
+            <v-tabs v-model="profileTabs" direction="vertical" bg-color="darkbrand" slider-color="brand" class="pt-12 px-8 border-sm h-100">
                 <v-tab value="profile" class="mt-4">Profile</v-tab>
                 <v-tab value="account" class="mt-4">Account</v-tab> <!-- utilization + tier / billing -->
                 <v-tab value="users" class="mt-4">Users</v-tab>
+                <v-spacer></v-spacer>
+                <v-tab value="help" class="mt-4 text-overline text-grey-lighten-2 mb-4 border-sm border-lightbrand">Need Help?</v-tab>
             </v-tabs>
             <div class="ma-12 w-100 h-100">
                 <v-window v-model="profileTabs">

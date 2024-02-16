@@ -21,9 +21,9 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/acquire',
-    name: 'acquire',
-    component: () => import(/* webpackChunkName: "login" */ '../views/AcquireView.vue'),
+    path: '/locations',
+    name: 'locations',
+    component: () => import(/* webpackChunkName: "login" */ '../views/LocationView.vue'),
     meta: { requiresAuth: true }
   },
   {

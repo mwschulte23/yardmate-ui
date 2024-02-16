@@ -18,7 +18,7 @@
             <v-card-text>
                 <v-form class="mt-4" @submit.prevent="submitOrderCalc">
                     <v-sheet class="bg-transparent">
-                        <div class="pl-1 mb-0 text-subtitle-2">% Nitrogen</div>
+                        <div class="pl-1 mb-0 text-subtitle-2">Percent Nitrogen</div>
                         <v-slider
                             v-model="percentNitrogen"
                             min="0"

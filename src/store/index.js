@@ -31,6 +31,12 @@ export default createStore({
     SET_USER_ID(state, userId) {
       state.userId = userId
     },
+    SET_USER_NAME(state, userName) {
+      state.userName = userName
+    },
+    SET_USER_EMAIL(state, userEmail) {
+      state.userEmail = userEmail
+    },
     SET_COMPANY_ID(state, companyId) {
       state.companyId = companyId
     },
@@ -62,6 +68,12 @@ export default createStore({
   actions: {
     setUserId({ commit }, userId) {
       commit('SET_USER_ID', userId)
+    },
+    setUserName({ commit }, userName) {
+      commit('SET_USER_NAME', userName)
+    },
+    setUserEmail({ commit }, userEmail) {
+      commit('SET_USER_EMAIL', userEmail)
     },
     setCompanyId({ commit }, companyId) {
       commit('SET_COMPANY_ID', companyId)

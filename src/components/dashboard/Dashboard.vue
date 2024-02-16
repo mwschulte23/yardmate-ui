@@ -76,6 +76,7 @@
                 </v-col>
             </v-row>
             <!-- METRICS -->
+            <v-divider class="mb-4 mx-8"></v-divider>
             <v-row>
                 <v-col>
                     <p class="ml-16 text-h6 text-dark font-weight-semibold">Summary</p>

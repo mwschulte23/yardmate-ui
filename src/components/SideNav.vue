@@ -58,14 +58,20 @@
                 >
                 </v-avatar>
                 <div class="text-left px-4">
-                    <h5 class="text-subtitle-1 font-weight-semibold">{{ userName }}</h5>
+                    <h5 class="text-subtitle-1 font-weight-semibold">{{ $store.state.userName }}</h5>
                     <p class="text-subtitle-2 font-weight-regular">{{ company }}</p>
                 </div>
             </div>
         </template>
     </v-navigation-drawer>
 
-    <v-dialog
+    <v-bottom-sheet v-model="openProfile" height="700">
+        <UserProfile />
+        <v-btn @click="openProfile = false" color="dark" variant="text" class="absolute-top-right mt-4 mr-2">
+            <v-icon class="text-h4">mdi-close</v-icon>
+        </v-btn>
+    </v-bottom-sheet>
+    <!-- <v-dialog
         v-model="openProfile"
         fullscreen
     >
@@ -73,7 +79,7 @@
         <v-btn @click="openProfile = false" color="dark" variant="text" class="absolute-top-right mt-4 mr-2">
             <v-icon class="text-h4">mdi-close</v-icon>
         </v-btn>
-    </v-dialog>    
+    </v-dialog>     -->
 </template>
 
 <script>
@@ -94,13 +100,12 @@ export default {
     },
     data: () => ({
         drawer: window.innerWidth > 800,
-        userName: 'Unknown',
         company: 'Unknown',
         items: [
             {title: 'Dashboard', to: '/', icon: 'mdi-home', enabled: true},
             {title: 'Measure', to: '/measure', icon: 'mdi-ruler', enabled: true},
-            {title: 'Order', to: '/order', icon: 'mdi-clipboard', enabled: true},
-            {title: 'Acquire', to: '/acquire', icon: 'mdi-account', enabled: false},
+            {title: 'Order', to: '/order', icon: 'mdi-clipboard', enabled: false},
+            {title: 'Locations', to: '/locations', icon: 'mdi-map-marker-multiple', enabled: true},
         ],
         openProfile: false
     }),
@@ -114,16 +119,17 @@ export default {
     },
     mounted() {
         this.getUserInfo().then((data) => {
-            this.userName = data.full_name
             this.company = data.company.name
             this.$store.dispatch('setCompanyId', data.company.id)
+            this.$store.dispatch('setUserName', data.full_name)
+            this.$store.dispatch('setUserEmail', data.email)
         })
     },
     methods: {
         async getUserInfo() {
             const { data, error } = await supabase
                 .from('user')
-                .select(`full_name, company ( id, name )`)
+                .select(`full_name, email, company ( id, name )`)
                 .eq('id', this.session.user.id)
                 .single()
             if (error) {

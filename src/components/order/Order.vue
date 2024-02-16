@@ -1,23 +1,123 @@
 <template>
     <v-container class="mb-8">
-        <v-row class="pa-8">
-            <!-- <v-col>
-                <v-card flat class="elevation-1 rounded-lg bg-white">
-                    <v-card-title>Build Order</v-card-title>
-                    <v-card-subtitle>PUT MORE ADVANCED ORDER BUILDER HERE!!!</v-card-subtitle>
-                    <v-card-text>
-                        <div class="d-flex justify-space-between">
-                            <v-select chips label="Supply to Order" :items="['Fertilizer', 'Seed', 'Weed Control']" variant="underlined" />
-                            <v-text-field label="" type="number"></v-text-field>
+        <v-row cols="12" class="rounded-lg bg-white elevation-1 mb-2">
+            <v-col cols="2" class="bg-darkbrand rounded-s-lg">
+                <h3 class="pb-4">Order Builder</h3>
+                <v-radio-group v-model="orderType">
+                    <v-radio label="Fertilizer" value="fertilizer"></v-radio>
+                    <v-radio label="Seed" value="seed"></v-radio>
+                    <v-radio label="Sod" value="sod"></v-radio>
+                </v-radio-group>
+            </v-col>
+            <v-col class="px-12">
+                <h3 class="font-weight-light">{{ orderType }}</h3>
+                <v-form class="pt-4">
+                    <div class="mt-8 mb-4">
+                        <div
+                            v-for="nutrient in [{'varName': 'percentNitrogen', 'label': 'Nitrogen (N)'}, {'varName': 'percentPhosphorus', 'label': 'Phosphorus (P)'}, {'varName': 'percentPotassium', 'label': 'Potassium (K)'}]"
+                        >
+                            <p class="mb-0 text-grey-darken-1 font-weight-light text-subtitle-2">{{ nutrient.label }}</p>
+                            <v-slider
+                                v-model="this[nutrient.varName]"
+                                min="0"
+                                max="100"
+                                step="1"
+                                color="brand"
+                                track-color="darkbrand"
+                                class="mr-4"
+                            >
+                                <template v-slot:append>
+                                    <v-text-field
+                                        v-model="this[nutrient.varName]"
+                                        variant="outlined"
+                                        density="compact"
+                                        type="number"
+                                        class="bg-white"
+                                        style="width: 70px;"
+                                        flat
+                                        hide-details
+                                        single-line
+                                    />
+                                </template>
+                            </v-slider>
                         </div>
-                    </v-card-text>
+                    </div>
+
+                    <div class="d-flex justify-space-between align-center mt-4">
+                        <!-- <div class="w-25">
+                            <v-select
+                                multiple
+                                chips
+                                class="pr-4 w-100 flex-shrink-1"
+                                variant="outlined"
+                                label="Customer Status"
+                                :items="['Customer', 'Prospect', 'Churned']"
+                            />
+                        </div> -->
+                        <v-text-field
+                            v-model="fertilizerPer1k"
+                            variant="outlined"
+                            color="brand"
+                            type="number"
+                            hint="Lbs per 1k Sq. Feet"
+                            class="mx-2 w-25"
+                            flat
+                            persistent-hint
+                            clearable
+                            single-line
+                        />
+
+                        <v-select
+                            chips
+                            multiple
+                            class="pr-4 w-100"
+                            variant="outlined"
+                            label="Select Locations"
+                            :items=customerNames
+                        ></v-select>
+                    </div>
+
+                    <div class="w-100 d-flex justify-end pr-4 mb-2">
+                        <v-btn type="submit" color="brand" class="px-4">
+                            Get Products
+                        </v-btn>
+                    </div>
                     
-                </v-card>
-            </v-col> -->
-            
+                    
+                </v-form>
+            </v-col>
         </v-row>
-        <v-row>
-            <v-col class="mx-10 rounded-lg bg-white pb-12 elevation-1">
+        <v-row cols="12" class="mb-12">
+            <v-col cols="12" class="elevation-2 bg-accent1 rounded-lg">
+                
+                <p class="text-h6 font-weight-semibold mx-2 my-4">Details</p>
+                <v-table class="bg-transparent">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="text-center">Product</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Bags Needed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                class="text-white"
+                                v-for="i in [{'product': 'Ferty', 'price': '$1', 'bagsNeeded': '10'}, {'product': 'Apples', 'price': '$1', 'bagsNeeded': '5'}, {'product': 'a', 'price': '$1', 'bagsNeeded': '7'}, {'product': 'a', 'price': '$1', 'bagsNeeded': '3'}]"
+                            >
+                                <td class="text-center">{{ i.product }}</td>
+                                <td class="text-center">{{ i.price }}</td>
+                                <td class="text-center">{{ i.bagsNeeded }}</td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-table>
+            </v-col>
+        </v-row>
+
+
+        <v-row cols="12">
+            <v-col cols="12" md="6" class="rounded-lg bg-white pb-12 elevation-1">
                 <p class="text-h6 font-weight-semibold mx-2 my-4">Order History</p>
                 <v-expansion-panels flat variant="accordion" v-if="orders">
                     <v-expansion-panel
@@ -74,42 +174,8 @@
         </v-row>
         <v-row>
             <v-col>
-                <!-- <v-card flat class="rounded-lg bg-accent1 pa-6">
-                    <v-sheet class="bg-transparent d-flex justify-space-between align-center">
-                        <v-sheet class="bg-transparent">
-                            <v-card-title>
-                                Order #{{ orders.id }}
-                            </v-card-title>
-                            <v-card-subtitle>
-                                Created on {{ orders.created_at.slice(0, 10) }}
-                            </v-card-subtitle>
-                        </v-sheet>
-                        <v-chip class="ml-2" size="small" color="lightbrand" variant="elevated">{{ orders.type }}</v-chip>
-                    </v-sheet>
-                    <v-card-text>
-                        <v-list class="bg-transparent" direction="horizontal">
-                            <v-list-item>
-                                Bags Needed: {{ orders.order_info.bags_needed }}
-                            </v-list-item>
-                            <v-list-item>
-                                Square Feet: {{ orders.order_info.square_feet }}
-                            </v-list-item>
-                            <v-list-item>
-                                Fertilizer per 1k Square Feet: {{ orders.order_info.fertilizer_per_thousand }} Lbs
-                            </v-list-item>
-                            <v-list-item>
-                                Lbs per Bag: {{ orders.order_info.lbs_per_bag }}%
-                            </v-list-item>
-                            <v-list-item>
-                                Nitrogen Percent: {{ orders.order_info.percent_nitrogen }}%
-                            </v-list-item>
-                        </v-list>
-                    </v-card-text>
-                </v-card> -->
+                {{ customerNames }}
             </v-col>
-        </v-row>
-        <v-row>
-
         </v-row>
     </v-container>
 </template>
@@ -121,7 +187,18 @@ export default {
     name: 'Order',
     data() {
         return {
-            orders: null
+            orders: null,
+            orderType: 'fertilizer',
+            percentNitrogen: 10,
+            percentPhosphorus: 0,
+            percentPotassium: 0,
+            fertilizerPer1k: 1,
+            locations: null
+        }
+    },
+    computed: {
+        customerNames() {
+            return this.locations ? this.locations.map(location => location.customer_name) : [];
         }
     },
     mounted() {
@@ -130,12 +207,25 @@ export default {
                 console.log(orders[0])
                 this.orders = orders
             }
-        })
+        });
+        this.getLocations().then((data) => {
+            this.locations = data;
+        });
     },
     // mounted() {
         
     // },
     methods: {
+        async getLocations() {
+            const { data, error } = await supabase
+                .from('locations')
+                .select('id, customer_name, status, address, square_feet')
+                .eq('is_deleted', false)
+            
+            if (error) throw error;
+            
+            return data
+        },
         async getOrders() {
             const { data, error } = await supabase
                 .from('orders')

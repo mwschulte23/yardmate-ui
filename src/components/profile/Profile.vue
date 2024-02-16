@@ -1,50 +1,53 @@
 <template>
-    <v-row cols="12" class="pt-16 pb-6 px-12 bg-white rounded-lg">
-        <v-col class="">
-            <v-text-field
-                class="pb-2"
-                v-model="full_name"
-                variant="underlined"
-                label="Name"
-                density="compact"
-            />
-            <v-text-field
-                class="pb-2"
-                v-model="email"
-                type="email"
-                variant="underlined"
-                density="compact"
-                label="Email"
-                
-            />
-            <!-- <v-text-field
-                class="pb-2"
-                v-model="company"
-                variant="underlined"
-                density="compact"
-                label="Company"
-                :placeholder="company"
-                
-            /> -->
-            <v-sheet class="d-flex justify-end bg-transparent mt-4 mb-0">
-                <v-btn @click="console.log('hooray')" color="brand" variant="tonal">
+    <v-row cols="12" class="pt-12 pb-6 px-6">
+        <v-col cols="12" md="6">
+            <p class="text-subtitle-1 mb-4">Info</p>
+            <p class="mb-4">Name: {{ $store.state.userName }}</p>
+            <p>Email: {{ $store.state.userEmail }}</p>
+        </v-col>
+        <!-- <v-col cols="12" md="6">
+            <p class="text-subtitle-1 mb-4">Update</p>
+            <v-form @submit.prevent>
+                <v-text-field
+                    class="mx-2"
+                    v-model="full_name"
+                    variant="underlined"
+                    label="Name"
+                    density="compact"
+                />
+                <v-text-field
+                    class="mx-2"
+                    v-model="email"
+                    type="email"
+                    variant="underlined"
+                    density="compact"
+                    label="Email"
+                    
+                />
+                <v-btn type="submit" color="brand" variant="tonal">
                     Save
                 </v-btn>
-            </v-sheet>
-        </v-col>
+            </v-form>
+        </v-col> -->
     </v-row>
-    
-    <ContactInfo />
 </template>
 
 
 <script>
-import ContactInfo from './ContactInfo.vue';
+import { supabase } from '../../supabase'
 
 export default {
     name: 'Profile',
-    components: {
-        ContactInfo,
+    data() {
+        return {
+
+        }
     },
+    mounted() {
+
+    },
+    methods: {
+
+    }
 }
 </script>

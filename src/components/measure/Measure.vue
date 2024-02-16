@@ -1,13 +1,16 @@
 <template>
     <v-container class="page-container py-0">
         <v-row class="my-0 my-0">
-            <v-col class="my-0 py-0">
+            <v-col class="mt-0 py-0">
                 <LocationSearch />
             </v-col>
         </v-row>
         <v-row class="mt-0 w-screen mb-12" style="height: 600px">
             <v-col v-if="coordinates" class="h-full w-full">
                 <MeasureMap :lat="coordinates.lat" :lon="coordinates.lon" />
+            </v-col>
+            <v-col v-else class="w-full mt-12 rounded-lg bg-grey-darken-2">
+                <p class="text-center text-h4 font-weight-bold">Enter Address Above to Pull Up Map</p>
             </v-col>
         </v-row>
         <v-row>

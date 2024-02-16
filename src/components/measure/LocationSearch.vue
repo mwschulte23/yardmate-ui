@@ -6,8 +6,7 @@
         density="comfortable"
         variant="outlined"
         menu-icon=""
-        
-        :color="isFocused == 'address' ? 'accent1' : 'dark' "
+        :color="isFocused == 'address' ? 'brand' : 'dark' "
         @focus="isFocused = 'address'"
         @blur="isFocused != 'address'"
         :items="suggestedAddresses"
