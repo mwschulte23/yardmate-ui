@@ -95,7 +95,7 @@ export default {
         items: [
             {title: 'Dashboard', to: '/', icon: 'mdi-home', enabled: true},
             {title: 'Measure', to: '/measure', icon: 'mdi-ruler', enabled: true},
-            {title: 'Order', to: '/order', icon: 'mdi-clipboard', enabled: false},
+            {title: 'Order', to: '/order', icon: 'mdi-clipboard', enabled: true},
             {title: 'Locations', to: '/locations', icon: 'mdi-map-marker-multiple', enabled: true},
         ],
         openProfile: false
