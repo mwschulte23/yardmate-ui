@@ -9,7 +9,7 @@
                             <v-icon v-bind="props" class="mr-8">mdi-domain</v-icon>
                         </template>
                     </v-tooltip>
-                    <span class="font-weight-regular">{{ company }}</span>
+                    <span class="font-weight-regular">{{ $store.state.companyName }}</span>
                 </v-list-item>
                 <v-list-item class="font-weight-light">
                     <v-tooltip location="bottom" text="Company Admin">
@@ -17,7 +17,7 @@
                             <v-icon v-bind="props" class="mr-8">mdi-shield-account</v-icon>
                         </template>
                     </v-tooltip>
-                    <span class="font-weight-regular">{{ company }}</span>
+                    <span class="font-weight-regular">{{ $store.state.userName }}</span>
                 </v-list-item>
                 <v-list-item class="font-weight-light">
                     <v-tooltip location="bottom" text="Account Created Date">
@@ -33,50 +33,40 @@
             <p class="text-h6 pb-4">Plan & Billing</p>
             <v-list class="bg-transparent">
                 <v-list-item class="font-weight-light">
-                    <v-tooltip location="bottom" text="Company Name">
+                    <v-tooltip location="bottom" text="Plan">
                         <template v-slot:activator="{ props }">
-                            <v-icon v-bind="props" class="mr-8">mdi-domain</v-icon>
+                            <v-icon v-bind="props" class="mr-8">mdi-card-outline</v-icon>
                         </template>
                     </v-tooltip>
-                    <span class="font-weight-regular">{{ company }}</span>
+                    <span class="font-weight-regular">Beta Customer</span>
                 </v-list-item>
                 <v-list-item class="font-weight-light">
-                    <v-tooltip location="bottom" text="Company Admin">
+                    <v-tooltip location="bottom" text="Monthly Price">
                         <template v-slot:activator="{ props }">
-                            <v-icon v-bind="props" class="mr-8">mdi-shield-account</v-icon>
+                            <v-icon v-bind="props" class="mr-8">mdi-cash</v-icon>
                         </template>
                     </v-tooltip>
-                    <span class="font-weight-regular">{{ company }}</span>
+                    <span class="font-weight-regular">Free</span>
                 </v-list-item>
                 <v-list-item class="font-weight-light">
-                    <v-tooltip location="bottom" text="Account Created Date">
+                    <v-tooltip location="bottom" text="Upgrade">
                         <template v-slot:activator="{ props }">
-                            <v-icon v-bind="props" class="mr-8">mdi-clock-time-eight-outline</v-icon>
+                            <v-icon v-bind="props" class="mr-8">mdi-one-up</v-icon>
                         </template>
                     </v-tooltip>
-                    <span class="font-weight-regular">{{ company }}</span>
+                    <span @click="console.log('abc')" class="font-weight-bold text-light rounded-lg bg-accent1 px-2 py-1">
+                        Upgrade
+                    </span>
                 </v-list-item>
             </v-list>
         </v-col>
     </v-row>
-
-    <ContactInfo />
 </template>
 
 
 <script>
-import ContactInfo from './ContactInfo.vue';
-
 
 export default {
     name: 'Account',
-    components: {
-        ContactInfo,
-    },
-    data() {
-        return {
-            company: 'Test'
-        }
-    }
 }
 </script>

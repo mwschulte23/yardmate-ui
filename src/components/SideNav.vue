@@ -2,7 +2,7 @@
     <v-app-bar app flat id="header-nav" class="bg-grey-lighten-5 border-sm px-4">
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>      
         <v-app-bar-title class="text-h5 text-black font-weight-bold" @click="$router.push('/')">
-            Yard <span id="logo-background" class="text-light">Mate</span>
+            Yard <span id="logo-background" class="text-light">Mate</span> <span class="text-overline font-weight-bold text-darkbrand">beta</span>
         </v-app-bar-title>
         <v-spacer></v-spacer>
         <!-- <v-btn class="text-center">
@@ -59,7 +59,7 @@
                 </v-avatar>
                 <div class="text-left px-4">
                     <h5 class="text-subtitle-1 font-weight-semibold">{{ $store.state.userName }}</h5>
-                    <p class="text-subtitle-2 font-weight-regular">{{ company }}</p>
+                    <p class="text-subtitle-2 font-weight-regular">{{ $store.state.companyName }}</p>
                 </div>
             </div>
         </template>
@@ -71,15 +71,6 @@
             <v-icon class="text-h4">mdi-close</v-icon>
         </v-btn>
     </v-bottom-sheet>
-    <!-- <v-dialog
-        v-model="openProfile"
-        fullscreen
-    >
-        <UserProfile />
-        <v-btn @click="openProfile = false" color="dark" variant="text" class="absolute-top-right mt-4 mr-2">
-            <v-icon class="text-h4">mdi-close</v-icon>
-        </v-btn>
-    </v-dialog>     -->
 </template>
 
 <script>
@@ -119,7 +110,7 @@ export default {
     },
     mounted() {
         this.getUserInfo().then((data) => {
-            this.company = data.company.name
+            this.$store.dispatch('setCompanyName', data.company.name)
             this.$store.dispatch('setCompanyId', data.company.id)
             this.$store.dispatch('setUserName', data.full_name)
             this.$store.dispatch('setUserEmail', data.email)
