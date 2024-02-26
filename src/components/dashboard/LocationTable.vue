@@ -6,48 +6,49 @@
                 label="Search"
                 prepend-inner-icon="mdi-magnify"
                 single-line
-                density="comfortable"
+                density="compact"
                 variant="outlined"
                 bg-color="bg-transparent"
                 hide-details
             ></v-text-field>
         </template>
-        <v-data-table
+        <v-data-table-virtual
             v-model="selected"
-            class="bg-transparent"
+            class="bg-transparent font-weight-light text-subtitle-2"
             item-value="id"
             :headers="headers" 
             :items="locations" 
             :search="search"
+            height="400"
             min-height="250" 
-            max-height="500"
-            density="compact"
+            max-height="350"
+            density="comfortable"
             show-select
         >
             <!-- Update, Delete: EDIT > PROFILE -->
             <template v-slot:item.actions="{ item }">
-                <v-icon
+                <!-- <v-icon
                     color="accent1"
                     class="pa-1"
                     @click="getLocationProfile(item)"
                 >
                     mdi-pencil
-                </v-icon>
+                </v-icon> -->
                 <v-icon
-                    color="accent1"
-                    class="pa-1"
+                    color="dark"
+                    class="px-6"
                     @click="deleteLocation(item)"
                 >
                     mdi-delete-outline
                 </v-icon>
             </template>
-        </v-data-table>
+        </v-data-table-virtual>
     </v-card>
 
     <!-- edit modal -->
-    <v-dialog v-model="editClicked">
+    <!-- <v-dialog v-model="editClicked">
         <LocationProfile v-show="editClicked" :location="targetLocation" @editClicked="closeEdit"  />
-    </v-dialog>
+    </v-dialog> -->
 
     <!-- delete modal -->
     <v-dialog v-model="deleteClicked">
@@ -76,7 +77,7 @@ export default {
                 { title: 'Status', key: 'status' },
                 { title: 'Address', key: 'address' },
                 { title: 'Sq Feet', key: 'square_feet' },
-                { title: 'Actions', key: 'actions', sortable: false },
+                { title: 'Delete', key: 'actions', sortable: false },
             ],
             selected: [],
             // update & delete
@@ -102,17 +103,17 @@ export default {
     mounted() {
     },
     methods: {
-        getLocationProfile(location) {
-            this.editClicked = true
-            this.targetLocation = location
-        },
+        // getLocationProfile(location) {
+        //     this.editClicked = true
+        //     this.targetLocation = location
+        // },
         deleteLocation(location) {
             this.deleteClicked = true
             this.targetLocation = location
         },
-        closeEdit(editClicked) {
-            this.editClicked = editClicked
-        },
+        // closeEdit(editClicked) {
+        //     this.editClicked = editClicked
+        // },
         closeDelete(deleteClicked) {
             this.deleteClicked = deleteClicked
         }

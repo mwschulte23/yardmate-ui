@@ -193,7 +193,10 @@ export default {
             percentPhosphorus: 0,
             percentPotassium: 0,
             fertilizerPer1k: 1,
-            locations: null
+            locations: null,
+
+            tempStepper: 1,
+            tempBool: false
         }
     },
     computed: {

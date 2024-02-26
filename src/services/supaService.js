@@ -16,3 +16,30 @@ export async function queryLocationOrder(locationId) {
 
     return data;
 }
+
+export async function queryServiceDay() {
+    const { data, error } = await supabase
+        .from('service_day')
+        .select()
+    
+        if (error) {
+            console.error('Error fetching service day: ', error)
+            return null;
+        }
+        
+        return data;
+}
+
+export async function queryLocationExtras(locationId) {
+    const { data, error } = await supabase
+        .from('location_extras')
+        .select()
+        .eq('id', locationId)
+        .single()
+    
+        if (error) {
+            console.error('Error fetching service day: ', error)
+            return null;
+        }
+        return data;
+}

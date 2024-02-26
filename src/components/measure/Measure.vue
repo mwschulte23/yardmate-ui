@@ -16,42 +16,6 @@
         <v-row>
 
         </v-row>
-        
-
-
-        <v-row>
-            <v-col>
-                                
-                                <!-- <v-card 
-                                    v-if="coordinates"
-                                    class="my-card" 
-                                    @click="expanded = !expanded"
-                                    v-ripple="false"
-                                >
-                                    <v-sheet class="d-flex justify-space-between align-start">
-                                        <v-sheet class="">
-                                            <v-card-title class="text-left mb-0 pb-1">{{ addressOnly(0) }}</v-card-title>
-                                            <v-card-subtitle class="text-subtitle-1 font-weight-regular mt-0">{{ addressOnly(1) }}, {{ addressOnly(2) }}</v-card-subtitle>
-                                        </v-sheet>
-                                        <v-sheet>
-                                            
-                                        </v-sheet>
-                                    </v-sheet>
-                                
-                                
-                                <v-card-text>
-                                    Property detail...
-                                <v-expand-transition>
-                                <div v-if="expanded">
-                                    
-                                    Lot Size: <span class="text-accent">15,000 sq ft</span>
-                                </div>
-                                </v-expand-transition>
-                                </v-card-text>
-                                </v-card> -->
-                            
-            </v-col>
-        </v-row>
 
         <!-- MEASURE NOTIFS -->
         <v-snackbar
@@ -111,7 +75,7 @@ export default {
                 return this.$store.state.locationSubmitted
             },
             set() {
-                this.$store.dispatch('triggerLocationSubmitNotif', false)
+                this.$store.dispatch('SET_LOCATION_SUBMITTED', false)
             }
         }
     },

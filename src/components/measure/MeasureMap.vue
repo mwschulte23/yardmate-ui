@@ -22,16 +22,15 @@
         
         
         <!-- Submission form -->
-        <v-dialog
-            v-model="openForm"
-            width="w-screen"
-        >
-            <SubmitLocation v-if="measuredArea > 0" :area="measuredArea" @openForm="closeLocationForm" class="mx-auto" style="width: 50%;"/>
-            <v-card v-else>
-                <v-card-title>
-                    <v-icon>mdi-info</v-icon> Please make measurements on map first!
-                </v-card-title>
-            </v-card>
+        <v-dialog v-model="openForm">
+            <div @click:outside="closeLocationForm" >
+                <SubmitLocation v-if="measuredArea > 0" :area="measuredArea" @openForm="closeLocationForm" class="mx-auto" style="width: 50%;"/>
+                <v-card v-else>
+                    <v-card-title>
+                        <v-icon>mdi-info</v-icon> Please make measurements on map first!
+                    </v-card-title>
+                </v-card>
+            </div>
         </v-dialog>
     </div>
     

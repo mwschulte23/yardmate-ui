@@ -30,12 +30,8 @@
             
                 <v-row v-show="this.$store.state.locationIds.length > 0" cols="12">
                     <v-divider class="mb-4 mx-12"></v-divider>
-                    <v-col cols="12" md="6" class="pl-12">
+                    <v-col cols="12" class="px-12">
                         <OrderCalcCard :locations="locations" />
-                    </v-col>
-                    <v-divider vertical />
-                    <v-col class="flex-grow-1 mr-12">
-                        <OrderHistCard />
                     </v-col>
                 </v-row>
             </v-slide-y-transition>
@@ -77,12 +73,12 @@
             </v-row>
             <!-- METRICS -->
             <v-divider class="mb-4 mx-8"></v-divider>
-            <v-row>
+            <!-- <v-row>
                 <v-col>
                     <p class="ml-16 text-h6 text-dark font-weight-semibold">Summary</p>
                     <DashboardMetrics :locations="locationStats.locations" :square_feet="locationStats.squareFeet" />
                 </v-col>
-            </v-row>
+            </v-row> -->
         </v-sheet>
     </v-container>
   </template>
@@ -94,7 +90,6 @@ import { supabase } from '../../supabase'
 import DashboardMetrics from './DashboardMetrics.vue'
 import LocationTable from './LocationTable.vue';
 import OrderCalcCard from './OrderCalcCard.vue';
-import OrderHistCard from './OrderHistCard.vue';
 // import LocationMapCard from './LocationMapCard.vue';
 
 const LocationMapCard = defineAsyncComponent({
@@ -112,7 +107,6 @@ export default {
         DashboardMetrics,
         LocationTable,
         OrderCalcCard,
-        OrderHistCard,
         LocationMapCard
     },
     data() {
@@ -175,7 +169,7 @@ export default {
       opacity: 1;
     }
     25%, 50% {
-      transform: scale(1.05); /* Increase size by 50% */
+      transform: scale(1.2);
     }
   }
 </style>

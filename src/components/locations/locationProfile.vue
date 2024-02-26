@@ -6,7 +6,7 @@
             <v-row class="h-50 pa-0 my-0">
                 <!-- carousel -->
                 <v-col class="pa-1">
-                    <v-sheet class="h-100 w-100 mb-1 bg-accent1 rounded-lg">
+                    <v-sheet class="h-100 w-100 mb-1 bg-accent1 rounded-lg pt-1">
                         <v-carousel 
                             class="h-100" 
                             :show-arrows="false" 
@@ -15,36 +15,15 @@
                             hide-delimiter-background 
                             
                         >
-                            <v-carousel-item class="mb-4">
+                            <v-carousel-item >
                                 <locationDetail :location="location" />
                             </v-carousel-item>
                             <v-carousel-item class="mb-4">
-                                <p class="text-center text-overline font-weight-semibold">Map</p>
+                                <p class="text-center text-overline font-weight-semibold">Additional Detail</p>
                                 <div class="h-75 d-flex align-center justify-center">COMING SOON!</div>    
                             </v-carousel-item>
                             <v-carousel-item class="mb-4">
-                                <p class="text-center text-overline font-weight-semibold">Recent Orders</p>
-                                <v-timeline 
-                                    v-if="orders"
-                                    side="end" 
-                                    class="px-4 mt-2" 
-                                    style="height: 80%;" 
-                                    truncate-line="start"
-                                >
-                                    <v-timeline-item
-                                        v-for="order in orders"
-                                        :dot-color="getOrderTypeColor(order.orders.type)"
-                                        size="small"
-                                    >
-                                        <p class="text-subtitle-2 font-weight-semibold">
-                                            {{ order.orders.type }} on {{ order.orders.created_at.slice(0, 10) }}
-                                        </p>
-                                    </v-timeline-item>
-                                </v-timeline>
-                                <div v-else>
-                                    <p>No orders found</p>
-                                    {{ this.orders }}
-                                </div>
+                                <locationOrderHist :locationId="location.id" />
                             </v-carousel-item>
                         </v-carousel>
                     </v-sheet>
@@ -53,139 +32,238 @@
             <v-row class="h-50 pa-0 my-0">
                 <!-- future map -->
                 <v-col class="pa-1">
-                    <v-sheet class="h-100 w-100 bg-grey-lighten-1 rounded-lg">
+                    <v-sheet class="h-100 w-100 bg-grey-lighten-1 rounded-lg pt-1">
                         <p class="text-center text-overline font-weight-semibold">Map</p>
                         <div class="h-75 d-flex align-center justify-center">COMING SOON!</div>
                     </v-sheet>
                 </v-col>
             </v-row>
         </v-col>
+
         <v-col rows="12" md="8" class="h-100 py-4">
-            <v-sheet class="h-100 bg-lightbrand rounded-lg">
-                <p class="text-center text-overline font-weight-semibold">Refine</p>
-                <div class="d-flex justify-space-around align-center flex-wrap mt-12">
-                    <div class="mx-4">
-                        <p>Square Foot Adjuster</p>
-                        <v-slider></v-slider>
-                    </div>
-                    <div class="mx-4">
-                        <p>Add Extra Detail</p>
-                        <v-slider></v-slider>
-                    </div>
-                </div>
-                <v-divider></v-divider>
-                <div class="mt-12">
-                    <p class="text-center text-overline font-weight-bold">Additional Details</p>
-                    <v-table class="bg-transparent mx-auto" density="compact" style="width: 90%;">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Value</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                v-for="(detail, index) in [{'name': 'abc', 'value': 2}, {'name': 'def', 'value': 3}, {'name': 'ghi', 'value': 4}]"
-                                :key="index"
+            <v-sheet class="h-100 bg-lightbrand rounded-lg pt-1">
+                <p class="text-center text-overline font-weight-semibold">Update</p>
+                
+                <v-row cols="12">
+                    <v-col cols="12" md="4" class="mt-4">
+                        <div class="mx-6">
+                            <v-text-field
+                                v-model="customerName"
+                                label="Customer Name"
+                                hide-details="auto"
+                                variant="outlined"
+                                density="comfortable"
+                                class="my-2"
+                                clearable
+                            />
+                            <v-select 
+                                v-model="customerStatus"
+                                :items="statuses"
+                                label="Customer Status"
+                                :item-value="location.status"
+                                variant="outlined"
+                                density="comfortable"
+                                class="my-4"
+                                required
+                                hide-details
+                            />
+                        </div>
+                    </v-col>
+                    <v-col cols="12" md="7">
+                        <div class="mt-6">
+                            <p class="text-center text-subtitle-2 font-weight-light">Adjust Yard Size</p>
+                            <v-slider
+                                v-model="adjustedSqFeet"
+                                :min="this.location.square_feet / 1.2"
+                                :max="this.location.square_feet * 1.15"
+                                color="darkbrand"
+                                track-color="dark"
+                                prepend-icon="mdi-arrow-down"
+                                append-icon="mdi-arrow-up"
+                                thumb-label
+                            />
+                        </div>
+                        <div class="d-flex justify-space-around align-center mt-1 mb-6">
+                            <div>
+                                <p class="text-center text-subtitle-2 font-weight-light">Current Sq Feet</p>
+                                <p class="text-center text-subtitle-2">{{ Math.round(location.square_feet) }}</p>
+                            </div>
+                            <div>
+                                <p class="text-center text-subtitle-2 font-weight-light">Adjusted Sq Feet</p>
+                                <p class="text-center text-subtitle-2">{{ Math.round(adjustedSqFeet) }}</p>
+                            </div>
+                            <div>
+                                <p
+                                    class="text-center text-subtitle-2 font-weight-light"
+                                    :class="{'text-darkbrand': adjustedSqFeet >= location.square_feet - 1, 'text-red-darken-4': adjustedSqFeet < location.square_feet}"
+                                >
+                                    Difference
+                                </p>
+                                <p 
+                                    class="text-center text-subtitle-2 font-weight-bold"
+                                    :class="{'text-darkbrand': adjustedSqFeet >= location.square_feet - 1, 'text-red-darken-4': adjustedSqFeet < location.square_feet}"
+                                >
+                                    {{ Math.round(adjustedSqFeet - location.square_feet) }}
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </v-col>
+                </v-row>
+
+                <v-container>
+                    <p class="text-center text-overline font-weight-semibold mt-4 mb-2">Additional Details</p>
+                    <v-row>
+                        <v-col>
+                            <div class="pa-2 border-sm rounded-lg h-100 w-100">
+                                <p class="text-center text-subtitle-2 font-weight-light">Location Details</p>
+                                <div class="d-flex justify-space-around align-center">
+                                    <v-checkbox v-model="hasDog" label="Has Dog?"></v-checkbox>
+                                    <v-checkbox v-model="hasFence" label="Has Fence?"></v-checkbox>
+                                    <v-checkbox v-model="hasSprinkler" label="Has Sprinkler?"></v-checkbox>
+                                </div>
+                            </div>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <div class="pa-2 border-sm rounded-lg h-100 w-100">
+                                <p class="text-center text-subtitle-2">Normal Service Day</p>
+                                <v-chip-group 
+                                    color="brand" 
+                                    class="d-flex justify-center align-end"
+                                    v-model="serviceDay"
+                                >
+                                    <v-chip :value="day.id" v-for="day in serviceDays" :active="serviceDay === day.id">
+                                        
+                                        {{ day.name }}
+                                    </v-chip>
+                                </v-chip-group>
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-textarea counter label="Notes" class="h-100" />
+                        </v-col>
+                    </v-row>
+                    <v-row class="mt-0 pt-">
+                        <v-col class="d-flex justify-end align-center">
+                            <v-btn 
+                                @click="resetDetails"
+                                variant="outlined"
+                                color="darkbrand"
                             >
-                                <td class="text-center text-subtitle-2 font-weight-light">{{ detail.name }}</td>
-                                <td class="text-center text-subtitle-2 font-weight-light">{{ detail.value }}</td>
-                                <td class="text-center text-subtitle-2 font-weight-light w-25">
-                                    <v-icon class="mr-1">mdi-pencil</v-icon><v-icon>mdi-delete-outline</v-icon>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </v-table>
-                </div>
+                                Reset
+                            </v-btn>
+                            <v-btn
+                                class="ml-4"
+                                color="darkbrand"
+                                @click="updateLocation"
+                            >
+                                Update
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-container>
             </v-sheet>
         </v-col>
     </v-row>
+    <v-snackbar
+        v-model="locationUpdated"
+        :timeout="2500"
+        elevation="24"
+        color="light"
+        multi-line
+        >
+        <p class="text-dark text-center font-weight-bold">Location Updated <v-icon>mdi-robot-happy-outline</v-icon></p>
+    </v-snackbar>
 </div>
-<!--
-        <v-col class="ma-2 bg-darkbrand rounded-lg">
-            <p class="text-center text-overline font-weight-semibold">Map</p>
-            <div class="h-75 d-flex align-center justify-center">COMING SOON!</div>
-        </v-col>
-    </v-row>
-    <v-row cols="12" class="h-50">
-        <v-col cols="12" md="4" class="ma-2 bg-accent1 rounded-lg">
-            
-
-        </v-col>
-        <v-col class="ma-2 bg-darkbrand rounded-lg">
-            <p class="text-center text-overline font-weight-semibold mb-4">Add'n Info</p>
-            <div class="d-flex justify-space-between align-center mx-auto" style="width: 90%;">
-                <v-text-field
-                    v-model="newInfoName"
-                    label="Detail Name"
-                    density="compact"
-                    variant="outlined"
-                    class="mr-1"
-                ></v-text-field>
-                <v-text-field
-                    v-model="newInfoValue"
-                    label="Detail"
-                    density="compact"
-                    variant="outlined"
-                ></v-text-field>
-            </div>
-            
-        </v-col>
-    </v-row>
-</div> -->
 </template>
 
 <script>
-import { queryLocationOrder } from '../../services/supaService'
+import { supabase } from '../../supabase'
+import { queryServiceDay, queryLocationExtras } from '../../services/supaService'
+
 import locationDetail from './locationDetail.vue'
+import locationOrderHist from './locationOrderHist.vue'
+
 
 export default {
     name: 'locationProfile',
     components: {
-        locationDetail
+        locationDetail,
+        locationOrderHist
     },
     props: {
-        location: Object
+        location: Object,
+        statuses: Array
     },
     data() {
         return {
-            orders: null,
-            locationCards: 0,
-            items: [
-                {
-                    'type': 'fertilizer',
-                    'date': '2024-02-03',
-                    'color': 'accent1'
-                },
-                {
-                    'type': 'seed',
-                    'date': '2024-01-03',
-                    'color': 'brand'
-                },
-                {
-                    'type': 'fertilizer',
-                    'date': '2023-06-28',
-                    'color': 'accent1'
-                }
-            ],
+            locationUpdated: false,
+
+            adjustedSqFeet: Math.round(this.location.square_feet),
+            customerName: this.location.customer_name,
+            customerStatus: this.location.status,
+            hasDog: this.location.has_dog,
+            hasFence: this.location.has_fence,
+            hasSprinkler: this.location.has_sprinkler,
+            serviceDays: null,
+            serviceDay: this.location.service_day_id,
         }
     },
     beforeMount() {
-        queryLocationOrder(this.location.id).then((data) => {
-            this.orders = data
-        })
+        queryServiceDay().then((data) => {
+            this.serviceDays = data
+        });
     },
     methods: {
-        getOrderTypeColor(type) {
-            if (type == 'fertilizer') {
-                return 'brand'
-            } else if (type == 'seed') {
-                return 'accent1'
-            } else {
-                return 'lightbrand'
+        async updateLocation() {
+            const records = {
+                customer_name: this.customerName,
+                status: this.customerStatus,
+                square_feet: this.adjustedSqFeet,
+                has_dog: this.hasDog,
+                has_fence: this.hasFence,
+                has_sprinkler: this.hasSprinkler,
+                service_day_id: this.serviceDay,
+                notes: this.notes
             }
-        }
+            const { data, error } = await supabase
+                .from('locations')
+                .update(records)
+                .eq('id', this.location.id)
+            
+            if (error) {
+                alert('Issue with updating location. Contact abc for def')
+                console.error('Error inserting data:', error);
+                return null;
+            } else {
+                this.location.customer_name = this.customerName
+                this.location.status = this.customerStatus
+                this.location.square_feet = this.adjustedSqFeet
+                this.location.has_dog = this.hasDog
+                this.location.has_fence = this.hasFence
+                this.location.has_sprinkler = this.hasSprinkler
+                this.location.service_day_id = this.serviceDay,
+                this.location.notes = this.notes
+
+                this.locationUpdated = true
+            }
+        },
+        closeWindow() {
+
+        },
+        resetDetails() {
+            this.adjustedSqFeet = this.location.square_feet
+            this.customerName = this.location.customer_name
+            this.customerStatus = this.location.status
+            this.hasDog = this.location.has_dog
+            this.hasFence = this.location.has_fence
+            this.hasSprinkler = this.location.has_sprinkler
+            this.serviceDay = this.location.service_day_id
+            this.notes = this.location.notes
+        },
     }
 }
 </script>

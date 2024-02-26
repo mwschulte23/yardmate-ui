@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { addressAutoComplete } from '../../services/apiService'
+import { addressAutoComplete, reverseGeocode } from '../../services/apiService'
 
 export default {
     name: 'LocationSearch',
@@ -60,12 +60,14 @@ export default {
             }  
         },
         updateSuggestion(suggestion) {
+            console.log(suggestion)
             const propertyDetails = suggestion.properties
             if (propertyDetails && propertyDetails.formatted && propertyDetails.lat && propertyDetails.lon ) {
                 this.coordinates = {
                     lat: suggestion.properties.lat,
                     lon: suggestion.properties.lon,
-                    address: suggestion.properties.formatted
+                    address: suggestion.properties.formatted,
+                    zipcode: suggestion.properties.postcode
                 } 
             }
         },
@@ -83,7 +85,6 @@ export default {
             } else {
                 this.hint = 'Location not found. Try again.'
             }
-            
         },
         resetSearch() {
             this.address = ''

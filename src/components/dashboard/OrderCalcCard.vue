@@ -73,7 +73,9 @@
                     </v-sheet>
                     
                     <v-sheet class="bg-transparent d-flex justify-space-between">
-                        <p class="pa-2 text-subtitle-2">Bags Needed: {{ fertilizerBags }} </p>
+                        <p class="pa-2 text-subtitle-1 font-weight-light">
+                            Bags Needed: <span class="px-2 font-weight-bold">{{ fertilizerBags }}</span>
+                        </p>
                         <v-sheet class=bg-transparent>
                             <v-btn variant="tonal" color="dark" class="text-caption mr-2" @click="$router.push('/order')">
                                 Advanced

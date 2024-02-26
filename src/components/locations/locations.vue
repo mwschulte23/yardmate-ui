@@ -14,33 +14,83 @@
             </v-col>
         </v-row>
         <v-sheet class="bg-white rounded-lg elevation-4 pa-4">
-            <v-row cols="12">
-                <v-col cols="12" md="7" class="ml-4">
+            <v-row cols="12" class="mb-0 pb-0">
+                <v-col cols="12" class="d-flex justify-start align-start">
                     <v-text-field
                         v-model="locationSearch"
                         :color="isFocused ? 'darkbrand' : 'dark' "
                         @focus="isFocused = true"
                         @blur="isFocused = false"
-                        @input="console.log('thing input')"
                         placeholder="Filter Locations"
                         append-inner-icon="mdi-magnify"
                         density="comfortable"
                         variant="outlined"
-                        class="mr-4"
+                        class="flex-grow-1"
                     />
+                    <v-btn class="pt-4 pl-6" variant="text" prepend-icon="mdi-map-outline">
+                        map view
+                    </v-btn>
                 </v-col>
-                <v-spacer></v-spacer>
-                <v-col cols="4" class="mr-4">
-                    <v-select
-                        chips
+            </v-row>
+            <v-row class="mt-0 pt-0 mb-4">
+                <v-col>
+                    <p class="text-start text-subtitle-1 mr-1">Customer Status</p>
+                    <v-chip-group
                         multiple
-                        placeholder="Customer Status"
-                        variant="outlined"
-                        density="comfortable"
+                        column
                         v-model="statuses"
-                        :items="statusList"
-                    />
+                        class="d-flex justify-start align-center"
+                    >
+                        <v-chip
+                            v-for="(status, index) in statusList" 
+                            :key="index" 
+                            :value="status"
+                            filter
+                            variant="outlined"
+                            color="accent2"    
+                            size="small"
+                        >
+                            {{ status }}
+                        </v-chip>
+                    </v-chip-group>
                 </v-col>
+                <v-col>
+                    <p>Location Details</p>
+                    <v-chip-group
+                        multiple
+                        column
+                        class="d-flex justify-start align-center"
+                    >
+                        <v-chip
+                            value="has dog"
+                            filter
+                            variant="outlined"
+                            color="accent1"
+                            size="small"
+                        >
+                            Has Dog?
+                        </v-chip>
+                        <v-chip
+                            value="has fence"
+                            filter
+                            variant="outlined"
+                            color="accent1"
+                            size="small"
+                        >
+                            Has Fence
+                        </v-chip>
+                        <v-chip
+                            value="has sprinkler"
+                            filter
+                            variant="outlined"
+                            color="accent1"
+                            size="small"
+                        >
+                            Has Sprinkler?
+                        </v-chip>
+                    </v-chip-group>
+                </v-col>
+                <v-col cols="3"></v-col>
             </v-row>
             <v-row cols="12">
                 <v-col 
@@ -66,8 +116,8 @@
                                     </p>
                                 </div>
                                 <div class="text-center mr-8">
-                                    <p class="text-subtitle-1 font-weight-light">Square Feet</p>
-                                    <p class="text-h6">{{ Math.round(location.square_feet) }}</p>
+                                    <p class="text-subtitle-1 font-weight-light">Yard Size</p>
+                                    <p class="text-h6">{{ Math.round(location.square_feet) }} sq ft</p>
                                 </div>
                             </div>
                         </v-list-item>
@@ -77,7 +127,7 @@
         </v-sheet>
     </v-container>
     <v-bottom-sheet v-model="openLocation" height="90%">
-        <LocationProfile :location="targetLocation" />
+        <LocationProfile :location="targetLocation" :statuses="statuses" />
         <v-btn @click="openLocation = false" color="dark" variant="text" class="absolute-top-right mt-4 mr-2">
             <v-icon class="text-h4">mdi-close</v-icon>
         </v-btn>
@@ -99,7 +149,7 @@ export default {
             locations: null,
             locationSearch: '',
             statusList: ['Customer', 'Prospect', 'Churned'],
-            statuses: ['Customer', 'Prospect', 'Churned'],
+            statuses: ['Customer', 'Prospect'],
             targetLocation: null,
             isFocused: false,
             openLocation: false
@@ -131,7 +181,7 @@ export default {
         async getLocations() {
             const { data, error } = await supabase
                 .from('locations')
-                .select('id, customer_name, status, address, square_feet, lat, lon')
+                .select()
                 .eq('is_deleted', false);
             if (error)
                 throw error;
