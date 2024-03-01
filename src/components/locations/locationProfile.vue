@@ -19,8 +19,7 @@
                                 <locationDetail :location="location" />
                             </v-carousel-item>
                             <v-carousel-item class="mb-4">
-                                <p class="text-center text-overline font-weight-semibold">Additional Detail</p>
-                                <div class="h-75 d-flex align-center justify-center">COMING SOON!</div>    
+                                <locationAddnDetail :location="location" :serviceDay="serviceDayName" />
                             </v-carousel-item>
                             <v-carousel-item class="mb-4">
                                 <locationOrderHist :locationId="location.id" />
@@ -56,9 +55,9 @@
                                 class="my-2"
                                 clearable
                             />
-                            <v-select 
+                            <v-select
                                 v-model="customerStatus"
-                                :items="statuses"
+                                :items="statusList"
                                 label="Customer Status"
                                 :item-value="location.status"
                                 variant="outlined"
@@ -182,9 +181,10 @@
 
 <script>
 import { supabase } from '../../supabase'
-import { queryServiceDay, queryLocationExtras } from '../../services/supaService'
+// import { queryServiceDay } from '../../services/supaService'
 
 import locationDetail from './locationDetail.vue'
+import locationAddnDetail from './locationAddnDetail.vue'
 import locationOrderHist from './locationOrderHist.vue'
 
 
@@ -192,11 +192,13 @@ export default {
     name: 'locationProfile',
     components: {
         locationDetail,
+        locationAddnDetail,
         locationOrderHist
     },
     props: {
         location: Object,
-        statuses: Array
+        serviceDays: Object,
+        statusList: Array
     },
     data() {
         return {
@@ -208,15 +210,23 @@ export default {
             hasDog: this.location.has_dog,
             hasFence: this.location.has_fence,
             hasSprinkler: this.location.has_sprinkler,
-            serviceDays: null,
             serviceDay: this.location.service_day_id,
         }
     },
-    beforeMount() {
-        queryServiceDay().then((data) => {
-            this.serviceDays = data
-        });
+    computed: {
+        serviceDayName() {
+            if (this.serviceDay) {
+                return this.serviceDays.find(day => day.id === this.location.service_day_id).name
+            } else {
+                return ''
+            }
+        }
     },
+    // beforeMount() {
+    //     queryServiceDay().then((data) => {
+    //         this.serviceDays = data
+    //     });
+    // },
     methods: {
         async updateLocation() {
             const records = {

@@ -212,7 +212,7 @@ export default {
                 return this.serviceDays.find(day => day.id === this.serviceDay).name
             } else {
                 return ''
-            }   
+            }
         }
     },
     mounted() {
