@@ -203,7 +203,6 @@ export default {
     data() {
         return {
             locationUpdated: false,
-
             adjustedSqFeet: Math.round(this.location.square_feet),
             customerName: this.location.customer_name,
             customerStatus: this.location.status,
@@ -222,11 +221,6 @@ export default {
             }
         }
     },
-    // beforeMount() {
-    //     queryServiceDay().then((data) => {
-    //         this.serviceDays = data
-    //     });
-    // },
     methods: {
         async updateLocation() {
             const records = {

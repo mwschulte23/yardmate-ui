@@ -162,7 +162,7 @@
                                 
                                 <div class="text-center mr-8">
                                     <p class="text-subtitle-1 font-weight-light">Yard Size</p>
-                                    <p class="text-h6">{{ Math.round(location.square_feet) }} sq ft</p>
+                                    <p class="text-h6">{{ formatArea(location.square_feet) }} sq ft</p>
                                 </div>
                             </div>
                         </v-list-item>
@@ -268,6 +268,9 @@ export default {
             else {
                 return 'blue';
             }
+        },
+        formatArea(area) {
+            return new Intl.NumberFormat('en-US', { notation: 'compact' }).format(area);
         },
         openLocationProfile(location) {
             this.targetLocation = location;

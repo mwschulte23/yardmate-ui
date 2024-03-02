@@ -43,7 +43,6 @@ export default {
                 this.centerLon = first_result.lon
                 this.centerLat = first_result.lat
             }
-            console.log(first_result)
         },
         loadMap() {
             mapboxgl.accessToken = 'pk.eyJ1IjoibXdzY2h1bHRlMjMiLCJhIjoiY2w4a2tpaGo1MDEwNDN2cncxMzV1bmp4eSJ9.uPejfD8btp768rOZpMiVyA';
@@ -51,20 +50,20 @@ export default {
                 container: 'markerMap',
                 style: 'mapbox://styles/mapbox/light-v11',
                 center: [this.centerLon, this.centerLat],
-                zoom: 6
+                zoom: 9
             });
             this.map.on('load', () => {
                 this.addMarkers();
+                this.addCircle();
             });
+            
         },
         addMarkers() {
             this.locations.forEach((location) => {
-                const marker = new mapboxgl.Marker(
-                    {
+                const marker = new mapboxgl.Marker({
                         color: this.getColor(location.status), 
                         label: location.customer_name
-                    }
-                )
+                    })
                     .setLngLat([location.lon, location.lat])
                     .addTo(this.map);
                 const popup = new mapboxgl.Popup({ offset: 25 })
@@ -72,6 +71,27 @@ export default {
                 marker.setPopup(popup)
             });
         },
+        addCircle() {
+            this.map.addLayer({
+                id: 'circle',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [this.centerLon, this.centerLat] // Example coordinates
+                        }
+                    }
+                },
+                paint: {
+                    'circle-radius': 50, // Radius size in pixels
+                    'circle-color': '#007cbf', // Circle color
+                    'circle-opacity': 0.5 // Circle opacity
+                }
+            });
+        }
     }
 }
 </script>

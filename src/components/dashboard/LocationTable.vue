@@ -17,7 +17,7 @@
             class="bg-transparent font-weight-light text-subtitle-2"
             item-value="id"
             :headers="headers" 
-            :items="locations" 
+            :items="locations"
             :search="search"
             height="400"
             min-height="250" 
@@ -44,11 +44,6 @@
             </template>
         </v-data-table-virtual>
     </v-card>
-
-    <!-- edit modal -->
-    <!-- <v-dialog v-model="editClicked">
-        <LocationProfile v-show="editClicked" :location="targetLocation" @editClicked="closeEdit"  />
-    </v-dialog> -->
 
     <!-- delete modal -->
     <v-dialog v-model="deleteClicked">
@@ -100,20 +95,11 @@ export default {
             deep: true // This will watch nested properties inside 'selected'
         }
     },
-    mounted() {
-    },
     methods: {
-        // getLocationProfile(location) {
-        //     this.editClicked = true
-        //     this.targetLocation = location
-        // },
         deleteLocation(location) {
             this.deleteClicked = true
             this.targetLocation = location
         },
-        // closeEdit(editClicked) {
-        //     this.editClicked = editClicked
-        // },
         closeDelete(deleteClicked) {
             this.deleteClicked = deleteClicked
         }

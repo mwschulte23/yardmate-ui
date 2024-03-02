@@ -205,7 +205,8 @@ export default {
             return this.$store.state.address.replace(', United States of America', '')
         },
         formattedArea() {
-            return Math.round(this.area * 100) / 100
+            return new Intl.NumberFormat('en-US', { notation: 'compact' }).format(this.area);
+            // return Math.round(this.area)
         },
         serviceDayName() {
             if (this.serviceDay) {
