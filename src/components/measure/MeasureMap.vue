@@ -93,7 +93,7 @@ export default {
         },
         // core map methods
         loadMap() {
-            mapboxgl.accessToken = 'pk.eyJ1IjoibXdzY2h1bHRlMjMiLCJhIjoiY2w4a2tpaGo1MDEwNDN2cncxMzV1bmp4eSJ9.uPejfD8btp768rOZpMiVyA';
+            mapboxgl.accessToken = '';
             this.map = new mapboxgl.Map({
                 container: 'map',
                 style: 'mapbox://styles/mapbox/satellite-v9',
